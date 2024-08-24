@@ -48,26 +48,34 @@ fun Navbar(
                 navbarViewModel.setPageState(0)
                 homeNavController.navigate(HomeNavObj.HomeScreen.route)
             }) {
-                Icon(imageVector = Icons.Default.Home, contentDescription = HomeNavObj.HomeScreen.route)
+                Icon(imageVector = Icons.Default.Home, contentDescription = HomeNavObj.HomeScreen.route, tint = isHighLighted(currentPage, 0))
             }
             IconButton(onClick = {
                 navbarViewModel.setPageState(1)
                 homeNavController.navigate(HomeNavObj.MapsScreen.route)
             }) {
-                Icon(imageVector = Icons.Default.Map, contentDescription = HomeNavObj.MapsScreen.route)
+                Icon(imageVector = Icons.Default.Map, contentDescription = HomeNavObj.MapsScreen.route, tint = isHighLighted(currentPage, 1))
             }
             IconButton(onClick = {
                 navbarViewModel.setPageState(2)
                 homeNavController.navigate(HomeNavObj.BookmarkScreen.route)
             }) {
-                Icon(imageVector = Icons.Default.Bookmark, contentDescription = HomeNavObj.BookmarkScreen.route)
+                Icon(imageVector = Icons.Default.Bookmark, contentDescription = HomeNavObj.BookmarkScreen.route, tint = isHighLighted(currentPage, 2))
             }
             IconButton(onClick = {
                 navbarViewModel.setPageState(3)
                 homeNavController.navigate(HomeNavObj.ProfileScreen.route)
             }) {
-                Icon(imageVector = Icons.Default.Person, contentDescription = HomeNavObj.ProfileScreen.route)
+                Icon(imageVector = Icons.Default.Person, contentDescription = HomeNavObj.ProfileScreen.route, tint = isHighLighted(currentPage, 3))
             }
         }
+    }
+}
+
+fun isHighLighted(currentPage: Int, index: Int): Color {
+    return if(currentPage == index){
+        Color.Red
+    } else {
+        Color.Black
     }
 }

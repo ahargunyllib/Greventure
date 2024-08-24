@@ -5,6 +5,8 @@ import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
@@ -15,16 +17,19 @@ import com.seven_sheesh.greventure.presentation.ui.widget.Navbar
 import com.seven_sheesh.greventure.presentation.view.bookmark.BookmarkScreen
 import com.seven_sheesh.greventure.presentation.view.home.HomeScreen
 import com.seven_sheesh.greventure.presentation.view.maps.MapsScreen
-import com.seven_sheesh.greventure.presentation.view.profile.NewsScreen
+import com.seven_sheesh.greventure.presentation.view.profile.ProfileScreen
 import com.seven_sheesh.greventure.presentation.viewmodel.NavbarViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
+@Preview
 fun HomeNavHost(parentNavController: NavController = rememberNavController()){
     val homeNavController = rememberNavController()
     val navbarViewModel   = hiltViewModel<NavbarViewModel>()
 
     Scaffold(
+        containerColor = Color.White,
+        contentColor = Color.White,
         bottomBar = {
             Navbar(
                 homeNavController = homeNavController,
@@ -90,7 +95,7 @@ fun HomeNavHost(parentNavController: NavController = rememberNavController()){
             composable(
                 route = HomeNavObj.ProfileScreen.route,
                 content = {
-                    NewsScreen(
+                    ProfileScreen(
                         homeNavController = homeNavController,
                         navbarViewModel = navbarViewModel
                     )

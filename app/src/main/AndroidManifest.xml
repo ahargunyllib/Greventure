@@ -18,10 +18,14 @@
         android:theme="@android:style/Theme.Material.NoActionBar.Fullscreen"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${googleMapsApiKey}"/>
+
         <activity
             android:name=".BaseActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
