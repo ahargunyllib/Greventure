@@ -1,4 +1,4 @@
-package com.seven_sheesh.greventure.presentation.view.news
+package com.seven_sheesh.greventure.presentation.view.profile
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview

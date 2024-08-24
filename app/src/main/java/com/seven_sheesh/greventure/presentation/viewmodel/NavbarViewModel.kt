@@ -12,7 +12,7 @@ class NavbarViewModel @Inject constructor(): ViewModel() {
     *  0 -> HomeScreen
     *  1 -> MapsScreen
     *  2 -> BookmarkScreen
-    *  3 -> NewsScreen
+    *  3 -> ProfileScreen
     * */
 
     private val _pageState = MutableStateFlow<Int>(0)

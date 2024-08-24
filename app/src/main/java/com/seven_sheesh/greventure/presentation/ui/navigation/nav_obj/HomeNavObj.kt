@@ -4,5 +4,5 @@ sealed class HomeNavObj(val route: String) {
     data object HomeScreen: HomeNavObj("home")
     data object MapsScreen: HomeNavObj("maps")
     data object BookmarkScreen: HomeNavObj("bookmark")
-    data object NewsScreen: HomeNavObj("news")
+    data object ProfileScreen: HomeNavObj("profile")
 }
