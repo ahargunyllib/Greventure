@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.ahargunyllib.hackathon_kotlin_starter"
+    namespace = "com.7sheesh.greventure"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.ahargunyllib.hackathon_kotlin_starter"
+        applicationId = "com.7sheesh.greventure"
         minSdk = 29
         targetSdk = 34
         versionCode = 1
