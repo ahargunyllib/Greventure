@@ -32,6 +32,13 @@ fun ParentNavHost() {
                     LoginScreen()
                 }
             )
+
+            composable(
+                route = ParentNavObj.HomeNav.route,
+                content = {
+                    HomeNavHost(parentNavController = parentNavController)
+                }
+            )
         },
     )
 }
