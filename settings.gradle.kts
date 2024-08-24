@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "hackathon-kotlin-starter"
+rootProject.name = "Greventure"
 include(":app")
