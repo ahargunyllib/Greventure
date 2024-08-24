@@ -1,4 +1,4 @@
-package com.ahargunyllib.hackathon_kotlin_starter
+package com.seven_sheesh.greventure
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,8 +11,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.ahargunyllib.hackathon_kotlin_starter.presentation.ui.design_system.Theme
-import com.ahargunyllib.hackathon_kotlin_starter.presentation.ui.navigation.nav_host.ParentNavHost
+import com.seven_sheesh.greventure.presentation.ui.design_system.Theme
+import com.seven_sheesh.greventure.presentation.ui.navigation.nav_host.ParentNavHost
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

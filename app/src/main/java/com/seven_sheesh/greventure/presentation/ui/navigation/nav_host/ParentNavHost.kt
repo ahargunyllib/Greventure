@@ -1,13 +1,13 @@
-package com.ahargunyllib.hackathon_kotlin_starter.presentation.ui.navigation.nav_host
+package com.seven_sheesh.greventure.presentation.ui.navigation.nav_host
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.ahargunyllib.hackathon_kotlin_starter.presentation.ui.navigation.nav_obj.ParentNavObj
-import com.ahargunyllib.hackathon_kotlin_starter.presentation.view.auth.splash_screen.LoginScreen
-import com.ahargunyllib.hackathon_kotlin_starter.presentation.view.auth.splash_screen.SplashScreen0
+import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.ParentNavObj
+import com.seven_sheesh.greventure.presentation.view.auth.splash_screen.LoginScreen
+import com.seven_sheesh.greventure.presentation.view.auth.splash_screen.SplashScreen0
 
 @Composable
 fun ParentNavHost() {

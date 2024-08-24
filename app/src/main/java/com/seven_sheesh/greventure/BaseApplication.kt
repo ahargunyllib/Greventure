@@ -1,4 +1,4 @@
-package com.ahargunyllib.hackathon_kotlin_starter
+package com.seven_sheesh.greventure
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

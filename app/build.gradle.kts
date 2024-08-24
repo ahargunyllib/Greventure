@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.7sheesh.greventure"
+    namespace = "com.seven_sheesh.greventure"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.7sheesh.greventure"
+        applicationId = "com.seven_sheesh.greventure"
         minSdk = 29
         targetSdk = 34
         versionCode = 1

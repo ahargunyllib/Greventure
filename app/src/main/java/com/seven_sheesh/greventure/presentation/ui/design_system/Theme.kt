@@ -1,4 +1,4 @@
-package com.ahargunyllib.hackathon_kotlin_starter.presentation.ui.design_system
+package com.seven_sheesh.greventure.presentation.ui.design_system
 
 import android.app.Activity
 import androidx.compose.foundation.isSystemInDarkTheme
