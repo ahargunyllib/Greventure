@@ -15,6 +15,7 @@ import androidx.navigation.compose.rememberNavController
 import com.seven_sheesh.greventure.presentation.ui.widget.GoogleMapsComponent
 import com.seven_sheesh.greventure.presentation.viewmodel.MapsViewModel
 import com.seven_sheesh.greventure.presentation.viewmodel.NavbarViewModel
+import com.seven_sheesh.greventure.utils.RequestLocationLooper
 import com.seven_sheesh.greventure.utils.RequestLocationPermission
 import com.seven_sheesh.greventure.utils.getCurrentLocation
 import com.seven_sheesh.greventure.utils.initializeLocationProvider
@@ -28,29 +29,7 @@ fun MapsScreen(
     navbarViewModel.setPageState(1)
     val mapsViewModel = hiltViewModel<MapsViewModel>()
     val context = LocalContext.current
-
-    RequestLocationPermission(
-        onPermissionGranted = {
-            Log.d("Nearby", "Permission granted")
-            initializeLocationProvider(context)
-            getCurrentLocation(
-                onGetCurrentLocationSuccess = { location ->
-                    mapsViewModel.updatePosition(location.first, location.second)
-                    Log.d("Nearby", "Location: $location")
-                },
-                onGetCurrentLocationFailed = { exception ->
-                    Log.e("Nearby", "getLastLocation:exception", exception)
-                },
-                context = context
-            )
-        },
-        onPermissionDenied = {
-            Log.d("Nearby", "Permission denied")
-        },
-        onPermissionsRevoked = {
-            Log.d("Nearby", "Permission revoked")
-        }
-    )
+    RequestLocationLooper(context = context, mapsViewModel = mapsViewModel)
 
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
         GoogleMapsComponent(

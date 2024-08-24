@@ -1,5 +1,8 @@
 package com.seven_sheesh.greventure.presentation.viewmodel
 
+import android.content.Context
+import android.widget.Toast
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.maps.model.CameraPosition
@@ -17,6 +20,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MapsViewModel @Inject constructor(): ViewModel() {
+    private val _requestPositionMessage = MutableStateFlow("")
     private val _currentPosition = MutableStateFlow(Pair(0.0, 0.0))
     private val _cameraPositionState = MutableStateFlow(
         CameraPositionState(
@@ -34,10 +38,17 @@ class MapsViewModel @Inject constructor(): ViewModel() {
         )
     )
 
+    val requestPositionMessage: StateFlow<String> get() = _requestPositionMessage
     val currentPosition: StateFlow<Pair<Double, Double>> get() = _currentPosition
     val cameraPositionState: StateFlow<CameraPositionState> get() = _cameraPositionState
     val uiSettings: StateFlow<MapUiSettings> get() = _uiSettings
     val properties: StateFlow<MapProperties> get() = _properties
+
+    fun setRequestPositionMessage(message: String){
+        viewModelScope.launch {
+            _requestPositionMessage.value = message
+        }
+    }
 
     fun updatePosition(lat: Double, lng: Double) {
         viewModelScope.launch {
