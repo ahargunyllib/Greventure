@@ -20,9 +20,13 @@ activityCompose = "1.9.0"
 composeBom = "2024.06.00"
 lifecycleRuntimeKtxVersion = "2.8.2"
 lifecycleViewmodelKtx = "2.8.2"
+mapsCompose = "6.1.0"
+mapsComposeVersion = "2.9.0"
 material3 = "1.2.1"
 materialIconsExtendedAndroid = "1.6.8"
 navigationCompose = "2.7.7"
+playServicesLocation = "21.3.0"
+playServicesMaps = "19.0.0"
 retrofit = "2.9.0"
 roomRuntime = "2.6.1"
 
@@ -62,7 +66,11 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroid" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }
+maps-compose = { module = "com.google.maps.android:maps-compose", version.ref = "mapsCompose" }
+maps-compose-v290 = { module = "com.google.maps.android:maps-compose", version.ref = "mapsComposeVersion" }
 material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
+play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
+play-services-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "playServicesMaps" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 
 [plugins]
