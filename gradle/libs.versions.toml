@@ -1,5 +1,6 @@
 [versions]
 #noinspection AndroidGradlePluginVersion
+accompanistPermissions = "0.31.1-alpha"
 agp = "8.4.0"
 androidxLifecycleRuntimeKtx = "2.8.3"
 coilCompose = "2.6.0"
@@ -31,6 +32,7 @@ retrofit = "2.9.0"
 roomRuntime = "2.6.1"
 
 [libraries]
+accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissions" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hiltCompiler" }

@@ -87,6 +87,9 @@ dependencies {
     implementation(libs.maps.compose.v290)
     implementation(libs.play.services.maps)
 
+    // Accompanist
+    implementation(libs.accompanist.permissions)
+
     //Room
     implementation(libs.androidx.room.runtime)
     kapt(libs.androidx.room.compiler)
