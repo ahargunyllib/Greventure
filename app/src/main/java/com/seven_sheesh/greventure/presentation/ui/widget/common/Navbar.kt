@@ -1,5 +1,6 @@
 package com.seven_sheesh.greventure.presentation.ui.widget.common
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -46,26 +47,42 @@ fun Navbar(
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(onClick = {
-                navbarViewModel.setPageState(0)
-                homeNavController.navigate(HomeNavObj.HomeScreen.route)
+                if(currentPage != 0){
+                    navbarViewModel.setPageState(0)
+                    homeNavController.navigate(HomeNavObj.HomeScreen.route)
+                } else {
+                    Toast.makeText(homeNavController.context, "Home", Toast.LENGTH_SHORT).show()
+                }
             }) {
                 Icon(imageVector = Icons.Default.Home, contentDescription = HomeNavObj.HomeScreen.route, tint = isHighLighted(currentPage, 0))
             }
             IconButton(onClick = {
-                navbarViewModel.setPageState(1)
-                homeNavController.navigate(HomeNavObj.MapsScreen.route)
+                if(currentPage != 1){
+                    navbarViewModel.setPageState(1)
+                    homeNavController.navigate(HomeNavObj.MapsScreen.route)
+                } else {
+                    Toast.makeText(homeNavController.context, "Maps", Toast.LENGTH_SHORT).show()
+                }
             }) {
                 Icon(imageVector = Icons.Default.Map, contentDescription = HomeNavObj.MapsScreen.route, tint = isHighLighted(currentPage, 1))
             }
             IconButton(onClick = {
-                navbarViewModel.setPageState(2)
-                homeNavController.navigate(HomeNavObj.BookmarkScreen.route)
+                if(currentPage != 2){
+                    navbarViewModel.setPageState(2)
+                    homeNavController.navigate(HomeNavObj.BookmarkScreen.route)
+                } else {
+                    Toast.makeText(homeNavController.context, "Bookmarks", Toast.LENGTH_SHORT).show()
+                }
             }) {
                 Icon(imageVector = Icons.Default.Bookmark, contentDescription = HomeNavObj.BookmarkScreen.route, tint = isHighLighted(currentPage, 2))
             }
             IconButton(onClick = {
-                navbarViewModel.setPageState(3)
-                homeNavController.navigate(HomeNavObj.ProfileScreen.route)
+                if(currentPage != 3){
+                    navbarViewModel.setPageState(3)
+                    homeNavController.navigate(HomeNavObj.ProfileScreen.route)
+                } else {
+                    Toast.makeText(homeNavController.context, "Profile", Toast.LENGTH_SHORT).show()
+                }
             }) {
                 Icon(imageVector = Icons.Default.Person, contentDescription = HomeNavObj.ProfileScreen.route, tint = isHighLighted(currentPage, 3))
             }

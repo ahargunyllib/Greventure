@@ -54,7 +54,7 @@ fun EventList(
         .padding(horizontal = 16.dp)) {
         dummyArray.forEach {
             Row(
-                modifier = Modifier,
+                modifier = Modifier.clickable {  },
                 verticalAlignment = Alignment.CenterVertically
             ){
                 Card(modifier = Modifier.size(48.dp),
