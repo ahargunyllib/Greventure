@@ -15,6 +15,7 @@ import androidx.navigation.compose.rememberNavController
 import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
 import com.seven_sheesh.greventure.presentation.ui.widget.common.Navbar
 import com.seven_sheesh.greventure.presentation.view.bookmark.BookmarkScreen
+import com.seven_sheesh.greventure.presentation.view.home.CityScreen
 import com.seven_sheesh.greventure.presentation.view.home.EventScreen
 import com.seven_sheesh.greventure.presentation.view.home.HomeScreen
 import com.seven_sheesh.greventure.presentation.view.home.NewsScreen
@@ -47,6 +48,24 @@ fun HomeNavHost(parentNavController: NavController = rememberNavController()){
                 route = HomeNavObj.HomeScreen.route,
                 content = {
                     HomeScreen(
+                        homeNavController = homeNavController,
+                        navbarViewModel = navbarViewModel
+                    )
+                }, enterTransition = {
+                    return@composable slideIntoContainer(
+                        AnimatedContentTransitionScope.SlideDirection.Up, tween(700)
+                    )
+                }, popExitTransition = {
+                    return@composable slideOutOfContainer(
+                        AnimatedContentTransitionScope.SlideDirection.Down, tween(700)
+                    )
+                }
+            )
+
+            composable(
+                route = HomeNavObj.CityScreen.route,
+                content = {
+                    CityScreen(
                         homeNavController = homeNavController,
                         navbarViewModel = navbarViewModel
                     )

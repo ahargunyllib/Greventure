@@ -51,12 +51,18 @@ fun ProfileBar(
         ){
             Card(modifier = Modifier.size(60.dp),
                 shape = RoundedCornerShape(50)
-            ) {}
+            ) {
+                Box(modifier = Modifier.fillMaxSize().clickable {
+                   homeNavController.navigate(HomeNavObj.ProfileScreen.route)
+                }, contentAlignment = Alignment.Center){}
+            }
             Spacer(modifier = Modifier.width(12.dp))
             Column {
                 Text(text = "Lorem ipsum dolor", fontWeight = FontWeight.SemiBold, fontSize = 18.sp, color = Color.Black)
                 Text(text = "Lorem ipsum", fontSize = 14.sp, modifier = Modifier.padding(top = 2.dp), color = Color.Black)
-                Text(text = "Ganti Kota", color = Color.Blue, modifier = Modifier.padding(top = 2.dp), textDecoration = TextDecoration.Underline)
+                Text(text = "Ganti Kota", color = Color.Blue, modifier = Modifier.padding(top = 2.dp).clickable {
+                    homeNavController.navigate(HomeNavObj.CityScreen.route)
+                }, textDecoration = TextDecoration.Underline)
             }
         }
 
