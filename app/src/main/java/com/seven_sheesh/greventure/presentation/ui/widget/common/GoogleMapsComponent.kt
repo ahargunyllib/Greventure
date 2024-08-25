@@ -43,15 +43,55 @@ fun GoogleMapsComponent(
     uiSettings: MapUiSettings,
     currentLocation: Pair<Double, Double>,
     context: Context,
-    viewModel: MapsViewModel = hiltViewModel()
+    viewModel: MapsViewModel = hiltViewModel(),
+    onClickMarker: (Pair<String, String>) -> Unit = {}
 ) {
-    val count = remember { mutableIntStateOf(0) }
+    // Buat ngetes doang...
+    // Function to generate random coordinates around Universitas Brawijaya
+    fun generateRandomCoordinates(center: LatLng, radius: Double): LatLng {
+        val random = java.util.Random()
+        val latOffset = (random.nextDouble() - 0.5) * radius
+        val lngOffset = (random.nextDouble() - 0.5) * radius
+        return LatLng(center.latitude + latOffset, center.longitude + lngOffset)
+    }
+
+    // Define Universitas Brawijaya's coordinates
+    val ubCoordinates = LatLng(-7.9570, 112.6133)
+
+    // Generate random markers
+    val randomMarkers = List(5) {
+        generateRandomCoordinates(ubCoordinates, 0.01)
+    }
+
     GoogleMap(
         modifier = Modifier.fillMaxSize(),
         cameraPositionState = cameraPositionState,
         properties = properties,
         uiSettings = uiSettings,
     ) {
+        randomMarkers.forEach { latLng ->
+            MarkerInfoWindow(
+                state = MarkerState(position = latLng),
+                icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE),
+                onClick = {
+                    onClickMarker("Random Marker" to "Generated near UB")
+                    false
+                }
+            ) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(24.dp))
+                        .background(Color.Blue)
+                        .padding(vertical = 8.dp, horizontal = 16.dp)
+                ) {
+                    Text("Random Marker", fontWeight = FontWeight.Medium, color = Color.White)
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+            }
+        }
+
         // Bekas Compfest
 //        MarkerInfoWindow(
 //            state = MarkerState(
