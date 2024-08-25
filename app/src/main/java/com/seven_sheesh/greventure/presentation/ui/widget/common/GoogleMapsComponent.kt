@@ -33,6 +33,7 @@ import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.MarkerInfoWindow
 import com.google.maps.android.compose.MarkerState
 import com.seven_sheesh.greventure.R
+import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
 import com.seven_sheesh.greventure.presentation.viewmodel.MapsViewModel
 
 @SuppressLint("UnrememberedMutableState")
@@ -83,10 +84,10 @@ fun GoogleMapsComponent(
                     verticalArrangement = Arrangement.Center,
                     modifier = Modifier
                         .clip(RoundedCornerShape(24.dp))
-                        .background(Color.Blue)
+                        .background(GreventureScheme.Secondary.color)
                         .padding(vertical = 8.dp, horizontal = 16.dp)
                 ) {
-                    Text("Random Marker", fontWeight = FontWeight.Medium, color = Color.White)
+                    Text("Random Marker", fontWeight = FontWeight.Medium, color = GreventureScheme.White.color)
                 }
                 Spacer(modifier = Modifier.height(8.dp))
             }
@@ -122,7 +123,7 @@ fun GoogleMapsComponent(
 //                        )
 //                        .padding(20.dp)
 //                ) {
-//                    Text("Your Location", fontWeight = FontWeight.Bold, color = Color.White)
+//                    Text("Your Location", fontWeight = FontWeight.Bold, color = GreventureScheme.White.color)
 //                }
 //                Spacer(modifier = Modifier.height(8.dp))
 //            }

@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
 import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
 
 @Composable
@@ -58,9 +59,9 @@ fun ProfileBar(
             }
             Spacer(modifier = Modifier.width(12.dp))
             Column {
-                Text(text = "Lorem ipsum dolor", fontWeight = FontWeight.SemiBold, fontSize = 18.sp, color = Color.Black)
-                Text(text = "Lorem ipsum", fontSize = 14.sp, modifier = Modifier.padding(top = 2.dp), color = Color.Black)
-                Text(text = "Ganti Kota", color = Color.Blue, modifier = Modifier.padding(top = 2.dp).clickable {
+                Text(text = "Lorem ipsum dolor", fontWeight = FontWeight.SemiBold, fontSize = 18.sp, color = GreventureScheme.Black.color)
+                Text(text = "Lorem ipsum", fontSize = 14.sp, modifier = Modifier.padding(top = 2.dp), color = GreventureScheme.Black.color)
+                Text(text = "Ganti Kota", color = GreventureScheme.Secondary.color, modifier = Modifier.padding(top = 2.dp).clickable {
                     homeNavController.navigate(HomeNavObj.CityScreen.route)
                 }, textDecoration = TextDecoration.Underline)
             }
@@ -68,8 +69,8 @@ fun ProfileBar(
 
         Card(modifier = Modifier.size(60.dp),
             shape = RoundedCornerShape(50),
-            colors = CardDefaults.cardColors(Color.White),
-            border = BorderStroke(2.dp, Color.LightGray)
+            colors = CardDefaults.cardColors(GreventureScheme.White.color),
+            border = BorderStroke(2.dp, GreventureScheme.SoftGray.color)
         ) {
             Box(modifier = Modifier.fillMaxSize().clickable {
                homeNavController.navigate(HomeNavObj.NotificationScreen.route)

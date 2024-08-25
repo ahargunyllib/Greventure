@@ -45,6 +45,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.font.FontWeight
+import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
 
 @ExperimentalMaterial3Api
 @Composable
@@ -64,7 +65,7 @@ fun SearchBar(
         modifier = modifier
             .padding(16.dp)
             .clip(shape)
-            .background(Color.White)
+            .background(GreventureScheme.White.color)
             .shadow(shadowElevation, shape)
     ) {
         Column(
@@ -84,7 +85,7 @@ fun SearchBar(
                 Column(
                     modifier = Modifier
                         .clip(shape)
-                        .background(Color.White)
+                        .background(GreventureScheme.White.color)
                         .padding(8.dp)
                 ) {
                     content()
@@ -122,7 +123,7 @@ fun SearchBarComponent() {
                     placeholder = { Text("Search") },
                     shape = RoundedCornerShape(50),
                     colors = TextFieldDefaults.textFieldColors(
-                        containerColor = Color.White,
+                        containerColor = GreventureScheme.White.color,
                         focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent
                     ),

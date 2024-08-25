@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
 import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
 
 @Composable
@@ -41,8 +42,8 @@ fun LocationCard(homeNavController: NavController) {
         Card(
             modifier = Modifier.size(48.dp),
             shape = RoundedCornerShape(50),
-            colors = CardDefaults.cardColors(Color.White),
-            border = BorderStroke(2.dp, Color.LightGray)
+            colors = CardDefaults.cardColors(GreventureScheme.White.color),
+            border = BorderStroke(2.dp, GreventureScheme.SoftGray.color)
         ) {
             Box(
                 modifier = Modifier
@@ -57,7 +58,7 @@ fun LocationCard(homeNavController: NavController) {
         }
         Spacer(modifier = Modifier.width(12.dp))
         Column {
-            Text(text = "Lorem Ipsum dolor sit Amet", color = Color.Black)
+            Text(text = "Lorem Ipsum dolor sit Amet", color = GreventureScheme.Black.color)
         }
     }
 }

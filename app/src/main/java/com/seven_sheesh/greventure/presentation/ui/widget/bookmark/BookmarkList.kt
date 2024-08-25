@@ -30,6 +30,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
 import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
 
 @Composable
@@ -45,8 +46,8 @@ fun BookmarkList(){
                 .fillMaxWidth()
                 .height(160.dp),
                 shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(Color.White),
-                border = BorderStroke(2.dp, Color.LightGray)
+                colors = CardDefaults.cardColors(GreventureScheme.White.color),
+                border = BorderStroke(2.dp, GreventureScheme.SoftGray.color)
             ) {
                 Row(modifier = Modifier
                     .fillMaxWidth()
@@ -64,13 +65,13 @@ fun BookmarkList(){
                                 text = "Lorem Ipsum",
                                 fontWeight = FontWeight.SemiBold,
                                 fontSize = 18.sp,
-                                color = Color.Black
+                                color = GreventureScheme.Black.color
                             )
                             Text(
                                 text = "Lorem ipsum Dolor Sit Amet",
                                 fontSize = 14.sp,
                                 modifier = Modifier.padding(top = 4.dp),
-                                color = Color.Black
+                                color = GreventureScheme.Black.color
                             )
                         }
                     }
@@ -78,8 +79,8 @@ fun BookmarkList(){
                     Card(
                         modifier = Modifier.size(48.dp),
                         shape = RoundedCornerShape(50),
-                        colors = CardDefaults.cardColors(Color.White),
-                        border = BorderStroke(2.dp, Color.LightGray)
+                        colors = CardDefaults.cardColors(GreventureScheme.White.color),
+                        border = BorderStroke(2.dp, GreventureScheme.SoftGray.color)
                     ) {
                         Box(modifier = Modifier
                             .fillMaxSize()
@@ -100,8 +101,9 @@ fun BookmarkList(){
                     horizontalArrangement = Arrangement.End,
                     verticalAlignment = Alignment.CenterVertically
                 ){
-                    Button(onClick = { /*TODO*/ }, colors = ButtonDefaults.buttonColors(Color.Blue)) {
-                        Text(text = "Kunjungi", color = Color.White)
+                    Button(onClick = { /*TODO*/ }, colors = ButtonDefaults.buttonColors(
+                        GreventureScheme.Secondary.color)) {
+                        Text(text = "Kunjungi", color = GreventureScheme.White.color)
                     }
                 }
                 Spacer(modifier = Modifier.height(16.dp))

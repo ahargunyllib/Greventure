@@ -12,17 +12,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
 import com.seven_sheesh.greventure.presentation.ui.widget.common.Accordion
 
 @Composable
 fun FAQSection() {
     Column(modifier = Modifier.padding(horizontal = 16.dp)) {
         Spacer(modifier = Modifier.height(32.dp))
-        HorizontalDivider(color = Color.LightGray, thickness = 1.dp)
+        HorizontalDivider(color = GreventureScheme.SoftGray.color, thickness = 1.dp)
         Spacer(modifier = Modifier.height(32.dp))
         Text(
             text = "FAQ",
-            color = Color.Black,
+            color = GreventureScheme.Black.color,
             fontSize = 18.sp,
             fontWeight = FontWeight.SemiBold
         )

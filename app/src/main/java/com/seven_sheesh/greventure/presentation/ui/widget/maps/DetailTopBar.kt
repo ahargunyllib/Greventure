@@ -29,6 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
 import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
 
 @Composable
@@ -51,7 +52,7 @@ fun TopBar(homeNavController: NavController) {
                     modifier = Modifier.clickable {
                         homeNavController.navigate(HomeNavObj.MapsScreen.route)
                     },
-                    tint = Color.Black
+                    tint = GreventureScheme.Black.color
                 )
                 Spacer(modifier = Modifier.width(12.dp))
                 Column {
@@ -59,7 +60,7 @@ fun TopBar(homeNavController: NavController) {
                         text = "Kembali",
                         fontWeight = FontWeight.Medium,
                         fontSize = 18.sp,
-                        color = Color.Black
+                        color = GreventureScheme.Black.color
                     )
                 }
             }
@@ -67,8 +68,8 @@ fun TopBar(homeNavController: NavController) {
             Card(
                 modifier = Modifier.size(48.dp),
                 shape = RoundedCornerShape(50),
-                colors = CardDefaults.cardColors(Color.White),
-                border = BorderStroke(2.dp, Color.LightGray)
+                colors = CardDefaults.cardColors(GreventureScheme.White.color),
+                border = BorderStroke(2.dp, GreventureScheme.SoftGray.color)
             ) {
                 Box(
                     modifier = Modifier

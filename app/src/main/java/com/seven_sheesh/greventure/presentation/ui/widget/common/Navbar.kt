@@ -38,7 +38,7 @@ fun Navbar(
     val currentPage by navbarViewModel.pageState.collectAsState()
 
     BottomAppBar(
-        containerColor = Color.White,
+        containerColor = GreventureScheme.White.color,
         modifier = Modifier.height(96.dp).shadow(32.dp),
         tonalElevation = 32.dp,
     ) {
@@ -93,8 +93,8 @@ fun Navbar(
 
 fun isHighLighted(currentPage: Int, index: Int): Color {
     return if(currentPage == index){
-        GreventureScheme.Primary.color
+        GreventureScheme.Secondary.color
     } else {
-        Color.Black
+        GreventureScheme.Gray.color
     }
 }

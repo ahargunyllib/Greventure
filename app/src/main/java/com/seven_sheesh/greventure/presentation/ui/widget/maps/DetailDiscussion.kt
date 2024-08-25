@@ -11,17 +11,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
 
 @Composable
 fun DiscussionSection() {
     Column(modifier = Modifier.padding(horizontal = 16.dp)) {
         Text(
             text = "Diskusi",
-            color = Color.Black,
+            color = GreventureScheme.Black.color,
             fontSize = 18.sp,
             fontWeight = FontWeight.SemiBold
         )
         Spacer(modifier = Modifier.height(12.dp))
-        Text(text = "OTW Siirr...", color = Color.Black)
+        Text(text = "OTW Siirr...", color = GreventureScheme.Black.color)
     }
 }

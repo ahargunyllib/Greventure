@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
 
 @Composable
 fun HeaderSection() {
@@ -40,7 +41,7 @@ fun HeaderSection() {
             ) {
                 Text(
                     text = "Lorem Ipsum dolor sit Amet",
-                    color = Color.Black,
+                    color = GreventureScheme.Black.color,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.SemiBold
                 )
@@ -52,11 +53,11 @@ fun HeaderSection() {
                         .background(Color.DarkGray),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text(text = "Category", color = Color.White, fontSize = 12.sp)
+                    Text(text = "Category", color = GreventureScheme.White.color, fontSize = 12.sp)
                 }
             }
             Spacer(modifier = Modifier.height(4.dp))
-            Text(text = "Lorem Ipsum dolor sit Amet", color = Color.Black)
+            Text(text = "Lorem Ipsum dolor sit Amet", color = GreventureScheme.Black.color)
         }
     }
 }

@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
 import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
 import com.seven_sheesh.greventure.presentation.ui.widget.common.GoogleMapsComponent
 import com.seven_sheesh.greventure.presentation.viewmodel.MapsViewModel
@@ -48,8 +49,8 @@ fun MapsCard(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ){
-        Text(text = "Lihat Peta", fontSize = 18.sp, color = Color.Black)
-        Text(text = "Lihat", color = Color.Blue, fontSize = 18.sp, modifier = Modifier.clickable {
+        Text(text = "Lihat Peta", fontSize = 18.sp, color = GreventureScheme.Black.color)
+        Text(text = "Lihat", color = GreventureScheme.Secondary.color, fontSize = 18.sp, modifier = Modifier.clickable {
             homeNavController.navigate(HomeNavObj.MapsScreen.route)
         }, textDecoration = TextDecoration.Underline)
     }
@@ -58,8 +59,8 @@ fun MapsCard(
         .fillMaxWidth()
         .height(200.dp)
         .padding(horizontal = 16.dp),
-        colors = CardDefaults.cardColors(Color.White),
-        border = BorderStroke(2.dp, Color.LightGray)
+        colors = CardDefaults.cardColors(GreventureScheme.White.color),
+        border = BorderStroke(2.dp, GreventureScheme.SoftGray.color)
     ) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
             GoogleMapsComponent(

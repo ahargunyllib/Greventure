@@ -26,6 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
 
 @Composable
 @Preview
@@ -37,7 +38,7 @@ fun PopupCard(
         .height(240.dp)
         .shadow(32.dp),
         shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
-        colors = CardDefaults.cardColors(Color.White)
+        colors = CardDefaults.cardColors(GreventureScheme.White.color)
     ) {
         Column(modifier = Modifier
             .fillMaxSize()
@@ -52,7 +53,7 @@ fun PopupCard(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ){
-                    Text(text = "Lorem Ipsum dolor sit Amet", color = Color.Black, fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
+                    Text(text = "Lorem Ipsum dolor sit Amet", color = GreventureScheme.Black.color, fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
                     Box(modifier = Modifier
                         .height(32.dp)
                         .width(72.dp)
@@ -60,20 +61,20 @@ fun PopupCard(
                         .background(Color.DarkGray),
                         contentAlignment = Alignment.Center
                     ){
-                        Text(text = "Category", color = Color.White, fontSize = 12.sp)
+                        Text(text = "Category", color = GreventureScheme.White.color, fontSize = 12.sp)
                     }
                 }
                 Spacer(modifier = Modifier.height(4.dp))
-                Text(text = "Lorem Ipsum dolor sit Amet", color = Color.Black)
+                Text(text = "Lorem Ipsum dolor sit Amet", color = GreventureScheme.Black.color)
             }
             Card(modifier = Modifier
                 .fillMaxWidth()
                 .height(48.dp),
                 shape = RoundedCornerShape(50),
-                colors = CardDefaults.cardColors(Color.Blue)
+                colors = CardDefaults.cardColors(GreventureScheme.Secondary.color)
             ) {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
-                    Text(text = "Selengkapnya", color = Color.White, modifier = Modifier.clickable {
+                    Text(text = "Selengkapnya", color = GreventureScheme.White.color, modifier = Modifier.clickable {
                         onClick()
                     })
                 }
