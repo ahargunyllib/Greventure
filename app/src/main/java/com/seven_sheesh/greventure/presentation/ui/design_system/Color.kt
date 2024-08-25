@@ -7,7 +7,7 @@ import androidx.compose.ui.graphics.Color
 val lightColorScheme = lightColorScheme()
 val darkColorScheme = darkColorScheme()
 
-sealed class GreventureScheme(color: Color){
+sealed class GreventureScheme(val color: Color){
     data object Primary: GreventureScheme(Color(0xFF4DAF76))
     data object PrimaryVariant1: GreventureScheme(Color(0xFFC3E4D1))
     data object PrimaryVariant2: GreventureScheme(Color(0xFF88C9A3))

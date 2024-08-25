@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
 import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
 import com.seven_sheesh.greventure.presentation.viewmodel.NavbarViewModel
 
@@ -92,7 +93,7 @@ fun Navbar(
 
 fun isHighLighted(currentPage: Int, index: Int): Color {
     return if(currentPage == index){
-        Color.Blue
+        GreventureScheme.Primary.color
     } else {
         Color.Black
     }
