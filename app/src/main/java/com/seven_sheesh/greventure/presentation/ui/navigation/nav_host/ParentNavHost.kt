@@ -29,7 +29,9 @@ fun ParentNavHost() {
             composable(
                 route = ParentNavObj.LoginScreen.route,
                 content = {
-                    LoginScreen()
+                    LoginScreen(
+                        parentNavController = parentNavController
+                    )
                 }
             )
 

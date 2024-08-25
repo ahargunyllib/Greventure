@@ -9,10 +9,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.ParentNavObj
 
 @Composable
-fun LoginScreen(modifier: Modifier = Modifier) {
+fun LoginScreen(
+    modifier: Modifier = Modifier,
+    parentNavController: NavController = rememberNavController()
+) {
     Box(
         content = {
             Column (
@@ -20,7 +25,14 @@ fun LoginScreen(modifier: Modifier = Modifier) {
                 verticalArrangement = Arrangement.Center,
                 modifier = Modifier.fillMaxSize(),
                 content = {
-                    Text("Login")
+                    Text("Login Screen")
+                    Button(
+                        onClick = {
+                            parentNavController.navigate(ParentNavObj.HomeNav.route)
+                        }
+                    ){
+                        Text("Login")
+                    }
                 }
             )
         }

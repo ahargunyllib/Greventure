@@ -1,6 +1,5 @@
 package com.seven_sheesh.greventure.presentation.view.maps
 
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -12,22 +11,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.seven_sheesh.greventure.presentation.ui.widget.GoogleMapsComponent
+import com.seven_sheesh.greventure.presentation.ui.widget.common.GoogleMapsComponent
 import com.seven_sheesh.greventure.presentation.viewmodel.MapsViewModel
 import com.seven_sheesh.greventure.presentation.viewmodel.NavbarViewModel
 import com.seven_sheesh.greventure.utils.RequestLocationLooper
-import com.seven_sheesh.greventure.utils.RequestLocationPermission
-import com.seven_sheesh.greventure.utils.getCurrentLocation
-import com.seven_sheesh.greventure.utils.initializeLocationProvider
 
 @Composable
 @Preview
 fun MapsScreen(
     homeNavController: NavController = rememberNavController(),
-    navbarViewModel: NavbarViewModel = hiltViewModel()
+    navbarViewModel: NavbarViewModel = hiltViewModel(),
+    mapsViewModel: MapsViewModel = hiltViewModel()
 ){
     navbarViewModel.setPageState(1)
-    val mapsViewModel = hiltViewModel<MapsViewModel>()
     val context = LocalContext.current
     RequestLocationLooper(context = context, mapsViewModel = mapsViewModel)
 

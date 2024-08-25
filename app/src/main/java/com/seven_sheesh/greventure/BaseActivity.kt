@@ -33,10 +33,7 @@ class BaseActivity : ComponentActivity() {
                             modifier = Modifier
                                 .fillMaxSize()
                                 .background(Color.White),
-                            content = { _ ->
-                                //ParentNavHost()
-                                      HomeNavHost()
-                                      },
+                            content = { _ -> ParentNavHost() },
                         )
                     },
                 )

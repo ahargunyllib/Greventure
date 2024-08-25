@@ -1,4 +1,4 @@
-package com.seven_sheesh.greventure.presentation.ui.widget
+package com.seven_sheesh.greventure.presentation.ui.widget.common
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -35,9 +35,9 @@ fun Navbar(
     val currentPage by navbarViewModel.pageState.collectAsState()
 
     BottomAppBar(
-        containerColor = Color.LightGray,
+        containerColor = Color.White,
         modifier = Modifier.height(96.dp),
-        tonalElevation = 16.dp
+        tonalElevation = 32.dp
     ) {
         Row(
             modifier = Modifier.fillMaxSize(),

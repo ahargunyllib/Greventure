@@ -13,11 +13,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
-import com.seven_sheesh.greventure.presentation.ui.widget.Navbar
+import com.seven_sheesh.greventure.presentation.ui.widget.common.Navbar
 import com.seven_sheesh.greventure.presentation.view.bookmark.BookmarkScreen
 import com.seven_sheesh.greventure.presentation.view.home.HomeScreen
 import com.seven_sheesh.greventure.presentation.view.maps.MapsScreen
 import com.seven_sheesh.greventure.presentation.view.profile.ProfileScreen
+import com.seven_sheesh.greventure.presentation.viewmodel.MapsViewModel
 import com.seven_sheesh.greventure.presentation.viewmodel.NavbarViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -26,6 +27,7 @@ import com.seven_sheesh.greventure.presentation.viewmodel.NavbarViewModel
 fun HomeNavHost(parentNavController: NavController = rememberNavController()){
     val homeNavController = rememberNavController()
     val navbarViewModel   = hiltViewModel<NavbarViewModel>()
+    val mapsViewModel     = hiltViewModel<MapsViewModel>()
 
     Scaffold(
         containerColor = Color.White,
@@ -61,7 +63,8 @@ fun HomeNavHost(parentNavController: NavController = rememberNavController()){
                 content = {
                     MapsScreen(
                         homeNavController = homeNavController,
-                        navbarViewModel = navbarViewModel
+                        navbarViewModel = navbarViewModel,
+                        mapsViewModel = mapsViewModel
                     )
                 }, enterTransition = {
                     return@composable slideIntoContainer(

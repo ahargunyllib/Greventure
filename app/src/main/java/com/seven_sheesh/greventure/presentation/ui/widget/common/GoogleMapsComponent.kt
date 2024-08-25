@@ -1,4 +1,4 @@
-package com.seven_sheesh.greventure.presentation.ui.widget
+package com.seven_sheesh.greventure.presentation.ui.widget.common
 
 import android.annotation.SuppressLint
 import android.content.Context

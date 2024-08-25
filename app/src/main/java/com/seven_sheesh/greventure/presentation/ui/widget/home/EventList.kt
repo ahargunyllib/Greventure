@@ -1,0 +1,67 @@
+package com.seven_sheesh.greventure.presentation.ui.widget.home
+
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+
+@Composable
+@Preview
+fun EventList(){
+    val dummyArray = listOf(0, 1, 2)
+    Spacer(modifier = Modifier.height(32.dp))
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ){
+        Text(text = "Event Terkini di Kotamu", fontSize = 18.sp, color = Color.Black)
+        Text(text = "Lainnya", color = Color.Blue, fontSize = 18.sp)
+    }
+    Spacer(modifier = Modifier.height(16.dp))
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .padding(horizontal = 16.dp)) {
+        dummyArray.forEach {
+            Row(
+                modifier = Modifier,
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                Card(modifier = Modifier.size(48.dp),
+                    shape = RoundedCornerShape(50),
+                    colors = CardDefaults.cardColors(Color.White),
+                    border = BorderStroke(2.dp, Color.LightGray)
+                ) {}
+                Spacer(modifier = Modifier.width(12.dp))
+                Column {
+                    Text(text = "Lorem ipsum dolor", fontWeight = FontWeight.Medium, fontSize = 18.sp, color = Color.Black)
+                    Text(text = "Lorem ipsum", fontSize = 14.sp, modifier = Modifier.padding(top = 2.dp), color = Color.Black)
+                }
+            }
+            Spacer(modifier = Modifier.height(12.dp))
+            HorizontalDivider()
+            Spacer(modifier = Modifier.height(12.dp))
+        }
+    }
+}

@@ -12,20 +12,24 @@ import com.google.maps.android.compose.CameraPositionState
 import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapType
 import com.google.maps.android.compose.MapUiSettings
+import com.seven_sheesh.greventure.R
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MapsViewModel @Inject constructor(): ViewModel() {
+class MapsViewModel @Inject constructor(
+    @ApplicationContext private val context: Context
+): ViewModel() {
     private val _requestPositionMessage = MutableStateFlow("")
     private val _currentPosition = MutableStateFlow(Pair(0.0, 0.0))
     private val _cameraPositionState = MutableStateFlow(
         CameraPositionState(
             position = CameraPosition.fromLatLngZoom(
-                LatLng(_currentPosition.value.first, _currentPosition.value.second), 14f
+                LatLng(_currentPosition.value.first, _currentPosition.value.second), 13f
             )
         )
     )
@@ -34,7 +38,8 @@ class MapsViewModel @Inject constructor(): ViewModel() {
     )
     private val _properties = MutableStateFlow(
         MapProperties(
-            mapType = MapType.NORMAL
+            mapType = MapType.NORMAL,
+            mapStyleOptions = MapStyleOptions.loadRawResourceStyle(context, R.raw.maps)
         )
     )
 
@@ -55,7 +60,7 @@ class MapsViewModel @Inject constructor(): ViewModel() {
             _currentPosition.value = Pair(lat, lng)
             _cameraPositionState.value = CameraPositionState(
                 position = CameraPosition.fromLatLngZoom(
-                    LatLng(lat, lng), 14f
+                    LatLng(lat, lng), 13f
                 )
             )
         }
