@@ -75,11 +75,11 @@ fun TopBar(homeNavController: NavController) {
                     modifier = Modifier
                         .fillMaxSize()
                         .clickable {
-                            homeNavController.navigate(HomeNavObj.NotificationScreen.route)
+
                         },
                     contentAlignment = Alignment.Center
                 ) {
-                    Icon(imageVector = Icons.Default.Bookmark, contentDescription = "Bookmark")
+                    Icon(imageVector = Icons.Default.Bookmark, contentDescription = "Bookmark", tint = GreventureScheme.Black.color)
                 }
             }
         }

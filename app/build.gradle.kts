@@ -115,6 +115,7 @@ dependencies {
     // Coroutines Lifecycle Scopes
     implementation(libs.androidx.lifecycle.runtime.ktx.v283)
     implementation(libs.androidx.lifecycle.runtime.compose)
+
     // LiveData
     implementation(libs.androidx.lifecycle.livedata.ktx)
 

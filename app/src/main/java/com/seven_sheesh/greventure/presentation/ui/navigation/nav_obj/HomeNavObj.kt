@@ -8,6 +8,7 @@ sealed class HomeNavObj(val route: String) {
     data object NewsScreen: HomeNavObj("home-news")
     data object MapsScreen: HomeNavObj("maps")
     data object DetailScreen: HomeNavObj("maps-detail")
+    data object DiscussionScreen: HomeNavObj("maps-discussion")
     data object BookmarkScreen: HomeNavObj("bookmark")
     data object ProfileScreen: HomeNavObj("profile")
 }
