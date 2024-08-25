@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
 import com.seven_sheesh.greventure.presentation.ui.design_system.Theme
 import com.seven_sheesh.greventure.presentation.ui.navigation.nav_host.HomeNavHost
 import com.seven_sheesh.greventure.presentation.ui.navigation.nav_host.ParentNavHost
@@ -32,7 +33,7 @@ class BaseActivity : ComponentActivity() {
                         Scaffold(
                             modifier = Modifier
                                 .fillMaxSize()
-                                .background(Color.White),
+                                .background(GreventureScheme.White.color),
                             content = { _ -> ParentNavHost() },
                         )
                     },

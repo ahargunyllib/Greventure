@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
 import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
 import com.seven_sheesh.greventure.presentation.ui.widget.bookmark.BookmarkList
 import com.seven_sheesh.greventure.presentation.viewmodel.NavbarViewModel
@@ -52,7 +53,7 @@ fun BookmarkScreen(
     navbarViewModel.setPageState(2)
     Box(modifier = Modifier
         .fillMaxSize()
-        .background(Color.White)
+        .background(GreventureScheme.White.color)
         .safeDrawingPadding(),
         contentAlignment = Alignment.Center){
         LazyColumn(modifier = Modifier

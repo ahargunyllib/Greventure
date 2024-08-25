@@ -44,6 +44,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
 import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
 import com.seven_sheesh.greventure.presentation.ui.widget.maps.PopupCard
 
@@ -61,8 +62,8 @@ fun MapsScreen(
     RequestLocationLooper(context = context, mapsViewModel = mapsViewModel)
 
     Scaffold(
-        containerColor = Color.White,
-        contentColor = Color.White,
+        containerColor = GreventureScheme.White.color,
+        contentColor = GreventureScheme.White.color,
         topBar = {
             Column {
                 Spacer(modifier = Modifier.height(16.dp))

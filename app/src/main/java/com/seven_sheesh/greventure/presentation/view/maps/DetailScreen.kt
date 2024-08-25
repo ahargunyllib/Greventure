@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
 import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
 import com.seven_sheesh.greventure.presentation.ui.widget.common.Accordion
 import com.seven_sheesh.greventure.presentation.ui.widget.common.SearchBarComponent
@@ -48,8 +49,8 @@ fun DetailScreen(
 ) {
     navbarViewModel.setPageState(1)
     Scaffold(
-        containerColor = Color.White,
-        contentColor = Color.White,
+        containerColor = GreventureScheme.White.color,
+        contentColor = GreventureScheme.White.color,
         topBar = {
             TopBar(homeNavController)
         },

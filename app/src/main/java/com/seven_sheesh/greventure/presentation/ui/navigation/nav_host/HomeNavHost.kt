@@ -12,6 +12,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
 import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
 import com.seven_sheesh.greventure.presentation.ui.widget.common.Navbar
 import com.seven_sheesh.greventure.presentation.view.bookmark.BookmarkScreen
@@ -35,8 +36,8 @@ fun HomeNavHost(parentNavController: NavController = rememberNavController()){
     val mapsViewModel     = hiltViewModel<MapsViewModel>()
 
     Scaffold(
-        containerColor = Color.White,
-        contentColor = Color.White,
+        containerColor = GreventureScheme.White.color,
+        contentColor = GreventureScheme.White.color,
         bottomBar = {
             Navbar(
                 homeNavController = homeNavController,

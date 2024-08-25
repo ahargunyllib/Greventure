@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
 import com.seven_sheesh.greventure.presentation.ui.widget.common.GoogleMapsComponent
 import com.seven_sheesh.greventure.presentation.ui.widget.home.EventList
 import com.seven_sheesh.greventure.presentation.ui.widget.home.MapsCard
@@ -57,7 +58,7 @@ fun HomeScreen(
 
     Box(modifier = Modifier
         .fillMaxSize()
-        .background(Color.White)
+        .background(GreventureScheme.White.color)
         .safeDrawingPadding(),
         contentAlignment = Alignment.Center){
         LazyColumn(modifier = Modifier
