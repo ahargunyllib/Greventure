@@ -18,4 +18,39 @@ sealed class GreventureScheme(val color: Color){
     data object SecondaryVariant1: GreventureScheme(Color(0xFFB7D4D4))
     data object SecondaryVariant2: GreventureScheme(Color(0xFF3055A0))
     data object SecondaryVariant3: GreventureScheme(Color(0xFF45BFBE))
+
+    data object Success: GreventureScheme(Color(0xFF00C566))
+    data object Error: GreventureScheme(Color(0xFFFF4747))
+    data object Warning: GreventureScheme(Color(0xFFECB826))
+
+    data object White: GreventureScheme(Color(0xFFFAFAFA))
+    data object LineDark: GreventureScheme(Color(0xFF484848))
+    data object SoftGray: GreventureScheme(Color(0xFFE3E7EC))
+    data object Black: GreventureScheme(Color(0xFF111111))
+    data object Gray: GreventureScheme(Color(0xFF6C6C6C))
 }
+
+// Overriding default Color values with GreventureScheme colors
+val Color.Companion.White: Color
+    get() = GreventureScheme.White.color
+
+val Color.Companion.Black: Color
+    get() = GreventureScheme.Black.color
+
+val Color.Companion.Red: Color
+    get() = GreventureScheme.Error.color
+
+val Color.Companion.Blue: Color
+    get() = GreventureScheme.Secondary.color
+
+val Color.Companion.Green: Color
+    get() = GreventureScheme.Success.color
+
+val Color.Companion.Gray: Color
+    get() = GreventureScheme.Gray.color
+
+val Color.Companion.LigtGray: Color
+    get() = GreventureScheme.SoftGray.color
+
+val Color.Companion.Yellow: Color
+    get() = GreventureScheme.Warning.color
