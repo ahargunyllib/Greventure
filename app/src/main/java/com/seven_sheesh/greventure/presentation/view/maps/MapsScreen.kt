@@ -44,6 +44,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
 import com.seven_sheesh.greventure.presentation.ui.widget.maps.PopupCard
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -77,7 +78,7 @@ fun MapsScreen(
             ) {
                 if (isMarkerClicked.value) {
                     PopupCard(onClick = {
-                        isMarkerClicked.value = false
+                        homeNavController.navigate(HomeNavObj.DetailScreen.route)
                     })
                     Spacer(modifier = Modifier.height(96.dp))
                 }

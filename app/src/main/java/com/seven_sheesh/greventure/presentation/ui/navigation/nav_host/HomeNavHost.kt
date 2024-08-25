@@ -20,6 +20,7 @@ import com.seven_sheesh.greventure.presentation.view.home.EventScreen
 import com.seven_sheesh.greventure.presentation.view.home.HomeScreen
 import com.seven_sheesh.greventure.presentation.view.home.NewsScreen
 import com.seven_sheesh.greventure.presentation.view.home.NotificationScreen
+import com.seven_sheesh.greventure.presentation.view.maps.DetailScreen
 import com.seven_sheesh.greventure.presentation.view.maps.MapsScreen
 import com.seven_sheesh.greventure.presentation.view.profile.ProfileScreen
 import com.seven_sheesh.greventure.presentation.viewmodel.MapsViewModel
@@ -138,6 +139,25 @@ fun HomeNavHost(parentNavController: NavController = rememberNavController()){
                 route = HomeNavObj.MapsScreen.route,
                 content = {
                     MapsScreen(
+                        homeNavController = homeNavController,
+                        navbarViewModel = navbarViewModel,
+                        mapsViewModel = mapsViewModel
+                    )
+                }, enterTransition = {
+                    return@composable slideIntoContainer(
+                        AnimatedContentTransitionScope.SlideDirection.Up, tween(700)
+                    )
+                }, popExitTransition = {
+                    return@composable slideOutOfContainer(
+                        AnimatedContentTransitionScope.SlideDirection.Down, tween(700)
+                    )
+                }
+            )
+
+            composable(
+                route = HomeNavObj.DetailScreen.route,
+                content = {
+                    DetailScreen(
                         homeNavController = homeNavController,
                         navbarViewModel = navbarViewModel,
                         mapsViewModel = mapsViewModel
