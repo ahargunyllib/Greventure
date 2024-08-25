@@ -64,10 +64,10 @@ fun HomeScreen(
             .fillMaxSize()
             .padding(horizontal = 16.dp)) {
             item{
-                ProfileBar()
-                MapsCard()
-                EventList()
-                NewsList()
+                ProfileBar(homeNavController)
+                MapsCard(homeNavController)
+                EventList(homeNavController)
+                NewsList(homeNavController)
             }
 
             item {

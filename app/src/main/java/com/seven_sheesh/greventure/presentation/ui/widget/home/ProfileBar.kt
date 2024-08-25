@@ -1,6 +1,7 @@
 package com.seven_sheesh.greventure.presentation.ui.widget.home
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,13 +26,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
 
 @Composable
 @Preview
-fun ProfileBar(){
+fun ProfileBar(
+    homeNavController: NavController = rememberNavController(),
+){
     Spacer(modifier = Modifier.height(16.dp))
     Row(modifier = Modifier
         .fillMaxWidth()
@@ -49,7 +56,7 @@ fun ProfileBar(){
             Column {
                 Text(text = "Lorem ipsum dolor", fontWeight = FontWeight.SemiBold, fontSize = 18.sp, color = Color.Black)
                 Text(text = "Lorem ipsum", fontSize = 14.sp, modifier = Modifier.padding(top = 2.dp), color = Color.Black)
-                Text(text = "Ganti Kota", color = Color.Blue, modifier = Modifier.padding(top = 2.dp))
+                Text(text = "Ganti Kota", color = Color.Blue, modifier = Modifier.padding(top = 2.dp), textDecoration = TextDecoration.Underline)
             }
         }
 
@@ -58,7 +65,9 @@ fun ProfileBar(){
             colors = CardDefaults.cardColors(Color.White),
             border = BorderStroke(2.dp, Color.LightGray)
         ) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
+            Box(modifier = Modifier.fillMaxSize().clickable {
+               homeNavController.navigate(HomeNavObj.NotificationScreen.route)
+            }, contentAlignment = Alignment.Center){
                 Icon(imageVector = Icons.Default.Notifications, contentDescription = "Notification")
             }
         }

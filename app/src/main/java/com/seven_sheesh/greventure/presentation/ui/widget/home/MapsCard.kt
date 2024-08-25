@@ -1,6 +1,7 @@
 package com.seven_sheesh.greventure.presentation.ui.widget.home
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -18,17 +19,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
 import com.seven_sheesh.greventure.presentation.ui.widget.common.GoogleMapsComponent
 import com.seven_sheesh.greventure.presentation.viewmodel.MapsViewModel
 import com.seven_sheesh.greventure.utils.RequestLocationLooper
 
 @Composable
 @Preview
-fun MapsCard(mapsViewModel: MapsViewModel = hiltViewModel()){
+fun MapsCard(
+    homeNavController: NavController = rememberNavController(),
+    mapsViewModel: MapsViewModel = hiltViewModel()
+){
     val context = LocalContext.current
     RequestLocationLooper(context = context, mapsViewModel = mapsViewModel)
 
@@ -41,7 +49,9 @@ fun MapsCard(mapsViewModel: MapsViewModel = hiltViewModel()){
         verticalAlignment = Alignment.CenterVertically
     ){
         Text(text = "Lihat Peta", fontSize = 18.sp, color = Color.Black)
-        Text(text = "Lihat", color = Color.Blue, fontSize = 18.sp)
+        Text(text = "Lihat", color = Color.Blue, fontSize = 18.sp, modifier = Modifier.clickable {
+            homeNavController.navigate(HomeNavObj.MapsScreen.route)
+        }, textDecoration = TextDecoration.Underline)
     }
     Spacer(modifier = Modifier.height(16.dp))
     Card(modifier = Modifier

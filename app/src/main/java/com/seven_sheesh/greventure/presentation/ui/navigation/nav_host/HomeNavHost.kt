@@ -15,7 +15,10 @@ import androidx.navigation.compose.rememberNavController
 import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
 import com.seven_sheesh.greventure.presentation.ui.widget.common.Navbar
 import com.seven_sheesh.greventure.presentation.view.bookmark.BookmarkScreen
+import com.seven_sheesh.greventure.presentation.view.home.EventScreen
 import com.seven_sheesh.greventure.presentation.view.home.HomeScreen
+import com.seven_sheesh.greventure.presentation.view.home.NewsScreen
+import com.seven_sheesh.greventure.presentation.view.home.NotificationScreen
 import com.seven_sheesh.greventure.presentation.view.maps.MapsScreen
 import com.seven_sheesh.greventure.presentation.view.profile.ProfileScreen
 import com.seven_sheesh.greventure.presentation.viewmodel.MapsViewModel
@@ -44,6 +47,60 @@ fun HomeNavHost(parentNavController: NavController = rememberNavController()){
                 route = HomeNavObj.HomeScreen.route,
                 content = {
                     HomeScreen(
+                        homeNavController = homeNavController,
+                        navbarViewModel = navbarViewModel
+                    )
+                }, enterTransition = {
+                    return@composable slideIntoContainer(
+                        AnimatedContentTransitionScope.SlideDirection.Up, tween(700)
+                    )
+                }, popExitTransition = {
+                    return@composable slideOutOfContainer(
+                        AnimatedContentTransitionScope.SlideDirection.Down, tween(700)
+                    )
+                }
+            )
+
+            composable(
+                route = HomeNavObj.NotificationScreen.route,
+                content = {
+                    NotificationScreen(
+                        homeNavController = homeNavController,
+                        navbarViewModel = navbarViewModel
+                    )
+                }, enterTransition = {
+                    return@composable slideIntoContainer(
+                        AnimatedContentTransitionScope.SlideDirection.Up, tween(700)
+                    )
+                }, popExitTransition = {
+                    return@composable slideOutOfContainer(
+                        AnimatedContentTransitionScope.SlideDirection.Down, tween(700)
+                    )
+                }
+            )
+
+            composable(
+                route = HomeNavObj.EventScreen.route,
+                content = {
+                    EventScreen(
+                        homeNavController = homeNavController,
+                        navbarViewModel = navbarViewModel
+                    )
+                }, enterTransition = {
+                    return@composable slideIntoContainer(
+                        AnimatedContentTransitionScope.SlideDirection.Up, tween(700)
+                    )
+                }, popExitTransition = {
+                    return@composable slideOutOfContainer(
+                        AnimatedContentTransitionScope.SlideDirection.Down, tween(700)
+                    )
+                }
+            )
+
+            composable(
+                route = HomeNavObj.NewsScreen.route,
+                content = {
+                    NewsScreen(
                         homeNavController = homeNavController,
                         navbarViewModel = navbarViewModel
                     )

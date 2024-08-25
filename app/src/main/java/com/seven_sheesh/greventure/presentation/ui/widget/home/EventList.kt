@@ -1,6 +1,7 @@
 package com.seven_sheesh.greventure.presentation.ui.widget.home
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,13 +21,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
 
 @Composable
 @Preview
-fun EventList(){
+fun EventList(
+    homeNavController: NavController = rememberNavController(),
+){
     val dummyArray = listOf(0, 1, 2)
     Spacer(modifier = Modifier.height(32.dp))
     Row(
@@ -37,7 +44,9 @@ fun EventList(){
         verticalAlignment = Alignment.CenterVertically
     ){
         Text(text = "Event Terkini di Kotamu", fontSize = 18.sp, color = Color.Black)
-        Text(text = "Lainnya", color = Color.Blue, fontSize = 18.sp)
+        Text(text = "Lainnya", color = Color.Blue, fontSize = 18.sp, modifier = Modifier.clickable {
+            homeNavController.navigate(HomeNavObj.EventScreen.route)
+        }, textDecoration = TextDecoration.Underline)
     }
     Spacer(modifier = Modifier.height(16.dp))
     Column(modifier = Modifier
