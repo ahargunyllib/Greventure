@@ -66,7 +66,7 @@ fun HomeScreen(
         ) {
             item{
                 ProfileBar(homeNavController)
-                Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)) {
+                Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp)) {
                     MapsCard(homeNavController)
                     EventList(homeNavController)
                     NewsList(homeNavController)

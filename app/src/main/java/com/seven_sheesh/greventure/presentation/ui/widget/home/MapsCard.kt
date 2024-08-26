@@ -4,17 +4,25 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.ArrowForwardIos
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -43,25 +51,22 @@ fun MapsCard(
     mapsViewModel: MapsViewModel = hiltViewModel()
 ){
     val context = LocalContext.current
+    val dummyArray = listOf(0, 1, 2)
     RequestLocationLooper(context = context, mapsViewModel = mapsViewModel)
 
     Row(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+            .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ){
         Text(text = "Di Sekitarmu", fontSize = 18.sp, color = GreventureScheme.Black.color, fontWeight = FontWeight.SemiBold)
-//        Text(text = "Lihat", color = GreventureScheme.Secondary.color, fontSize = 18.sp, modifier = Modifier.clickable {
-//            homeNavController.navigate(HomeNavObj.MapsScreen.route)
-//        }, textDecoration = TextDecoration.Underline)
     }
     Spacer(modifier = Modifier.height(16.dp))
     Card(modifier = Modifier
         .fillMaxWidth()
         .height(180.dp)
-        .padding(horizontal = 16.dp),
+        .padding(),
         colors = CardDefaults.cardColors(GreventureScheme.White.color),
         border = BorderStroke(2.dp, GreventureScheme.SoftGray.color)
     ) {
@@ -77,10 +82,50 @@ fun MapsCard(
             Box(modifier = Modifier
                 .fillMaxSize()
                 .padding(12.dp), contentAlignment = Alignment.TopEnd){
-                Button(onClick = { /*TODO*/ }, colors = ButtonDefaults.buttonColors(GreventureScheme.Primary.color), shape = RoundedCornerShape(16.dp)) {
+                Button(onClick = {
+                    homeNavController.navigate(HomeNavObj.MapsScreen.route)
+                }, colors = ButtonDefaults.buttonColors(GreventureScheme.Primary.color), shape = RoundedCornerShape(16.dp)) {
                     Text(text = "Buka Peta")
                 }
             }
         }
+    }
+    Spacer(modifier = Modifier.height(32.dp))
+    dummyArray.forEach {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { },
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ){
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Card(modifier = Modifier.size(48.dp),
+                    shape = RoundedCornerShape(50),
+                    colors = CardDefaults.cardColors(GreventureScheme.White.color),
+                    border = BorderStroke(2.dp, GreventureScheme.SoftGray.color)
+                ) {}
+                Spacer(modifier = Modifier.width(12.dp))
+                Column {
+                    Text(text = "Lorem ipsum dolor", fontWeight = FontWeight.Medium, fontSize = 16.sp, color = GreventureScheme.Black.color)
+                    Text(text = "Lorem ipsum", fontSize = 12.sp, modifier = Modifier.padding(top = 2.dp), color = GreventureScheme.Black.color)
+                }
+            }
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ){
+                Text(text = "300 m", fontSize = 12.sp, modifier = Modifier.padding(top = 2.dp), color = GreventureScheme.Black.color)
+                Spacer(modifier = Modifier.width(4.dp))
+                Icon(imageVector = Icons.Default.ArrowForwardIos, contentDescription = "Arrow", tint = GreventureScheme.Black.color)
+            }
+        }
+        Spacer(modifier = Modifier.height(12.dp))
+        HorizontalDivider()
+        Spacer(modifier = Modifier.height(12.dp))
     }
 }

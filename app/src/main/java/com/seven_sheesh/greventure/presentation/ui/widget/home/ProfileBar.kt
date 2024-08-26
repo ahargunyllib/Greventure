@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.outlined.LocationOn
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -42,7 +43,9 @@ import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
 fun ProfileBar(
     homeNavController: NavController = rememberNavController(),
 ){
-    Column(modifier = Modifier.fillMaxWidth().background(GreventureScheme.White.color)) {
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .background(GreventureScheme.White.color)) {
         Row(modifier = Modifier
             .fillMaxWidth()
             .height(120.dp)
@@ -124,12 +127,17 @@ fun ProfileBar(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp)
+                .padding(horizontal = 24.dp)
                 .clickable { },
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ){
-            Text(text = "Malang, Jawa Timur", fontSize = 16.sp, color = GreventureScheme.Black.color)
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(imageVector = Icons.Outlined.LocationOn, contentDescription = "location", tint = GreventureScheme.Black.color, modifier = Modifier.size(20.dp))
+                Spacer(modifier = Modifier.width(4.dp))
+                Text(text = "Malang, Jawa Timur", fontSize = 16.sp, color = GreventureScheme.Black.color)
+            }
+
             Text(text = "Ganti Kota", color = GreventureScheme.Primary.color, fontSize = 16.sp, modifier = Modifier.clickable {
                 homeNavController.navigate(HomeNavObj.CityScreen.route)
             }, textDecoration = TextDecoration.Underline)
