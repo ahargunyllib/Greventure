@@ -1,9 +1,21 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
     id("org.jetbrains.kotlin.plugin.serialization") version "2.0.20"
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+}
+
+val properties = Properties()
+val localPropertiesFile = project.rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    FileInputStream(localPropertiesFile).use { inputStream ->
+        properties.load(inputStream)
+    }
 }
 
 android {
@@ -18,6 +30,8 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        manifestPlaceholders["googleMapsApiKey"] = properties.getProperty("MAPS_API_KEY")
     }
 
     buildTypes {
@@ -81,6 +95,15 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.fragment)
     implementation(libs.androidx.hilt.navigation.compose)
 
+    // Google Maps
+    implementation(libs.maps.compose)
+    implementation(libs.play.services.location)
+    implementation(libs.maps.compose.v290)
+    implementation(libs.play.services.maps)
+
+    // Accompanist
+    implementation(libs.accompanist.permissions)
+
     //Room
     implementation(libs.androidx.room.runtime)
     kapt(libs.androidx.room.compiler)
@@ -93,6 +116,7 @@ dependencies {
     // Coroutines Lifecycle Scopes
     implementation(libs.androidx.lifecycle.runtime.ktx.v283)
     implementation(libs.androidx.lifecycle.runtime.compose)
+
     // LiveData
     implementation(libs.androidx.lifecycle.livedata.ktx)
 

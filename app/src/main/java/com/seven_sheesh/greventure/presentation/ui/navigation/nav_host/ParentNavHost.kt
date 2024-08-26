@@ -1,5 +1,7 @@
 package com.seven_sheesh.greventure.presentation.ui.navigation.nav_host
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
@@ -10,6 +12,7 @@ import com.seven_sheesh.greventure.presentation.view.auth.splash_screen.LoginScr
 import com.seven_sheesh.greventure.presentation.view.auth.splash_screen.SignInScreen
 import com.seven_sheesh.greventure.presentation.view.auth.splash_screen.SplashScreen0
 
+@RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 @Composable
 fun ParentNavHost() {
     val parentNavController = rememberNavController()
