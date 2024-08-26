@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.ParentNavObj
 import com.seven_sheesh.greventure.presentation.view.auth.splash_screen.LoginScreen
+import com.seven_sheesh.greventure.presentation.view.auth.splash_screen.SignInScreen
 import com.seven_sheesh.greventure.presentation.view.auth.splash_screen.SplashScreen0
 
 @Composable
@@ -29,7 +30,9 @@ fun ParentNavHost() {
             composable(
                 route = ParentNavObj.LoginScreen.route,
                 content = {
-                    LoginScreen()
+                    SignInScreen(
+                        navController = parentNavController
+                    )
                 }
             )
         },

@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
+    id("org.jetbrains.kotlin.plugin.serialization") version "2.0.20"
 }
 
 android {
@@ -112,6 +113,25 @@ dependencies {
 
     // Icon Extended
     implementation(libs.androidx.material.icons.extended.android)
+
+    // Supabase
+    implementation("io.github.jan-tennert.supabase:postgrest-kt:2.6.0")
+    implementation("io.github.jan-tennert.supabase:storage-kt:2.6.0")
+    implementation("io.github.jan-tennert.supabase:gotrue-kt:2.6.0")
+    implementation("io.github.jan-tennert.supabase:compose-auth:2.6.0")
+    implementation("io.github.jan-tennert.supabase:compose-auth-ui:2.6.0")
+    implementation("io.ktor:ktor-client-android:2.3.12")
+    implementation("io.ktor:ktor-client-core:2.3.12")
+    implementation("io.ktor:ktor-utils:2.3.12")
+    implementation("io.ktor:ktor-client-cio:2.3.12")
+
+    implementation("androidx.credentials:credentials:1.2.2")
+    implementation ("com.google.android.libraries.identity.googleid:googleid:1.1.1")
+
+    // optional - needed for credentials support from play services, for devices running
+    // Android 13 and below.
+    //    implementation("androidx.credentials:credentials-play-services-auth:<latest version>")
+
 }
 
 kapt {

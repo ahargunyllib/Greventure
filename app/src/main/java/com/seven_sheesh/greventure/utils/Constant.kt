@@ -1,0 +1,6 @@
+package com.seven_sheesh.greventure.utils
+
+const val SUPABASE_URL = "https://csjzppimbihiqokacjco.supabase.co"
+const val SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNzanpwcGltYmloaXFva2FjamNvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjQ0ODU1MzAsImV4cCI6MjA0MDA2MTUzMH0.jW23V3Dgy6P6fg6Kz9_Wf0gKu4FSZ2zcqd4fhhBqeF4"
+const val ANDROID_GOOGLE_CLIENT_ID = "225015109283-2f38bhgsbp3r9svgrt1hean0dauenf7u.apps.googleusercontent.com"
+const val WEB_GOOGLE_CLIENT_ID = "225015109283-5p8em561uvckvl263qk24becokvdockv.apps.googleusercontent.com"
