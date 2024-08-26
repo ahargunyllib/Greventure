@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.ParentNavObj
-import com.seven_sheesh.greventure.presentation.ui.widget.GoogleSignInButton
+import com.seven_sheesh.greventure.presentation.ui.widget.common.GoogleSignInButton
 import com.seven_sheesh.greventure.presentation.viewmodel.SignInViewModel
 import io.github.jan.supabase.compose.auth.ui.annotations.AuthUiExperimental
 

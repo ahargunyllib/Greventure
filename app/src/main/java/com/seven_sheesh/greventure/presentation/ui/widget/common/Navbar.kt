@@ -110,7 +110,7 @@ fun Navbar(
             }, modifier = Modifier.size(64.dp)) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Icon(imageVector = if(isCurrentPage(currentPage, 3)) Icons.Default.Person else Icons.Outlined.Person, contentDescription = HomeNavObj.ProfileScreen.route, tint = isHighLighted(currentPage, 3), modifier = Modifier.size(28.dp))
-                    Text(text = "Profile", color = isHighLighted(currentPage, 1), fontSize = 10.sp)
+                    Text(text = "Profile", color = isHighLighted(currentPage, 3), fontSize = 10.sp)
                 }
             }
         }
