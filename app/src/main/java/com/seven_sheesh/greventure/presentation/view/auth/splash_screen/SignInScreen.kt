@@ -35,6 +35,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.ParentNavObj
 import com.seven_sheesh.greventure.presentation.ui.widget.GoogleSignInButton
 import com.seven_sheesh.greventure.presentation.viewmodel.SignInViewModel
 import io.github.jan.supabase.compose.auth.ui.ProviderButtonContent
@@ -57,6 +58,9 @@ fun SignInScreen(
                 .padding(paddingValues)
         ) {
             GoogleSignInButton()
+            Button(onClick = { navController.navigate(ParentNavObj.HomeNav.route) }) {
+                Text(text = "Skip for now")
+            }
         }
     }
 }

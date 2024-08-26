@@ -63,12 +63,14 @@ fun HomeScreen(
         contentAlignment = Alignment.Center){
         LazyColumn(modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 16.dp)) {
+        ) {
             item{
                 ProfileBar(homeNavController)
-                MapsCard(homeNavController)
-                EventList(homeNavController)
-                NewsList(homeNavController)
+                Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)) {
+                    MapsCard(homeNavController)
+                    EventList(homeNavController)
+                    NewsList(homeNavController)
+                }
             }
 
             item {
