@@ -11,4 +11,5 @@ sealed class HomeNavObj(val route: String) {
     data object DiscussionScreen: HomeNavObj("maps-discussion")
     data object BookmarkScreen: HomeNavObj("bookmark")
     data object ProfileScreen: HomeNavObj("profile")
+    data object EditProfileScreen: HomeNavObj("profile-edit")
 }

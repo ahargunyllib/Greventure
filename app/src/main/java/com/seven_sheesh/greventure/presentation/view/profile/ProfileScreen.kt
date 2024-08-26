@@ -109,7 +109,9 @@ fun ProfileScreen(
                     ProfileItem(
                         icon = Icons.Default.Person,
                         title = "Edit Profil"
-                    ){}
+                    ){
+                        homeNavController.navigate(HomeNavObj.EditProfileScreen.route)
+                    }
                     Spacer(modifier = Modifier.height(16.dp))
                     HorizontalDivider()
                     ProfileItem(

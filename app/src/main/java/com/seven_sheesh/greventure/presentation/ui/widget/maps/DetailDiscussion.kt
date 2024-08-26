@@ -23,6 +23,10 @@ fun DiscussionSection() {
             fontWeight = FontWeight.SemiBold
         )
         Spacer(modifier = Modifier.height(12.dp))
-        Text(text = "OTW Siirr...", color = GreventureScheme.Black.color)
+        ChatMessage(message = "Lorem ipsum dolor sit amet,", isUser = false, isReply = false)
+        ChatMessage(message = "Reply to above message,", isUser = false, isReply = true)
+        ChatMessage(message = "Another message from the user,", isUser = true, isReply = false)
+        ChatMessage(message = "Another reply,", isUser = false, isReply = true)
+        ChatInput()
     }
 }

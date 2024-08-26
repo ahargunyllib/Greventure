@@ -73,10 +73,10 @@ fun PopupCard(
                 shape = RoundedCornerShape(50),
                 colors = CardDefaults.cardColors(GreventureScheme.Secondary.color)
             ) {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
-                    Text(text = "Selengkapnya", color = GreventureScheme.White.color, modifier = Modifier.clickable {
-                        onClick()
-                    })
+                Box(modifier = Modifier.fillMaxSize().clickable {
+                    onClick()
+                }, contentAlignment = Alignment.Center){
+                    Text(text = "Selengkapnya", color = GreventureScheme.White.color, modifier = Modifier)
                 }
             }
         }

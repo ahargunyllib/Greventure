@@ -24,6 +24,7 @@ import com.seven_sheesh.greventure.presentation.view.home.NotificationScreen
 import com.seven_sheesh.greventure.presentation.view.maps.DetailScreen
 import com.seven_sheesh.greventure.presentation.view.maps.DiscussionScreen
 import com.seven_sheesh.greventure.presentation.view.maps.MapsScreen
+import com.seven_sheesh.greventure.presentation.view.profile.EditProfileScreen
 import com.seven_sheesh.greventure.presentation.view.profile.ProfileScreen
 import com.seven_sheesh.greventure.presentation.viewmodel.MapsViewModel
 import com.seven_sheesh.greventure.presentation.viewmodel.NavbarViewModel
@@ -179,9 +180,9 @@ fun HomeNavHost(parentNavController: NavController = rememberNavController()){
                 route = HomeNavObj.DiscussionScreen.route,
                 content = {
                     DiscussionScreen(
-                        homeNavController = homeNavController,
-                        navbarViewModel = navbarViewModel,
-                        mapsViewModel = mapsViewModel
+//                        homeNavController = homeNavController,
+//                        navbarViewModel = navbarViewModel,
+//                        mapsViewModel = mapsViewModel
                     )
                 }, enterTransition = {
                     return@composable slideIntoContainer(
@@ -216,6 +217,24 @@ fun HomeNavHost(parentNavController: NavController = rememberNavController()){
                 route = HomeNavObj.ProfileScreen.route,
                 content = {
                     ProfileScreen(
+                        homeNavController = homeNavController,
+                        navbarViewModel = navbarViewModel
+                    )
+                }, enterTransition = {
+                    return@composable slideIntoContainer(
+                        AnimatedContentTransitionScope.SlideDirection.Up, tween(700)
+                    )
+                }, popExitTransition = {
+                    return@composable slideOutOfContainer(
+                        AnimatedContentTransitionScope.SlideDirection.Down, tween(700)
+                    )
+                }
+            )
+
+            composable(
+                route = HomeNavObj.EditProfileScreen.route,
+                content = {
+                    EditProfileScreen(
                         homeNavController = homeNavController,
                         navbarViewModel = navbarViewModel
                     )
