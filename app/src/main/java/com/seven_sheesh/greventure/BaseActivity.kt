@@ -42,3 +42,5 @@ class BaseActivity : ComponentActivity() {
         )
     }
 }
+
+// test
