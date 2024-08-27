@@ -1,34 +1,39 @@
 package com.seven_sheesh.greventure.domain.model
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import java.math.BigDecimal
 
+@Serializable
 data class Bubble(
-    val id: String,
-    val userId: String,
-    val title: String,
-    val description: String,
-    val type: BubbleType,
-    val eventType: EventType? = null,
-    val latitude: Double,
-    val longitude: Double,
-    val startTime: String,
-    val duration: String,
-    val phoneNumber: String,
-    val createdAt: String? = null,
-    val updatedAt: String? = null
+    @SerialName("id") val id: String,
+    @SerialName("user_id") val userId: String,
+    @SerialName("title") val title: String,
+    @SerialName("description") val description: String,
+    @SerialName("type") val type: BubbleType,
+    @SerialName("event_type") val eventType: EventType? = null,
+    @SerialName("latitude") val latitude: Double,
+    @SerialName("longitude") val longitude: Double,
+    @SerialName("start_time") val startTime: String,
+    @SerialName("duration") val duration: String,
+    @SerialName("phone_number") val phoneNumber: String,
+    @SerialName("created_at") val createdAt: String? = null,
+    @SerialName("updated_at") val updatedAt: String? = null
 )
 
+@Serializable
 data class BubblePhoto(
-    val id: Int,
-    val bubbleId: String,
-    val url: String,
-    val createdAt: String? = null
+    @SerialName("id") val id: Int,
+    @SerialName("bubble_id") val bubbleId: String,
+    @SerialName("url") val url: String,
+    @SerialName("created_at") val createdAt: String? = null
 )
 
+@Serializable
 data class BubbleSocialMedia(
-    val id: Int,
-    val bubbleId: String,
-    val content: String,
-    val type: SocialMedia,
-    val createdAt: String? = null
+    @SerialName("id") val id: Int,
+    @SerialName("bubble_id") val bubbleId: String,
+    @SerialName("content") val content: String,
+    @SerialName("type") val type: SocialMedia,
+    @SerialName("created_at") val createdAt: String? = null
 )

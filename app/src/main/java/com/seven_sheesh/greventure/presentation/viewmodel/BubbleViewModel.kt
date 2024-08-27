@@ -10,7 +10,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class BubbleListViewModel @Inject constructor(private val bubbleRepository: BubbleRepositoryImpl) : ViewModel() {
+class BubbleViewModel @Inject constructor(private val bubbleRepository: BubbleRepositoryImpl) : ViewModel() {
 
     private val _bubbleListState = MutableStateFlow<Pair<String, List<Bubble>>>(Pair("Loading...", emptyList()))
     val bubbleListState: StateFlow<Pair<String, List<Bubble>>> get() = _bubbleListState

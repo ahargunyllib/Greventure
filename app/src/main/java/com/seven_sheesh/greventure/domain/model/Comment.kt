@@ -1,9 +1,13 @@
 package com.seven_sheesh.greventure.domain.model
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Comment(
-    val id: String,
-    val threadId: String? = null,
-    val userId: String? = null,
-    val content: String,
-    val createdAt: String? = null
+    @SerialName("id") val id: String,
+    @SerialName("thread_id") val threadId: String? = null,
+    @SerialName("user_id") val userId: String? = null,
+    @SerialName("content") val content: String,
+    @SerialName("created_at") val createdAt: String? = null
 )
