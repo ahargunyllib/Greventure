@@ -1,20 +1,21 @@
 package com.seven_sheesh.greventure.data.repository
 
-import com.seven_sheesh.greventure.data.remote.SupabaseClientProvider
 import com.seven_sheesh.greventure.domain.model.Bubble
 import com.seven_sheesh.greventure.domain.repository.BubbleRepository
 import io.github.jan.supabase.SupabaseClient
+import io.github.jan.supabase.postgrest.Postgrest
 import io.github.jan.supabase.postgrest.postgrest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.Dispatchers
+import javax.inject.Inject
 
-class BubbleRepositoryImpl(private val supabaseClientProvider: SupabaseClientProvider) : BubbleRepository {
+class BubbleRepositoryImpl @Inject constructor(private val supabaseClientProvider: Postgrest) : BubbleRepository {
     override fun getAllBubbles(): Flow<Pair<String, List<Bubble>>> {
         return flow {
             emit(Pair("Loading...", emptyList<Bubble>()))
             try {
-                val bubblesResponse = supabaseClientProvider.getClient().postgrest.from("bubbles").select().decodeList<Bubble>()
+                val bubblesResponse = supabaseClientProvider.from("bubbles").select().decodeList<Bubble>()
                 val bubbles = bubblesResponse ?: emptyList<Bubble>()
                 emit(Pair("Successfully fetched bubbles", bubbles))
             } catch (e: Exception) {
@@ -27,7 +28,7 @@ class BubbleRepositoryImpl(private val supabaseClientProvider: SupabaseClientPro
         return flow {
             emit(Pair("Loading...", null))
             try {
-                val bubbleResponse = supabaseClientProvider.getClient().postgrest.from("bubbles")
+                val bubbleResponse = supabaseClientProvider.from("bubbles")
                     .select {
                         filter {
                             eq("id", bubbleId)
@@ -45,7 +46,7 @@ class BubbleRepositoryImpl(private val supabaseClientProvider: SupabaseClientPro
         return flow {
             emit("Processing...")
             try {
-                val response = supabaseClientProvider.getClient().postgrest.from("bubbles").upsert(bubble)
+                val response = supabaseClientProvider.from("bubbles").upsert(bubble)
                 emit("Bubble successfully inserted/updated")
             } catch (e: Exception) {
                 emit("An error occurred: ${e.message}")
@@ -57,7 +58,7 @@ class BubbleRepositoryImpl(private val supabaseClientProvider: SupabaseClientPro
         return flow {
             emit("Processing...")
             try {
-                val response = supabaseClientProvider.getClient().postgrest.from("bubbles")
+                val response = supabaseClientProvider.from("bubbles")
                     .delete {
                         filter {
                             eq("id", bubbleId)
@@ -74,7 +75,7 @@ class BubbleRepositoryImpl(private val supabaseClientProvider: SupabaseClientPro
         return flow {
             emit(Pair("Searching...", emptyList<Bubble>()))
             try {
-                val bubblesResponse = supabaseClientProvider.getClient().postgrest.from("bubbles")
+                val bubblesResponse = supabaseClientProvider.from("bubbles")
                     .select {
                         filter {
                             eq("description.ilike", "%$query%")
