@@ -56,7 +56,9 @@ fun NewsList(
        ) {
         dummyArray.forEach {
             Row(
-                modifier = Modifier,
+                modifier = Modifier.clickable {
+                     homeNavController.navigate(HomeNavObj.NewsDetailScreen.route)
+                },
                 verticalAlignment = Alignment.CenterVertically
             ){
                 Card(modifier = Modifier.height(96.dp).width(120.dp),

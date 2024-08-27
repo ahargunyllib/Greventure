@@ -6,6 +6,7 @@ sealed class HomeNavObj(val route: String) {
     data object NotificationScreen: HomeNavObj("home-notification")
     data object EventScreen: HomeNavObj("home-event")
     data object NewsScreen: HomeNavObj("home-news")
+    data object NewsDetailScreen: HomeNavObj("home-news-detail")
     data object MapsScreen: HomeNavObj("maps")
     data object DetailScreen: HomeNavObj("maps-detail")
     data object DiscussionScreen: HomeNavObj("maps-discussion")

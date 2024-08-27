@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
 import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
 import com.seven_sheesh.greventure.presentation.viewmodel.NavbarViewModel
 
@@ -55,31 +56,31 @@ fun NewsScreen(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 16.dp)
         ) {
             item {
-                Spacer(modifier = Modifier.height(16.dp))
                 Row(modifier = Modifier
                     .fillMaxWidth()
-                    .height(80.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
+                    .height(90.dp)
+                    .background(GreventureScheme.Primary.color),
+                    horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Row(
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp)
+                            .fillMaxSize(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ){
                         Icon(imageVector = Icons.Default.ArrowBackIosNew, contentDescription = "Arrow Back", modifier = Modifier.clickable {
                             homeNavController.navigate(HomeNavObj.HomeScreen.route)
-                        }, tint = Color.Black)
-                        Spacer(modifier = Modifier.width(12.dp))
+                        }, tint = GreventureScheme.White.color)
                         Column {
-                            Text(text = "Berita", fontWeight = FontWeight.Medium, fontSize = 18.sp, color = Color.Black)
+                            Text(text = "Berita", fontWeight = FontWeight.SemiBold, fontSize = 22.sp, color = GreventureScheme.White.color)
                         }
+                        Spacer(modifier = Modifier.padding(horizontal = 8.dp))
                     }
-
-                    Spacer(modifier = Modifier)
                 }
-                HorizontalDivider()
             }
 
             item {
@@ -93,15 +94,17 @@ fun NewsScreen(
                             modifier = Modifier,
                             verticalAlignment = Alignment.CenterVertically
                         ){
-                            Card(modifier = Modifier.size(60.dp),
-                                shape = RectangleShape,
-                                colors = CardDefaults.cardColors(Color.White),
-                                border = BorderStroke(2.dp, Color.LightGray)
+                            Card(modifier = Modifier
+                                .height(96.dp)
+                                .width(120.dp),
+                                shape = RoundedCornerShape(16.dp),
+                                colors = CardDefaults.cardColors(GreventureScheme.PrimaryVariant1.color),
                             ) {}
                             Spacer(modifier = Modifier.width(12.dp))
                             Column {
-                                Text(text = "8 Agt 2024", fontWeight = FontWeight.Medium, fontSize = 18.sp, color = Color.Black)
-                                Text(text = "Lorem ipsum", fontSize = 14.sp, modifier = Modifier.padding(top = 2.dp), color = Color.Black)
+                                Text(text = "2 Maret 2024", fontSize = 12.sp, modifier = Modifier.padding(top = 2.dp), color = GreventureScheme.Black.color)
+                                Text(text = "Lorem Ipsum Dolor sit Amet", fontWeight = FontWeight.Medium, fontSize = 16.sp, color = GreventureScheme.Black.color)
+                                Text(text = "Lorem ipsum - 2 menit dibaca", fontSize = 12.sp, modifier = Modifier.padding(top = 2.dp), color = GreventureScheme.Black.color)
                             }
                         }
                         Spacer(modifier = Modifier.height(12.dp))
