@@ -118,7 +118,7 @@ fun SearchBarComponent() {
                     modifier = Modifier
                         .fillMaxWidth()
                         .shadow(16.dp),
-                    leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
+                    leadingIcon = { Icon(Icons.Default.Search, contentDescription = null, tint = GreventureScheme.Primary.color) },
                     trailingIcon = { Icon(Icons.Default.MoreVert, contentDescription = null) },
                     placeholder = { Text("Search") },
                     shape = RoundedCornerShape(50),
