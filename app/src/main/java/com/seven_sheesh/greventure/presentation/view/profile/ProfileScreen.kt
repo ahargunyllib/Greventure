@@ -71,7 +71,9 @@ fun ProfileScreen(
                     colors = CardDefaults.cardColors(GreventureScheme.Secondary.color),
                     shape = RoundedCornerShape(50.dp)
                     ) {
-                    Box(modifier = Modifier.fillMaxSize().clickable {  }, contentAlignment = Alignment.Center){
+                    Box(modifier = Modifier
+                        .fillMaxSize()
+                        .clickable { }, contentAlignment = Alignment.Center){
                         Text(text = "Keluar", color = GreventureScheme.White.color, fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
                     }
                 }
@@ -85,25 +87,32 @@ fun ProfileScreen(
             .safeDrawingPadding(),
             contentAlignment = Alignment.Center){
             LazyColumn(modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 16.dp)){
+                .fillMaxSize())
+            {
+                
                 item {
-                    Spacer(modifier = Modifier.height(60.dp))
-                    Row(modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Card(
-                            modifier = Modifier.size(100.dp),
-                            shape = RoundedCornerShape(50),
-                            colors = CardDefaults.cardColors(GreventureScheme.White.color),
-                            border = BorderStroke(2.dp, GreventureScheme.SoftGray.color)
-                        ) {
+                    Box(modifier = Modifier.fillMaxWidth().height(220.dp).background(GreventureScheme.Primary.color)){
 
-                        }
                     }
-                    Spacer(modifier = Modifier.height(16.dp))
                 }
+
+//                item {
+//                    Spacer(modifier = Modifier.height(60.dp))
+//                    Row(modifier = Modifier.fillMaxWidth(),
+//                        horizontalArrangement = Arrangement.Center,
+//                        verticalAlignment = Alignment.CenterVertically
+//                    ) {
+//                        Card(
+//                            modifier = Modifier.size(100.dp),
+//                            shape = RoundedCornerShape(50),
+//                            colors = CardDefaults.cardColors(GreventureScheme.White.color),
+//                            border = BorderStroke(2.dp, GreventureScheme.SoftGray.color)
+//                        ) {
+//
+//                        }
+//                    }
+//                    Spacer(modifier = Modifier.height(16.dp))
+//                }
 
                 item {
                     ProfileItem(

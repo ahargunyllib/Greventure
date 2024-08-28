@@ -57,20 +57,16 @@ import com.seven_sheesh.greventure.utils.find3ClosestBubbles
 @Preview
 fun MapsCard(
     homeNavController: NavController = rememberNavController(),
-    mapsViewModel: MapsViewModel = hiltViewModel()
+    mapsViewModel: MapsViewModel = hiltViewModel(),
+    bubbleViewModel: BubbleViewModel = hiltViewModel()
 ) {
     val currentPosition = mapsViewModel.currentPosition.collectAsState()
     val context = LocalContext.current
-    val bubbleViewModel = hiltViewModel<BubbleViewModel>()
     val bubbleList = bubbleViewModel.bubbleListState.collectAsState()
 
     val closestBubble by remember(currentPosition, bubbleList) {
         derivedStateOf {
-            find3ClosestBubbles(
-                currentPosition.value.first,
-                currentPosition.value.second,
-                bubbleList.value.second
-            )
+            find3ClosestBubbles(currentPosition.value.first, currentPosition.value.second, bubbleList.value.second)
         }
     }
 
@@ -135,7 +131,7 @@ fun MapsCard(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clickable {
-                             homeNavController.navigate(HomeNavObj.DetailScreen.createRoute(bubble.first.id))
+                            homeNavController.navigate(HomeNavObj.DetailScreen.createRoute(bubble.first.id))
                         },
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
