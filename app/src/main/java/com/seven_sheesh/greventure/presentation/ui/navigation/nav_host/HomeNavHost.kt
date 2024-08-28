@@ -237,6 +237,7 @@ fun HomeNavHost(parentNavController: NavController = rememberNavController()){
                 content = {
                     ProfileScreen(
                         homeNavController = homeNavController,
+                        parentNavController = parentNavController,
                         navbarViewModel = navbarViewModel
                     )
                 }, enterTransition = {

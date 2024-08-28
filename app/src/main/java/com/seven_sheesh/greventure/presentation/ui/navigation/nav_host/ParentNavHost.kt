@@ -20,7 +20,7 @@ fun ParentNavHost() {
         startDestination = ParentNavObj.Auth.route,
         builder = {
             composable(ParentNavObj.Auth.route) {
-                AuthNavHost(parentNavCtr = parentNavController)
+                AuthNavHost(parentNavController)
             }
 
             composable(

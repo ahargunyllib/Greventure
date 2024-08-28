@@ -14,7 +14,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.buildJsonObject
+import okhttp3.internal.wait
 import javax.inject.Inject
+import com.google.gson.JsonObject
 
 class AuthenticationRepositoryImpl @Inject constructor(
     private val auth: Auth,
@@ -42,20 +44,33 @@ class AuthenticationRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun signUp(name: String, email: String, phoneNumber: String, password: String): Flow<String> {
+    override suspend fun signUp(
+        name: String,
+        email: String,
+        phoneNumber: String,
+        password: String
+    ): Flow<String> {
         val FUNCTION_NAME = "signUp"
 
         return flow {
             Log.d(FILE_NAME, "[$FUNCTION_NAME] Loading")
             emit("Loading")
             try {
-                val res = auth.signUpWith(Email) {
+                auth.signUpWith(Email) {
                     this.email = email
                     this.password = password
                 }
-                withContext(Dispatchers.IO){
+                withContext(Dispatchers.IO) {
+                    auth.awaitInitialization()
+                    val currentUser = auth.currentUserOrNull()
+                    if (currentUser == null) {
+                        Log.d(FILE_NAME, "[$FUNCTION_NAME] Error")
+                        emit("User not found")
+                        return@withContext
+                    }
+
                     val userDto = User(
-                        id = res?.id ?: "",
+                        id = currentUser.id,
                         name = name,
                         email = email,
                         phoneNum = phoneNumber
@@ -71,19 +86,98 @@ class AuthenticationRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun signInWithNativeGoogle(googleIdToken: String, rawNonce: String): Flow<String> {
+    override suspend fun signInWithNativeGoogle(
+        googleIdToken: String,
+        rawNonce: String
+    ): Flow<String> {
         val FUNCTION_NAME = "signInWithNativeGoogle"
         return flow {
             Log.d(FILE_NAME, "[$FUNCTION_NAME] Loading")
             emit("Loading")
             try {
-                auth.signInWith(IDToken){
+                auth.signInWith(IDToken) {
                     idToken = googleIdToken
                     provider = Google
                     nonce = rawNonce
                 }
+                withContext(Dispatchers.IO) {
+                    auth.awaitInitialization()
+                    val currentUser = auth.currentUserOrNull()
+                    if (currentUser == null) {
+                        Log.d(FILE_NAME, "[$FUNCTION_NAME] Error")
+                        emit("User not found")
+                        return@withContext
+                    }
+
+                    val user = db.from("users").select {
+                        filter {
+                            eq("email", currentUser.email!!)
+                        }
+                    }.decodeSingleOrNull<User>()
+                    if (user == null) {
+                        val userDto = User(
+                            id = currentUser.id,
+                            name = currentUser.userMetadata?.get("full_name")?.toString()!!
+                                .replace("\"", ""),
+                            email = currentUser.email!!,
+                            phoneNum = "",
+                            profilePictureUrl = currentUser.userMetadata?.get("avatar_url")
+                                ?.toString()!!.replace("\"", ""),
+                        )
+
+                        db.from("users").insert(userDto)
+                    }
+                }
                 Log.d(FILE_NAME, "[$FUNCTION_NAME] Success")
                 emit("Successfully login with google")
+            } catch (e: Exception) {
+                Log.d(FILE_NAME, "[$FUNCTION_NAME] Error")
+                emit("An error occurred: ${e.message}")
+            }
+        }
+    }
+
+    override suspend fun me(): Flow<Pair<String, User?>> {
+        val FUNCTION_NAME = "me"
+        return flow {
+            Log.d(FILE_NAME, "[$FUNCTION_NAME] Loading")
+            emit(Pair("Loading", null))
+            try {
+                auth.awaitInitialization()
+                val session = auth.currentSessionOrNull()
+                if (session == null) {
+                    Log.d(FILE_NAME, "[$FUNCTION_NAME] Error")
+                    emit(Pair("User not found", null))
+                    return@flow
+                }
+
+                val userEmail = session.user?.email!!
+                val user = withContext(Dispatchers.IO) {
+                    db.from("users").select {
+                        filter {
+                            eq("email", userEmail)
+                        }
+                    }.decodeSingle<User>()
+                }
+
+                Log.d(FILE_NAME, "[$FUNCTION_NAME] Success")
+                emit(Pair("Successfully get user", user))
+            } catch (e: Exception) {
+                Log.d(FILE_NAME, "[$FUNCTION_NAME] Error")
+                emit(Pair("An error occurred: ${e.message}", null))
+            }
+        }
+    }
+
+    override suspend fun signOut(): Flow<String> {
+        val FUNCTION_NAME = "signOut"
+        return flow {
+            Log.d(FILE_NAME, "[$FUNCTION_NAME] Loading")
+            emit("Loading")
+            try {
+                auth.signOut()
+                Log.d(FILE_NAME, "[$FUNCTION_NAME] Success")
+                emit("Successfully sign out")
             } catch (e: Exception) {
                 Log.d(FILE_NAME, "[$FUNCTION_NAME] Error")
                 emit("An error occurred: ${e.message}")

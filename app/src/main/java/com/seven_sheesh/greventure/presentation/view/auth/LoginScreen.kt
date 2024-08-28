@@ -55,7 +55,11 @@ import kotlinx.coroutines.launch
 
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 @Composable
-fun LoginScreen(authNavCtr: NavController, viewModel: LoginViewModel = hiltViewModel()) {
+fun LoginScreen(
+    authNavCtr: NavController,
+    parentNavCtr: NavController,
+    viewModel: LoginViewModel = hiltViewModel()
+) {
     val snackBarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
 
@@ -78,7 +82,7 @@ fun LoginScreen(authNavCtr: NavController, viewModel: LoginViewModel = hiltViewM
 
             if (message.contains("Successfully")) {
                 delay(1000)
-                authNavCtr.navigate(AuthNavObj.Home.route)
+                parentNavCtr.navigate(ParentNavObj.HomeNav.route)
             }
         }
     }
@@ -109,6 +113,7 @@ fun LoginScreen(authNavCtr: NavController, viewModel: LoginViewModel = hiltViewM
                 value = email.value,
                 onValueChange = { viewModel.onEmailChange(it) },
                 placeholder = "Email",
+                keyboardType = KeyboardType.Email,
                 textStyle = TextStyle(
                     fontSize = 16.sp,
                     fontWeight = FontWeight.W400
@@ -137,15 +142,7 @@ fun LoginScreen(authNavCtr: NavController, viewModel: LoginViewModel = hiltViewM
                 onClick = {
                     localSoftwareKeyboardController?.hide()
                     viewModel.onSignIn()
-                    coroutineScope.launch {
-                        message?.let {
-                            snackBarHostState.showSnackbar(
-                                message = it,
-                                duration = SnackbarDuration.Short
-                            )
-                        }
-                    }
-              },
+                },
                 text = "Masuk",
                 size = ButtonSize.LARGE,
                 modifier = Modifier.fillMaxWidth()
