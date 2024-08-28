@@ -63,6 +63,14 @@ class BubbleViewModel @Inject constructor(
         }
     }
 
+    fun loadBubbleByUserId(userId: String){
+        viewModelScope.launch {
+            bubbleRepository.getBubbleByUserId(userId).collect{
+                result -> _bubbleListState.value = result
+            }
+        }
+    }
+
     fun upsertBubble(bubble: Bubble) {
         viewModelScope.launch {
             bubbleRepository.upsertBubble(bubble)

@@ -43,7 +43,7 @@ fun Input(
     trailingContent: @Composable (() -> Unit)? = null
 ) {
     Column(
-        modifier = modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.Start,
     ) {
@@ -57,7 +57,7 @@ fun Input(
                 ),
             )
         }
-        Spacer(modifier = modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(8.dp))
         BasicTextField(
             value = value,
             onValueChange = onValueChange,

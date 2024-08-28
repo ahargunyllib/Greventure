@@ -52,6 +52,27 @@ class BubbleRepositoryImpl @Inject constructor(private val supabaseClientProvide
         }
     }
 
+    override fun getBubbleByUserId(userId: String): Flow<Pair<String, List<Bubble>>> {
+        return flow {
+            Log.d(TAG, "getBubbleById: Loading...")
+            emit(Pair("Loading...", listOf()))
+            try {
+                val bubbleResponse = supabaseClientProvider.from("bubbles")
+                    .select {
+                        filter {
+                            eq("user_id", userId)
+                        }
+                    }
+                    .decodeList<Bubble>()
+                Log.d(TAG, "getBubbleById: Bubble found")
+                emit(Pair("Bubble found", bubbleResponse))
+            } catch (e: Exception) {
+                Log.e(TAG, "getBubbleById: An error occurred: ${e.message}", e)
+                emit(Pair("An error occurred: ${e.message}", listOf()))
+            }
+        }
+    }
+
     override fun upsertBubble(bubble: Bubble): Flow<String> {
         return flow {
             Log.d(TAG, "upsertBubble: Processing...")

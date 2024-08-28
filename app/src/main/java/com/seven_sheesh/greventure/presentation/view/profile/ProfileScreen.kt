@@ -132,7 +132,9 @@ fun ProfileScreen(
                     ProfileItem(
                         icon = Icons.Default.History,
                         title = "Bubble Buatanmu"
-                    ){}
+                    ){
+                        homeNavController.navigate(HomeNavObj.YourBubbleScreen.route)
+                    }
                     Spacer(modifier = Modifier.height(16.dp))
                     HorizontalDivider()
                     ProfileItem(
