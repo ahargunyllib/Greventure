@@ -1,6 +1,8 @@
 package com.seven_sheesh.greventure.presentation.ui.widget.common
 
 import android.widget.Toast
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -50,7 +52,8 @@ fun Navbar(
         containerColor = GreventureScheme.White.color,
         modifier = Modifier
             .height(96.dp)
-            .shadow(32.dp),
+            .shadow(32.dp)
+            .border(BorderStroke(1.dp, GreventureScheme.SoftGray.color)),
         tonalElevation = 32.dp,
     ) {
         Row(
@@ -63,12 +66,12 @@ fun Navbar(
                     navbarViewModel.setPageState(0)
                     homeNavController.navigate(HomeNavObj.HomeScreen.route)
                 } else {
-                    Toast.makeText(homeNavController.context, "Home", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(homeNavController.context, "Beranda", Toast.LENGTH_SHORT).show()
                 }
             }, modifier = Modifier.size(64.dp)) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Icon(imageVector = if(isCurrentPage(currentPage, 0)) Icons.Default.Home else Icons.Outlined.Home, contentDescription = HomeNavObj.HomeScreen.route, tint = isHighLighted(currentPage, 0), modifier = Modifier.size(28.dp))
-                    Text(text = "Home", color = isHighLighted(currentPage, 0), fontSize = 10.sp)
+                    Text(text = "Beranda", color = isHighLighted(currentPage, 0), fontSize = 10.sp)
                 }
             }
             IconButton(onClick = {
@@ -76,12 +79,12 @@ fun Navbar(
                     navbarViewModel.setPageState(1)
                     homeNavController.navigate(HomeNavObj.MapsScreen.route)
                 } else {
-                    Toast.makeText(homeNavController.context, "Maps", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(homeNavController.context, "Peta", Toast.LENGTH_SHORT).show()
                 }
             }, modifier = Modifier.size(64.dp)) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Icon(imageVector = if(isCurrentPage(currentPage, 1)) Icons.Default.Map else Icons.Outlined.Map, contentDescription = HomeNavObj.MapsScreen.route, tint = isHighLighted(currentPage, 1), modifier = Modifier.size(28.dp))
-                    Text(text = "Maps", color = isHighLighted(currentPage, 1), fontSize = 10.sp)
+                    Text(text = "Peta", color = isHighLighted(currentPage, 1), fontSize = 10.sp)
                 }
             }
             IconButton(onClick = {
@@ -89,12 +92,12 @@ fun Navbar(
                     navbarViewModel.setPageState(2)
                     homeNavController.navigate(HomeNavObj.BookmarkScreen.route)
                 } else {
-                    Toast.makeText(homeNavController.context, "Bookmarks", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(homeNavController.context, "Bookmark", Toast.LENGTH_SHORT).show()
                 }
             }, modifier = Modifier.size(64.dp)) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Icon(imageVector = if(isCurrentPage(currentPage, 2)) Icons.Default.Bookmark else Icons.Outlined.BookmarkBorder, contentDescription = HomeNavObj.BookmarkScreen.route, tint = isHighLighted(currentPage, 2), modifier = Modifier.size(28.dp))
-                    Text(text = "Bookmarks", color = isHighLighted(currentPage, 2), fontSize = 10.sp)
+                    Text(text = "Bookmark", color = isHighLighted(currentPage, 2), fontSize = 10.sp)
                 }
             }
             IconButton(onClick = {
@@ -102,12 +105,12 @@ fun Navbar(
                     navbarViewModel.setPageState(3)
                     homeNavController.navigate(HomeNavObj.ProfileScreen.route)
                 } else {
-                    Toast.makeText(homeNavController.context, "Profile", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(homeNavController.context, "Profil", Toast.LENGTH_SHORT).show()
                 }
             }, modifier = Modifier.size(64.dp)) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Icon(imageVector = if(isCurrentPage(currentPage, 3)) Icons.Default.Person else Icons.Outlined.Person, contentDescription = HomeNavObj.ProfileScreen.route, tint = isHighLighted(currentPage, 3), modifier = Modifier.size(28.dp))
-                    Text(text = "Profile", color = isHighLighted(currentPage, 1), fontSize = 10.sp)
+                    Text(text = "Profil", color = isHighLighted(currentPage, 3), fontSize = 10.sp)
                 }
             }
         }

@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
@@ -40,34 +41,35 @@ fun NewsList(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp)
             .clickable {  },
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ){
-        Text(text = "Berita", fontSize = 18.sp, color = GreventureScheme.Black.color)
-        Text(text = "Lainnya", color = GreventureScheme.Secondary.color, fontSize = 18.sp, modifier = Modifier.clickable {
+        Text(text = "Berita", fontSize = 18.sp, color = GreventureScheme.Black.color, fontWeight = FontWeight.SemiBold)
+        Text(text = "Lainnya", color = GreventureScheme.Primary.color, fontSize = 16.sp, modifier = Modifier.clickable {
             homeNavController.navigate(HomeNavObj.NewsScreen.route)
         }, textDecoration = TextDecoration.Underline)
     }
     Spacer(modifier = Modifier.height(16.dp))
     Column(modifier = Modifier
         .fillMaxWidth()
-        .padding(horizontal = 16.dp)) {
+       ) {
         dummyArray.forEach {
             Row(
-                modifier = Modifier,
+                modifier = Modifier.clickable {
+                     homeNavController.navigate(HomeNavObj.NewsDetailScreen.route)
+                },
                 verticalAlignment = Alignment.CenterVertically
             ){
-                Card(modifier = Modifier.size(60.dp),
-                    shape = RectangleShape,
-                    colors = CardDefaults.cardColors(GreventureScheme.White.color),
-                    border = BorderStroke(2.dp, GreventureScheme.SoftGray.color)
+                Card(modifier = Modifier.height(96.dp).width(120.dp),
+                    shape = RoundedCornerShape(16.dp),
+                    colors = CardDefaults.cardColors(GreventureScheme.PrimaryVariant1.color),
                 ) {}
                 Spacer(modifier = Modifier.width(12.dp))
                 Column {
-                    Text(text = "8 Agt 2024", fontWeight = FontWeight.Medium, fontSize = 18.sp, color = GreventureScheme.Black.color)
-                    Text(text = "Lorem ipsum", fontSize = 14.sp, modifier = Modifier.padding(top = 2.dp), color = GreventureScheme.Black.color)
+                    Text(text = "2 Maret 2024", fontSize = 12.sp, modifier = Modifier.padding(top = 2.dp), color = GreventureScheme.Black.color)
+                    Text(text = "Lorem Ipsum Dolor sit Amet", fontWeight = FontWeight.Medium, fontSize = 16.sp, color = GreventureScheme.Black.color)
+                    Text(text = "Lorem ipsum - 2 menit dibaca", fontSize = 12.sp, modifier = Modifier.padding(top = 2.dp), color = GreventureScheme.Black.color)
                 }
             }
             Spacer(modifier = Modifier.height(12.dp))

@@ -6,19 +6,24 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
@@ -36,42 +41,50 @@ fun EventList(
     homeNavController: NavController = rememberNavController(),
 ){
     val dummyArray = listOf(0, 1, 2)
-    Spacer(modifier = Modifier.height(32.dp))
+    Spacer(modifier = Modifier.height(16.dp))
     Row(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+            .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ){
-        Text(text = "Event Terkini di Kotamu", fontSize = 18.sp, color = GreventureScheme.Black.color)
-        Text(text = "Lainnya", color = GreventureScheme.Secondary.color, fontSize = 18.sp, modifier = Modifier.clickable {
+        Text(text = "Event", fontSize = 18.sp, color = GreventureScheme.Black.color, fontWeight = FontWeight.SemiBold)
+        Text(text = "Lainnya", color = GreventureScheme.Primary.color, fontSize = 16.sp, modifier = Modifier.clickable {
             homeNavController.navigate(HomeNavObj.EventScreen.route)
         }, textDecoration = TextDecoration.Underline)
     }
     Spacer(modifier = Modifier.height(16.dp))
     Column(modifier = Modifier
-        .fillMaxWidth()
-        .padding(horizontal = 16.dp)) {
+        .fillMaxWidth()) {
         dummyArray.forEach {
-            Row(
-                modifier = Modifier.clickable {  },
-                verticalAlignment = Alignment.CenterVertically
-            ){
-                Card(modifier = Modifier.size(48.dp),
-                    shape = RoundedCornerShape(50),
-                    colors = CardDefaults.cardColors(GreventureScheme.White.color),
-                    border = BorderStroke(2.dp, GreventureScheme.SoftGray.color)
-                ) {}
-                Spacer(modifier = Modifier.width(12.dp))
-                Column {
-                    Text(text = "Lorem ipsum dolor", fontWeight = FontWeight.Medium, fontSize = 18.sp, color = GreventureScheme.Black.color)
-                    Text(text = "Lorem ipsum", fontSize = 14.sp, modifier = Modifier.padding(top = 2.dp), color = GreventureScheme.Black.color)
+            Card(modifier = Modifier
+                .fillMaxWidth()
+                .height(140.dp)
+                .clip(RoundedCornerShape(16.dp))
+                .clickable {  },
+                colors = CardDefaults.cardColors(GreventureScheme.Primary.color),
+                shape = RoundedCornerShape(16.dp),
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Column {
+                        Text(text = "Lorem ipsum dolor", fontWeight = FontWeight.Medium, fontSize = 16.sp, color = GreventureScheme.White.color)
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Icon(imageVector = Icons.Default.Star, contentDescription = "Star", tint = GreventureScheme.White.color)
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text(text = "4.9", fontWeight = FontWeight.Medium, fontSize = 16.sp, color = GreventureScheme.White.color)
+                        }
+                    }
+
+                    Text(text = "Lorem ipsum dolor sit amet", fontSize = 12.sp, modifier = Modifier.padding(top = 2.dp), color = GreventureScheme.White.color)
                 }
             }
-            Spacer(modifier = Modifier.height(12.dp))
-            HorizontalDivider()
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 }

@@ -23,7 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class BaseActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
-    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "NewApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
