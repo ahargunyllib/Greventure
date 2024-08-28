@@ -1,5 +1,6 @@
 package com.seven_sheesh.greventure.presentation.ui.widget.maps
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -45,7 +46,8 @@ fun PopupCard(
         .height(240.dp)
         .shadow(32.dp),
         shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
-        colors = CardDefaults.cardColors(GreventureScheme.White.color)
+        colors = CardDefaults.cardColors(GreventureScheme.White.color),
+        border = BorderStroke(2.dp, GreventureScheme.SoftGray.color)
     ) {
         Column(modifier = Modifier
             .fillMaxSize()
@@ -63,7 +65,7 @@ fun PopupCard(
                     Text(text = bubble.title, color = GreventureScheme.Black.color, fontSize = 20.sp, fontWeight = FontWeight.Bold)
                     Box(modifier = Modifier
                         .height(32.dp)
-                        .width(72.dp)
+                        .width(92.dp)
                         .clip(RoundedCornerShape(50))
                         .background(GreventureScheme.PrimaryVariant3.color),
                         contentAlignment = Alignment.Center
@@ -81,8 +83,8 @@ fun PopupCard(
                 Text(text = bubble.description, fontSize = 16.sp, color = GreventureScheme.Black.color)
                 Spacer(modifier = Modifier.height(16.dp))
                 Card(modifier = Modifier
-                    .width(120.dp)
-                    .height(32.dp),
+                    .width(140.dp)
+                    .height(36.dp),
                     shape = RoundedCornerShape(50),
                     colors = CardDefaults.cardColors(GreventureScheme.Primary.color)
                 ) {

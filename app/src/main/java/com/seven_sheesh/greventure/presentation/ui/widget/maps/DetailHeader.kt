@@ -50,7 +50,7 @@ fun HeaderSection(currentBubble: State<Pair<String, Bubble?>>) {
                 Box(
                     modifier = Modifier
                         .height(32.dp)
-                        .width(82.dp)
+                        .width(92.dp)
                         .clip(RoundedCornerShape(50))
                         .background(GreventureScheme.PrimaryVariant3.color),
                     contentAlignment = Alignment.Center
