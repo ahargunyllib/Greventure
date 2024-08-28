@@ -20,7 +20,7 @@ class BubbleSocialMediaRepositoryImpl @Inject constructor(private val supabaseCl
             emit(Pair("Loading...", emptyList()))
             try {
                 val bubbleSocialMediaResponse = withContext(Dispatchers.IO) {
-                    supabaseClientProvider.from("bubble_social_media").select().decodeList<BubbleSocialMedia>()
+                    supabaseClientProvider.from("bubble_social_medias").select().decodeList<BubbleSocialMedia>()
                 }
                 val bubbleSocialMedia = bubbleSocialMediaResponse ?: emptyList()
                 Log.d(TAG, "getAllBubbleSocialMedia: Successfully fetched bubble social media")
@@ -38,7 +38,7 @@ class BubbleSocialMediaRepositoryImpl @Inject constructor(private val supabaseCl
             emit(Pair("Loading...", null))
             try {
                 val bubbleSocialMediaResponse = withContext(Dispatchers.IO) {
-                    supabaseClientProvider.from("bubble_social_media")
+                    supabaseClientProvider.from("bubble_social_medias")
                         .select {
                             filter {
                                 eq("id", socialMediaId)
@@ -61,7 +61,7 @@ class BubbleSocialMediaRepositoryImpl @Inject constructor(private val supabaseCl
             emit(Pair("Loading...", emptyList()))
             try {
                 val bubbleSocialMediaResponse = withContext(Dispatchers.IO) {
-                    supabaseClientProvider.from("bubble_social_media")
+                    supabaseClientProvider.from("bubble_social_medias")
                         .select {
                             filter {
                                 eq("bubble_id", bubbleId)
@@ -85,7 +85,7 @@ class BubbleSocialMediaRepositoryImpl @Inject constructor(private val supabaseCl
             emit("Processing...")
             try {
                 val response = withContext(Dispatchers.IO) {
-                    supabaseClientProvider.from("bubble_social_media").upsert(bubbleSocialMedia)
+                    supabaseClientProvider.from("bubble_social_medias").upsert(bubbleSocialMedia)
                 }
                 Log.d(TAG, "upsertBubbleSocialMedia: Bubble social media successfully inserted/updated")
                 emit("Bubble social media successfully inserted/updated")
@@ -102,7 +102,7 @@ class BubbleSocialMediaRepositoryImpl @Inject constructor(private val supabaseCl
             emit("Processing...")
             try {
                 val response = withContext(Dispatchers.IO) {
-                    supabaseClientProvider.from("bubble_social_media")
+                    supabaseClientProvider.from("bubble_social_medias")
                         .delete {
                             filter {
                                 eq("id", socialMediaId)

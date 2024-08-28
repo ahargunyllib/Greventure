@@ -5,13 +5,14 @@ import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
 import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
 import com.seven_sheesh.greventure.presentation.ui.widget.common.Navbar
@@ -178,22 +179,24 @@ fun HomeNavHost(parentNavController: NavController = rememberNavController()){
 
             composable(
                 route = HomeNavObj.DetailScreen.route,
+                arguments = listOf(navArgument("bubble_id") { type = NavType.StringType }),
                 content = {
+                    val bubbleId = it.arguments?.getString("bubble_id") ?: ""
                     DetailScreen(
                         homeNavController = homeNavController,
                         navbarViewModel = navbarViewModel,
-                        mapsViewModel = mapsViewModel
+                        mapsViewModel = mapsViewModel,
+                        bubbleId = bubbleId
                     )
-                }, enterTransition = {
-                    return@composable slideIntoContainer(
-                        AnimatedContentTransitionScope.SlideDirection.Up, tween(700)
-                    )
-                }, popExitTransition = {
-                    return@composable slideOutOfContainer(
-                        AnimatedContentTransitionScope.SlideDirection.Down, tween(700)
-                    )
+                },
+                enterTransition = {
+                    slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Up, tween(700))
+                },
+                popExitTransition = {
+                    slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Down, tween(700))
                 }
             )
+
 
             composable(
                 route = HomeNavObj.DiscussionScreen.route,

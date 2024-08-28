@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -21,10 +22,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.seven_sheesh.greventure.domain.model.Bubble
 import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
 
 @Composable
-fun HeaderSection() {
+fun HeaderSection(currentBubble: State<Pair<String, Bubble?>>) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -40,7 +42,7 @@ fun HeaderSection() {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Lorem Ipsum dolor sit Amet",
+                    text = currentBubble.value.second?.title ?: "",
                     color = GreventureScheme.Black.color,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.SemiBold
@@ -48,16 +50,16 @@ fun HeaderSection() {
                 Box(
                     modifier = Modifier
                         .height(32.dp)
-                        .width(72.dp)
+                        .width(92.dp)
                         .clip(RoundedCornerShape(50))
-                        .background(Color.DarkGray),
+                        .background(GreventureScheme.PrimaryVariant3.color),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text(text = "Category", color = GreventureScheme.White.color, fontSize = 12.sp)
+                    Text(text = currentBubble.value.second?.eventType.toString(), color = GreventureScheme.White.color, fontSize = 12.sp)
                 }
             }
             Spacer(modifier = Modifier.height(4.dp))
-            Text(text = "Lorem Ipsum dolor sit Amet", color = GreventureScheme.Black.color)
+            Text(text = currentBubble.value.second?.description ?: "", color = GreventureScheme.Black.color)
         }
     }
 }

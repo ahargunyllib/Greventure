@@ -1,5 +1,6 @@
 package com.seven_sheesh.greventure.presentation.ui.widget.common
 
+import android.annotation.SuppressLint
 import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -22,8 +23,11 @@ import com.google.maps.android.compose.MarkerState
 import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
 import com.seven_sheesh.greventure.presentation.viewmodel.MapsViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.google.maps.android.compose.Marker
+import com.seven_sheesh.greventure.domain.model.Bubble
 import com.seven_sheesh.greventure.ui.viewmodel.BubbleViewModel
 
+@SuppressLint("UnrememberedMutableState")
 @Composable
 fun GoogleMapsComponent(
     cameraPositionState: CameraPositionState,
@@ -32,7 +36,7 @@ fun GoogleMapsComponent(
     currentLocation: Pair<Double, Double>,
     context: Context,
     viewModel: MapsViewModel = hiltViewModel(),
-    onClickMarker: (Pair<String, String>) -> Unit = {}
+    onClickMarker: (Bubble) -> Unit = {}
 ) {
     val bubbleViewModel = hiltViewModel<BubbleViewModel>()
     val bubbles by bubbleViewModel.bubbleListState.collectAsState()
@@ -43,26 +47,37 @@ fun GoogleMapsComponent(
         properties = properties,
         uiSettings = uiSettings,
     ) {
+        Marker(
+            state = MarkerState(position = LatLng(currentLocation.first, currentLocation.second)),
+            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
+            title = "Your Location"
+        )
+
         bubbles.second.forEach { bubble ->
             MarkerInfoWindow(
                 state = MarkerState(position = LatLng(bubble.latitude.toDouble(), bubble.longitude.toDouble())),
                 icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
                 onClick = {
-                    onClickMarker(bubble.title to bubble.description)
+                    onClickMarker(bubble)
                     false
                 }
             ) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center,
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(24.dp))
-                        .background(GreventureScheme.Primary.color)
-                        .padding(vertical = 8.dp, horizontal = 16.dp)
                 ) {
-                    Text(bubble.title, fontWeight = FontWeight.Medium, color = GreventureScheme.White.color)
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center,
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(24.dp))
+                            .background(GreventureScheme.Primary.color)
+                            .padding(vertical = 8.dp, horizontal = 16.dp)
+                    ) {
+                        Text(bubble.title, fontWeight = FontWeight.Medium, color = GreventureScheme.White.color)
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
                 }
-                Spacer(modifier = Modifier.height(8.dp))
             }
         }
     }
