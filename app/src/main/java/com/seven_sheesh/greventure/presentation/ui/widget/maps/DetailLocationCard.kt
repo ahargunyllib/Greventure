@@ -21,16 +21,17 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.seven_sheesh.greventure.domain.model.Bubble
 import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
 import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
 
 @Composable
-fun LocationCard(homeNavController: NavController) {
+fun LocationCard(homeNavController: NavController, currentBubble: State<Pair<String, Bubble?>>) {
     Spacer(modifier = Modifier.height(12.dp))
     Row(
         modifier = Modifier
@@ -43,7 +44,7 @@ fun LocationCard(homeNavController: NavController) {
             modifier = Modifier.size(48.dp),
             shape = RoundedCornerShape(50),
             colors = CardDefaults.cardColors(GreventureScheme.White.color),
-            border = BorderStroke(2.dp, GreventureScheme.SoftGray.color)
+            border = BorderStroke(2.dp, GreventureScheme.PrimaryVariant2.color)
         ) {
             Box(
                 modifier = Modifier
@@ -53,12 +54,12 @@ fun LocationCard(homeNavController: NavController) {
                     },
                 contentAlignment = Alignment.Center
             ) {
-                Icon(imageVector = Icons.Default.LocationOn, contentDescription = "Location")
+                Icon(imageVector = Icons.Default.LocationOn, contentDescription = "Location", tint = GreventureScheme.Primary.color)
             }
         }
         Spacer(modifier = Modifier.width(12.dp))
         Column {
-            Text(text = "Lorem Ipsum dolor sit Amet", color = GreventureScheme.Black.color)
+            Text(text = currentBubble.value.second?.latitude.toString()+ "° / " + currentBubble.value.second?.longitude.toString() + "°", color = GreventureScheme.Black.color)
         }
     }
 }

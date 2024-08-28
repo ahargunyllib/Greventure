@@ -8,7 +8,9 @@ sealed class HomeNavObj(val route: String) {
     data object NewsScreen: HomeNavObj("home-news")
     data object NewsDetailScreen: HomeNavObj("home-news-detail")
     data object MapsScreen: HomeNavObj("maps")
-    data object DetailScreen: HomeNavObj("maps-detail")
+    data object DetailScreen: HomeNavObj("maps-detail/{bubble_id}"){
+        fun createRoute(bubbleId: String) = "maps-detail/$bubbleId"
+    }
     data object DiscussionScreen: HomeNavObj("maps-discussion")
     data object BookmarkScreen: HomeNavObj("bookmark")
     data object ProfileScreen: HomeNavObj("profile")

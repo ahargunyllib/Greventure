@@ -22,6 +22,7 @@ import com.google.maps.android.compose.MarkerState
 import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
 import com.seven_sheesh.greventure.presentation.viewmodel.MapsViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.seven_sheesh.greventure.domain.model.Bubble
 import com.seven_sheesh.greventure.ui.viewmodel.BubbleViewModel
 
 @Composable
@@ -32,7 +33,7 @@ fun GoogleMapsComponent(
     currentLocation: Pair<Double, Double>,
     context: Context,
     viewModel: MapsViewModel = hiltViewModel(),
-    onClickMarker: (Pair<String, String>) -> Unit = {}
+    onClickMarker: (Bubble) -> Unit = {}
 ) {
     val bubbleViewModel = hiltViewModel<BubbleViewModel>()
     val bubbles by bubbleViewModel.bubbleListState.collectAsState()
@@ -48,7 +49,7 @@ fun GoogleMapsComponent(
                 state = MarkerState(position = LatLng(bubble.latitude.toDouble(), bubble.longitude.toDouble())),
                 icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
                 onClick = {
-                    onClickMarker(bubble.title to bubble.description)
+                    onClickMarker(bubble)
                     false
                 }
             ) {

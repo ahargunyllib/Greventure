@@ -117,7 +117,7 @@ fun Navbar(
     }
 }
 
-fun isHighLighted(currentPage: Int, index: Int): Color {
+private fun isHighLighted(currentPage: Int, index: Int): Color {
     return if(currentPage == index){
         GreventureScheme.Primary.color
     } else {
@@ -125,6 +125,6 @@ fun isHighLighted(currentPage: Int, index: Int): Color {
     }
 }
 
-fun isCurrentPage(currentPage: Int, index: Int): Boolean {
+private fun isCurrentPage(currentPage: Int, index: Int): Boolean {
     return currentPage == index
 }
