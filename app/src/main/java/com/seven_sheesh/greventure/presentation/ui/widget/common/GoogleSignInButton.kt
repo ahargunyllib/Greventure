@@ -42,13 +42,11 @@ fun GoogleSignInButton(
 
         // Generate a nonce and hash it with sha-256
         // Providing a nonce is optional but recommended
-        val rawNonce = UUID.randomUUID()
-            .toString() // Generate a random String. UUID should be sufficient, but can also be any other random string.
+        val rawNonce = UUID.randomUUID().toString() // Generate a random String. UUID should be sufficient, but can also be any other random string.
         val bytes = rawNonce.toString().toByteArray()
         val md = MessageDigest.getInstance("SHA-256")
         val digest = md.digest(bytes)
-        val hashedNonce =
-            digest.fold("") { str, it -> str + "%02x".format(it) } // Hashed nonce to be passed to Google sign-in
+        val hashedNonce = digest.fold("") { str, it -> str + "%02x".format(it) } // Hashed nonce to be passed to Google sign-in
 
 
         val googleIdOption: GetGoogleIdOption = GetGoogleIdOption.Builder()
