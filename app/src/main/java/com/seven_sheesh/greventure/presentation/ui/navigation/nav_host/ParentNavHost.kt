@@ -20,6 +20,15 @@ fun ParentNavHost() {
             composable(ParentNavObj.Auth.route) {
                 AuthNavHost(parentNavCtr = parentNavCtr)
             }
+
+            composable(
+                route = ParentNavObj.HomeNav.route,
+                content = {
+                    HomeNavHost(
+                        parentNavController = parentNavController
+                    )
+                }
+            )
         },
     )
 }

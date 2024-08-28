@@ -73,7 +73,7 @@ fun GoogleMapsComponent(
         randomMarkers.forEach { latLng ->
             MarkerInfoWindow(
                 state = MarkerState(position = latLng),
-                icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE),
+                icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
                 onClick = {
                     onClickMarker("Random Marker" to "Generated near UB")
                     false
