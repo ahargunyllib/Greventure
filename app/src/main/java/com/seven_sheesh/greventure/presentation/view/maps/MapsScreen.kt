@@ -44,6 +44,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.seven_sheesh.greventure.domain.model.PlaceholderData
 import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
 import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
 import com.seven_sheesh.greventure.presentation.ui.widget.maps.PopupCard
@@ -59,6 +60,7 @@ fun MapsScreen(
     navbarViewModel.setPageState(1)
     val context = LocalContext.current
     val isMarkerClicked = remember { mutableStateOf(false) }
+    val selectedBubble = remember { mutableStateOf(PlaceholderData.bubble1) }
     RequestLocationLooper(context = context, mapsViewModel = mapsViewModel)
 
     Scaffold(
@@ -78,8 +80,11 @@ fun MapsScreen(
                     .background(Color.White)
             ) {
                 if (isMarkerClicked.value) {
-                    PopupCard(onClick = {
-                        homeNavController.navigate(HomeNavObj.DetailScreen.route)
+                    PopupCard(
+                        bubble = selectedBubble.value,
+                        onClick = {
+                        val route = HomeNavObj.DetailScreen.createRoute(it)
+                        homeNavController.navigate(route)
                     })
                     Spacer(modifier = Modifier.height(96.dp))
                 }
@@ -96,6 +101,7 @@ fun MapsScreen(
                 viewModel = mapsViewModel,
                 onClickMarker = {
                     isMarkerClicked.value = true
+                    selectedBubble.value = it
                 }
             )
         }
