@@ -3,18 +3,26 @@ package com.seven_sheesh.greventure.presentation.ui.widget.common
 import android.credentials.GetCredentialException
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.credentials.CredentialManager
 import androidx.credentials.GetCredentialRequest
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
-import com.seven_sheesh.greventure.presentation.viewmodel.SignInViewModel
+import com.seven_sheesh.greventure.R
+import com.seven_sheesh.greventure.presentation.ui.widget.common.ButtonSize
+import com.seven_sheesh.greventure.presentation.ui.widget.common.ButtonType
+import com.seven_sheesh.greventure.presentation.ui.widget.common.CustomButton
+import com.seven_sheesh.greventure.presentation.viewmodel.LoginViewModel
 import com.seven_sheesh.greventure.utils.WEB_GOOGLE_CLIENT_ID
 import io.github.jan.supabase.exceptions.RestException
 import kotlinx.coroutines.launch
@@ -24,7 +32,7 @@ import java.util.UUID
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 @Composable
 fun GoogleSignInButton(
-    viewModel: SignInViewModel = hiltViewModel(),
+    viewModel: LoginViewModel = hiltViewModel(),
 ) {
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
@@ -78,9 +86,14 @@ fun GoogleSignInButton(
         }
     }
 
-    Button(
+    CustomButton(
         onClick = onClick,
-    ) {
-        Text("Sign in with Google")
-    }
+        type = ButtonType.OUTLINED,
+        size = ButtonSize.LARGE,
+        modifier = Modifier.fillMaxWidth(),
+        text = "Masuk dengan Google",
+        leadingContent = {
+            Icon(painterResource(id = R.drawable.google_logo), contentDescription = "Google Logo")
+        }
+    )
 }
