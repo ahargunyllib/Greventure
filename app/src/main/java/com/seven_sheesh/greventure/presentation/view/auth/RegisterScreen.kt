@@ -50,7 +50,6 @@ import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureSchem
 import com.seven_sheesh.greventure.presentation.ui.design_system.PlusJakartaSans
 import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.AuthNavObj
 import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.ParentNavObj
-import com.seven_sheesh.greventure.presentation.ui.widget.GoogleSignInButton
 import com.seven_sheesh.greventure.presentation.ui.widget.common.ButtonSize
 import com.seven_sheesh.greventure.presentation.ui.widget.common.ButtonType
 import com.seven_sheesh.greventure.presentation.ui.widget.common.CustomButton
