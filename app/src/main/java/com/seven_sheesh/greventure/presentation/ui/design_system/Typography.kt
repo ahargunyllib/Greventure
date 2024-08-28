@@ -9,7 +9,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.seven_sheesh.greventure.R
 
-private val PlusJakartaSans = FontFamily(
+val PlusJakartaSans = FontFamily(
     Font(R.font.plus_jakarta_sans_extra_light, FontWeight.ExtraLight),
     Font(R.font.plus_jakarta_sans_light, FontWeight.Light),
     Font(R.font.plus_jakarta_sans_regular, FontWeight.Normal),
