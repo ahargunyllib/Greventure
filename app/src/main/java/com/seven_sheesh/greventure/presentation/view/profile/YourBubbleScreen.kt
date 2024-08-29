@@ -148,6 +148,10 @@ fun YourBubbleScreen(
                     }
                     HorizontalDivider()
                 }
+
+                item{
+                    Spacer(modifier = Modifier.height(120.dp))
+                }
             }
         }
     }

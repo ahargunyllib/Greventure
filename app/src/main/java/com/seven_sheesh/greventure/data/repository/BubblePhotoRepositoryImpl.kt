@@ -1,16 +1,25 @@
 package com.seven_sheesh.greventure.data.repository
 
+import android.app.Application
+import android.content.ContentResolver
+import android.net.Uri
 import android.util.Log
 import com.seven_sheesh.greventure.domain.model.BubblePhoto
 import com.seven_sheesh.greventure.domain.repository.BubblePhotoRepository
 import io.github.jan.supabase.postgrest.Postgrest
+import io.github.jan.supabase.storage.Storage
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.io.InputStream
 import javax.inject.Inject
 
-class BubblePhotoRepositoryImpl @Inject constructor(private val supabaseClientProvider: Postgrest) : BubblePhotoRepository {
+class BubblePhotoRepositoryImpl @Inject constructor(
+    private val supabaseClientProvider: Postgrest,
+    private val supabaseStorage: Storage,
+    private val application: Application
+) : BubblePhotoRepository {
 
     private val TAG = "BubblePhotoRepositoryImpl"
 
@@ -81,20 +90,48 @@ class BubblePhotoRepositoryImpl @Inject constructor(private val supabaseClientPr
 
     override fun upsertBubblePhoto(bubblePhoto: BubblePhoto): Flow<String> {
         return flow {
-            Log.d(TAG, "upsertBubblePhoto: Processing...")
-            emit("Processing...")
+            emit("Starting photo upload...")
+            Log.d(TAG, "upsertBubblePhoto: Uploading photo...")
+
+            val contentResolver: ContentResolver = application.contentResolver
+            val uri = Uri.parse(bubblePhoto.url)
+            val inputStream: InputStream? = contentResolver.openInputStream(uri)
+
+            if (inputStream == null) {
+                Log.e(TAG, "upsertBubblePhoto: Unable to open InputStream from Uri")
+                emit("Unable to open InputStream from Uri")
+                return@flow
+            }
+
             try {
-                val response = withContext(Dispatchers.IO) {
-                    supabaseClientProvider.from("bubble_photos").upsert(bubblePhoto)
+                val imagePath = "bubble_photos/${uri.lastPathSegment ?: "unknown_image"}"
+                val uploadResponse = supabaseStorage.from("bubble").upload(
+                    path = imagePath,
+                    data = inputStream.readBytes(),
+                    upsert = true
+                )
+                Log.d(TAG, "upsertBubblePhoto: Upload response: $uploadResponse")
+
+                val publicUrl = supabaseStorage.from("bubble").publicUrl(imagePath)
+                Log.d(TAG, "upsertBubblePhoto: Public URL: $publicUrl")
+
+                val updatedBubblePhoto = bubblePhoto.copy(url = publicUrl)
+                val updateResponse = withContext(Dispatchers.IO) {
+                    supabaseClientProvider.from("bubble_photos").upsert(updatedBubblePhoto)
                 }
+                Log.d(TAG, "upsertBubblePhoto: Update response: $updateResponse")
+
                 Log.d(TAG, "upsertBubblePhoto: Bubble photo successfully inserted/updated")
                 emit("Bubble photo successfully inserted/updated")
             } catch (e: Exception) {
                 Log.e(TAG, "upsertBubblePhoto: An error occurred: ${e.message}", e)
                 emit("An error occurred: ${e.message}")
+            } finally {
+                inputStream.close()
             }
         }
     }
+
 
     override fun deleteBubblePhoto(photoId: Int): Flow<String> {
         return flow {
