@@ -25,24 +25,32 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import coil.compose.AsyncImage
 import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
 import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
+import com.seven_sheesh.greventure.presentation.viewmodel.ProfileViewModel
 
 @Composable
 @Preview
 fun ProfileBar(
     homeNavController: NavController = rememberNavController(),
+    profileViewModel: ProfileViewModel = hiltViewModel()
 ){
+    val user = profileViewModel.user.collectAsState(initial = Pair("", null)).value.second
+
     Column(modifier = Modifier
         .fillMaxWidth()
         .background(GreventureScheme.White.color)) {
@@ -76,27 +84,22 @@ fun ProfileBar(
                                 homeNavController.navigate(HomeNavObj.ProfileScreen.route)
                             }, contentAlignment = Alignment.Center
                         ) {
-                            // profile picture
+                            AsyncImage(model = user?.profilePictureUrl, contentDescription = "profile", modifier = Modifier.fillMaxSize(), contentScale = ContentScale.Crop)
                         }
                     }
                     Spacer(modifier = Modifier.width(12.dp))
                     Column {
                         Text(
-                            text = "Halo, Lorem Ipsum!",
+                            text = if (user == null) "Login dulu yuk" else "Halo, ${user.name}",
                             fontWeight = FontWeight.SemiBold,
                             fontSize = 18.sp,
                             color = GreventureScheme.White.color
                         )
                         Text(
-                            text = "Jelajahi kotamu bersama",
+                            text = "Jelajahi kotamu bersama \nGreventure",
                             fontSize = 14.sp,
                             modifier = Modifier.padding(top = 4.dp),
                             color = GreventureScheme.White.color
-                        )
-                        Text(text = "Greventure",
-                            color = GreventureScheme.White.color,
-                            modifier = Modifier
-                                .padding(top = 2.dp)
                         )
                     }
                 }

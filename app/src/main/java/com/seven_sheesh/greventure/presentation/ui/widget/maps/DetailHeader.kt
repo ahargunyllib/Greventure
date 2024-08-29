@@ -23,6 +23,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.seven_sheesh.greventure.domain.model.Bubble
+import com.seven_sheesh.greventure.domain.model.EventColor
+import com.seven_sheesh.greventure.domain.model.EventType
 import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
 
 @Composable
@@ -44,7 +46,7 @@ fun HeaderSection(currentBubble: State<Pair<String, Bubble?>>) {
                 Text(
                     text = currentBubble.value.second?.title ?: "",
                     color = GreventureScheme.Black.color,
-                    fontSize = 18.sp,
+                    fontSize = 20.sp,
                     fontWeight = FontWeight.SemiBold
                 )
                 Box(
@@ -52,13 +54,13 @@ fun HeaderSection(currentBubble: State<Pair<String, Bubble?>>) {
                         .height(32.dp)
                         .width(92.dp)
                         .clip(RoundedCornerShape(50))
-                        .background(GreventureScheme.PrimaryVariant3.color),
+                        .background(EventColor(currentBubble.value.second?.eventType ?: EventType.Masyarakat)),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(text = currentBubble.value.second?.eventType.toString(), color = GreventureScheme.White.color, fontSize = 12.sp)
                 }
             }
-            Spacer(modifier = Modifier.height(4.dp))
+            Spacer(modifier = Modifier.height(12.dp))
             Text(text = currentBubble.value.second?.description ?: "", color = GreventureScheme.Black.color)
         }
     }

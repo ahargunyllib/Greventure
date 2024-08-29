@@ -45,6 +45,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.seven_sheesh.greventure.domain.model.Bubble
+import com.seven_sheesh.greventure.domain.model.EventColor
+import com.seven_sheesh.greventure.domain.model.EventType
+import com.seven_sheesh.greventure.domain.model.EventVector
 import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
 import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
 import com.seven_sheesh.greventure.presentation.ui.widget.common.GoogleMapsComponent
@@ -141,13 +144,24 @@ fun MapsCard(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Card(
-                            modifier = Modifier.size(48.dp),
+                            modifier = Modifier.size(54.dp),
                             shape = RoundedCornerShape(50),
-                            colors = CardDefaults.cardColors(GreventureScheme.White.color),
-                            border = BorderStroke(2.dp, GreventureScheme.PrimaryVariant2.color)
-                        ) {}
+                            colors = CardDefaults.cardColors(EventColor(bubble.first.eventType ?: EventType.Komunitas)),
+                            border = BorderStroke(2.dp, GreventureScheme.SoftGray.color)
+                        ) {
+                            Box(
+                                modifier = Modifier.fillMaxSize(),
+                                contentAlignment = Alignment.Center
+                            ){
+                                Icon(
+                                    imageVector = EventVector(bubble.first.eventType ?: EventType.Komunitas),
+                                    contentDescription = "Icon",
+                                    tint = GreventureScheme.White.color
+                                )
+                            }
+                        }
                         Spacer(modifier = Modifier.width(12.dp))
-                        Column(modifier = Modifier.fillMaxSize(0.8f)) {
+                        Column(modifier = Modifier.fillMaxSize(0.7f)) {
                             Text(
                                 text = bubble.first.title,
                                 fontWeight = FontWeight.Medium,

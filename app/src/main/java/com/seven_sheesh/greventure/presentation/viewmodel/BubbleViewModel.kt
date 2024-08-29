@@ -43,6 +43,19 @@ class BubbleViewModel @Inject constructor(
 
     init {
         loadAllBubbles()
+        observeBubbleListChanges()
+    }
+
+    private fun observeBubbleListChanges() {
+        viewModelScope.launch {
+            bubbleListState.collect { (status, bubbles) ->
+                if (status != "Loading..." && bubbles.isNotEmpty()) {
+                    bubbles.forEach { bubble ->
+                        loadBubblePhotoByBubbleId2(bubble.id)
+                    }
+                }
+            }
+        }
     }
 
     fun loadAllBubbles() {
@@ -116,6 +129,15 @@ class BubbleViewModel @Inject constructor(
             bubblePhotoRepository.getBubblePhotosByBubbleId(bubbleId)
                 .collect { result ->
                     _bubblePhotoListState.value = result
+                }
+        }
+    }
+
+    private fun loadBubblePhotoByBubbleId2(bubbleId: String) {
+        viewModelScope.launch {
+            bubblePhotoRepository.getBubblePhotosByBubbleId(bubbleId)
+                .collect { result ->
+                    _bubblePhotoListState.value = _bubblePhotoListState.value.copy(second = bubblePhotoListState.value.second + result.second)
                 }
         }
     }

@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -31,7 +32,7 @@ import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureSchem
 import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
 
 @Composable
-fun LocationCard(homeNavController: NavController, currentBubble: State<Pair<String, Bubble?>>) {
+fun DateLocationCard(homeNavController: NavController, currentBubble: State<Pair<String, Bubble?>>) {
     Spacer(modifier = Modifier.height(12.dp))
     Row(
         modifier = Modifier
@@ -41,10 +42,10 @@ fun LocationCard(homeNavController: NavController, currentBubble: State<Pair<Str
         verticalAlignment = Alignment.CenterVertically
     ) {
         Card(
-            modifier = Modifier.size(48.dp),
+            modifier = Modifier.size(42.dp),
             shape = RoundedCornerShape(50),
-            colors = CardDefaults.cardColors(GreventureScheme.White.color),
-            border = BorderStroke(2.dp, GreventureScheme.PrimaryVariant2.color)
+            colors = CardDefaults.cardColors(GreventureScheme.Primary.color),
+            border = BorderStroke(2.dp, GreventureScheme.SoftGray.color)
         ) {
             Box(
                 modifier = Modifier
@@ -54,12 +55,44 @@ fun LocationCard(homeNavController: NavController, currentBubble: State<Pair<Str
                     },
                 contentAlignment = Alignment.Center
             ) {
-                Icon(imageVector = Icons.Default.LocationOn, contentDescription = "Location", tint = GreventureScheme.Primary.color)
+                Icon(imageVector = Icons.Default.LocationOn, contentDescription = "Location", tint = GreventureScheme.White.color)
             }
         }
         Spacer(modifier = Modifier.width(12.dp))
         Column {
             Text(text = currentBubble.value.second?.latitude.toString()+ "° / " + currentBubble.value.second?.longitude.toString() + "°", color = GreventureScheme.Black.color)
+        }
+    }
+
+    Spacer(modifier = Modifier.height(12.dp))
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
+        horizontalArrangement = Arrangement.Start,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Card(
+            modifier = Modifier.size(42.dp),
+            shape = RoundedCornerShape(50),
+            colors = CardDefaults.cardColors(GreventureScheme.Primary.color),
+            border = BorderStroke(2.dp, GreventureScheme.SoftGray.color)
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clickable {
+                        homeNavController.navigate(HomeNavObj.NotificationScreen.route)
+                    },
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(imageVector = Icons.Default.CalendarToday, contentDescription = "Location", tint = GreventureScheme.White.color)
+            }
+        }
+        Spacer(modifier = Modifier.width(12.dp))
+        Column {
+            Text(text = currentBubble.value.second?.startTime.toString()
+                , color = GreventureScheme.Black.color)
         }
     }
 }

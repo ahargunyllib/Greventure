@@ -25,6 +25,8 @@ import com.seven_sheesh.greventure.presentation.viewmodel.MapsViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.maps.android.compose.Marker
 import com.seven_sheesh.greventure.domain.model.Bubble
+import com.seven_sheesh.greventure.domain.model.EventColor
+import com.seven_sheesh.greventure.domain.model.EventType
 import com.seven_sheesh.greventure.ui.viewmodel.BubbleViewModel
 
 @SuppressLint("UnrememberedMutableState")
@@ -75,7 +77,7 @@ fun GoogleMapsComponent(
                         verticalArrangement = Arrangement.Center,
                         modifier = Modifier
                             .clip(RoundedCornerShape(24.dp))
-                            .background(GreventureScheme.Primary.color)
+                            .background(EventColor(bubble.eventType ?: EventType.Masyarakat))
                             .padding(vertical = 8.dp, horizontal = 16.dp)
                     ) {
                         Text(bubble.title, fontWeight = FontWeight.Medium, color = GreventureScheme.White.color)

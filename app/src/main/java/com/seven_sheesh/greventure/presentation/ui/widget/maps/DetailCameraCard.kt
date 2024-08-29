@@ -31,39 +31,40 @@ import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureSchem
 import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
 
 @Composable
-fun CameraCard(
+fun SocialMediaCard(
     homeNavController: NavController,
     currentBubbleSocialMedia: State<Pair<String, List<BubbleSocialMedia>>>
 ) {
-    Spacer(modifier = Modifier.height(12.dp))
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
-        horizontalArrangement = Arrangement.Start,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Card(
-            modifier = Modifier.size(48.dp),
-            shape = RoundedCornerShape(50),
-            colors = CardDefaults.cardColors(GreventureScheme.White.color),
-            border = BorderStroke(2.dp, GreventureScheme.PrimaryVariant2.color)
+    currentBubbleSocialMedia.value.second.forEach {
+        Spacer(modifier = Modifier.height(12.dp))
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .clickable {
-                        homeNavController.navigate(HomeNavObj.NotificationScreen.route)
-                    },
-                contentAlignment = Alignment.Center
+            Card(
+                modifier = Modifier.size(42.dp),
+                shape = RoundedCornerShape(50),
+                colors = CardDefaults.cardColors(GreventureScheme.Primary.color),
+                border = BorderStroke(2.dp, GreventureScheme.SoftGray.color)
             ) {
-                Icon(imageVector = Icons.Default.CameraAlt, contentDescription = "Camera", tint = GreventureScheme.Primary.color)
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .clickable {
+                            homeNavController.navigate(HomeNavObj.NotificationScreen.route)
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(imageVector = Icons.Default.CameraAlt, contentDescription = "Camera", tint = GreventureScheme.White.color)
+                }
             }
-        }
-        Spacer(modifier = Modifier.width(12.dp))
-        Column {
-            Text(text = currentBubbleSocialMedia.value.second.firstOrNull()?.type.toString() + ": " +
-                currentBubbleSocialMedia.value.second.firstOrNull()?.content.toString(), color = GreventureScheme.Black.color)
+            Spacer(modifier = Modifier.width(12.dp))
+            Column {
+                Text(text = it.type.toString() + ": " + it.content, color = GreventureScheme.Black.color)
+            }
         }
     }
 }

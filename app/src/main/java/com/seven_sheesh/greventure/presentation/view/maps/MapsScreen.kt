@@ -85,7 +85,9 @@ fun MapsScreen(
                         onClick = {
                         val route = HomeNavObj.DetailScreen.createRoute(it)
                         homeNavController.navigate(route)
-                    })
+                    }, onDismiss = {
+                        isMarkerClicked.value = false
+                        })
                     Spacer(modifier = Modifier.height(96.dp))
                 }
             }

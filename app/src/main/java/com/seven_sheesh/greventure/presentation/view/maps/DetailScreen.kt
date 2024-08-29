@@ -1,6 +1,10 @@
 package com.seven_sheesh.greventure.presentation.view.maps
 
 import android.annotation.SuppressLint
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,11 +20,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
-import com.seven_sheesh.greventure.presentation.ui.widget.maps.CameraCard
+import com.seven_sheesh.greventure.presentation.ui.widget.maps.SocialMediaCard
 import com.seven_sheesh.greventure.presentation.ui.widget.maps.DiscussionSection
 import com.seven_sheesh.greventure.presentation.ui.widget.maps.FAQSection
 import com.seven_sheesh.greventure.presentation.ui.widget.maps.HeaderSection
-import com.seven_sheesh.greventure.presentation.ui.widget.maps.LocationCard
+import com.seven_sheesh.greventure.presentation.ui.widget.maps.DateLocationCard
 import com.seven_sheesh.greventure.presentation.ui.widget.maps.PictureCard
 import com.seven_sheesh.greventure.presentation.ui.widget.maps.TopBar
 import com.seven_sheesh.greventure.presentation.viewmodel.MapsViewModel
@@ -60,20 +64,28 @@ fun DetailScreen(
                 .safeDrawingPadding(),
             contentAlignment = Alignment.Center
         ) {
-            LazyColumn(
-                modifier = Modifier.fillMaxSize()
+            AnimatedVisibility(
+                visible = currentBubble.value.second?.id == bubbleId,
+                enter = fadeIn(animationSpec = tween(durationMillis = 500)),
+                exit = fadeOut(animationSpec = tween(durationMillis = 500))
             ) {
-                item { PictureCard(currentBubblePhoto) }
-                item { HeaderSection(currentBubble) }
-                item { LocationCard(homeNavController, currentBubble) }
-                item { CameraCard(homeNavController, currentBubbleSocialMedia) }
-                item { FAQSection() }
-                item { DiscussionSection() }
-                item { Spacer(modifier = Modifier.height(140.dp)) }
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    item { PictureCard(currentBubblePhoto, currentBubble) }
+                    item { HeaderSection(currentBubble) }
+                    item { DateLocationCard(homeNavController, currentBubble) }
+                    item { SocialMediaCard(homeNavController, currentBubbleSocialMedia) }
+                    item { FAQSection() }
+                    item { DiscussionSection() }
+                    item { Spacer(modifier = Modifier.height(140.dp)) }
+                }
             }
         }
     }
 }
+
+
 
 
 
