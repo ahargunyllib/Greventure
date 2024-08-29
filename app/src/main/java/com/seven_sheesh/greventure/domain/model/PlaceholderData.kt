@@ -198,7 +198,7 @@ object PlaceholderData {
         latitude = 0.0,
         longitude = 0.0,
         startTime = java.time.OffsetDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSXXX")),
-        duration = "02:00:00",
+        duration = "00:00:00",
         phoneNumber = "",
         createdAt = java.time.OffsetDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSXXX")),
         updatedAt = java.time.OffsetDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSXXX"))
