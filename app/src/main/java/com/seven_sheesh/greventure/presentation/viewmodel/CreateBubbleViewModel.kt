@@ -18,7 +18,9 @@ class CreateBubbleViewModel @Inject constructor(): ViewModel() {
     private val _bubblePhoto = MutableStateFlow<BubblePhoto>(PlaceholderData.bubblePhotoEmpty)
     val bubblePhoto = _bubblePhoto.asStateFlow()
 
-    private val _bubbleSocialMedia = MutableStateFlow<BubbleSocialMedia>(PlaceholderData.bubbleSocialMediaEmpty)
+    private val _bubbleSocialMedia = MutableStateFlow<Triple<BubbleSocialMedia, BubbleSocialMedia, BubbleSocialMedia>>(
+        Triple(PlaceholderData.bubbleSocialMediaEmpty, PlaceholderData.bubbleSocialMediaEmpty, PlaceholderData.bubbleSocialMediaEmpty)
+    )
     val bubbleSocialMedia = _bubbleSocialMedia.asStateFlow()
 
     fun updateBubble(bubble: Bubble) {
@@ -29,7 +31,11 @@ class CreateBubbleViewModel @Inject constructor(): ViewModel() {
         _bubblePhoto.value = bubblePhoto
     }
 
-    fun updateBubbleSocialMedia(bubbleSocialMedia: BubbleSocialMedia) {
-        _bubbleSocialMedia.value = bubbleSocialMedia
+    fun updateBubbleSocialMedia(bubbleSocialMedia: BubbleSocialMedia, index: Int) {
+        when(index){
+            0 -> _bubbleSocialMedia.value = _bubbleSocialMedia.value.copy(first = bubbleSocialMedia)
+            1 -> _bubbleSocialMedia.value = _bubbleSocialMedia.value.copy(second = bubbleSocialMedia)
+            2 -> _bubbleSocialMedia.value = _bubbleSocialMedia.value.copy(third = bubbleSocialMedia)
+        }
     }
 }

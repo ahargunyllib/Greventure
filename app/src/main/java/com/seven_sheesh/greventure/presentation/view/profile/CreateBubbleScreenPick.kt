@@ -1,7 +1,5 @@
 package com.seven_sheesh.greventure.presentation.view.profile
 
-import android.content.Context
-import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -32,7 +30,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -50,42 +47,26 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.seven_sheesh.greventure.R
-import com.seven_sheesh.greventure.domain.model.Bubble
-import com.seven_sheesh.greventure.domain.model.BubblePhoto
-import com.seven_sheesh.greventure.domain.model.BubbleSocialMedia
 import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
 import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
+import com.seven_sheesh.greventure.presentation.ui.widget.common.GoogleMapsComponent
 import com.seven_sheesh.greventure.presentation.viewmodel.CreateBubbleViewModel
+import com.seven_sheesh.greventure.presentation.viewmodel.MapsViewModel
 import com.seven_sheesh.greventure.presentation.viewmodel.NavbarViewModel
-import com.seven_sheesh.greventure.ui.viewmodel.BubbleViewModel
+import com.seven_sheesh.greventure.utils.RequestLocationLooper
 
 @Composable
 @Preview
-fun CreateBubbleScreen3(
+fun CreateBubbleScreenPick(
     homeNavController: NavController = rememberNavController(),
     navbarViewModel: NavbarViewModel = hiltViewModel(),
     createBubbleViewModel: CreateBubbleViewModel = hiltViewModel(),
+    mapsViewModel: MapsViewModel = hiltViewModel()
 ){
     navbarViewModel.setPageState(3)
-    val bubbleViewModel = hiltViewModel<BubbleViewModel>()
-    val message = bubbleViewModel.messageState.collectAsState()
     val bubble = createBubbleViewModel.bubbleState.collectAsState()
-    val bubblePhoto = createBubbleViewModel.bubblePhoto.collectAsState()
-    val bubbleSocialMedia = createBubbleViewModel.bubbleSocialMedia.collectAsState()
     val context = LocalContext.current
-
-    val singlePhotoPickerLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.PickVisualMedia(),
-        onResult = { uri ->
-            createBubbleViewModel.updateBubblePhoto(bubblePhoto.value.copy(url = uri.toString()))
-        }
-    )
-
-    LaunchedEffect(message.value) {
-        if (message.value.isNotEmpty()) {
-            Toast.makeText(context, message.value, Toast.LENGTH_SHORT).show()
-        }
-    }
+    RequestLocationLooper(context = context, mapsViewModel = mapsViewModel)
 
     Box(modifier = Modifier
         .fillMaxSize()
@@ -126,7 +107,7 @@ fun CreateBubbleScreen3(
                 Box(modifier = Modifier
                     .fillMaxWidth()
                     .padding(24.dp), contentAlignment = Alignment.Center){
-                    Image(painter = painterResource(id = R.drawable.create_bubble_3), contentDescription = "step 1", modifier = Modifier.height(72.dp))
+                    Image(painter = painterResource(id = R.drawable.create_bubble_2), contentDescription = "step 1", modifier = Modifier.height(72.dp))
                 }
             }
 
@@ -139,56 +120,50 @@ fun CreateBubbleScreen3(
                 ) {
                     Column(modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp)) {
-                        Text(text = "Lampirkan Dokumentasi (optional)", fontWeight = FontWeight.Bold, fontSize = 16.sp, color = GreventureScheme.Black.color)
+                        .padding(16.dp)
+                    ) {
+                        Text(text = "Tap sekali peta untuk memilih lokasi", fontWeight = FontWeight.Bold, fontSize = 16.sp, color = GreventureScheme.Black.color)
                         Spacer(modifier = Modifier.height(4.dp))
-                        Text(text = "Dokumentasi terkait event", fontSize = 12.sp, color = GreventureScheme.Gray.color)
-                        Spacer(modifier = Modifier.height(16.dp))
-                        Box(modifier = Modifier
-                            .fillMaxWidth()
-                            .height(160.dp)
-                            .clip(RoundedCornerShape(16.dp))
-                            .border(
-                                BorderStroke(2.dp, GreventureScheme.SoftGray.color),
-                                RoundedCornerShape(16.dp)
-                            )
-                            .clickable {
-                                singlePhotoPickerLauncher.launch(
-                                    PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
-                                )
-                            },
-                            contentAlignment = Alignment.Center,
-                        ){
-                            Icon(imageVector = Icons.Outlined.Image, contentDescription = "Image", tint = GreventureScheme.SoftGray.color, modifier = Modifier.size(60.dp))
-                            AsyncImage(model = bubblePhoto.value.url, contentDescription = "Image", modifier = Modifier.fillMaxSize(), contentScale = ContentScale.Crop)
-                        }
-
-                        Spacer(modifier = Modifier.height(24.dp))
-                        HorizontalDivider()
+                        Text(text = "Lokasi terpilih: ", fontSize = 12.sp, color = GreventureScheme.Gray.color)
+                        Text(text = "${bubble.value.latitude} / ${bubble.value.longitude}", fontSize = 12.sp, color = GreventureScheme.Gray.color)
                         Spacer(modifier = Modifier.height(16.dp))
 
                         Card(modifier = Modifier
                             .fillMaxWidth()
-                            .height(48.dp),
+                            .height(360.dp),
+                            colors = CardDefaults.cardColors(GreventureScheme.White.color),
+                            border = BorderStroke(2.dp, GreventureScheme.SoftGray.color)
+                        ){
+                            GoogleMapsComponent(
+                                cameraPositionState = mapsViewModel.cameraPositionState.collectAsState().value,
+                                properties = mapsViewModel.properties.collectAsState().value,
+                                uiSettings = mapsViewModel.uiSettings.collectAsState().value,
+                                currentLocation = mapsViewModel.currentPosition.collectAsState().value,
+                                context = context,
+                                onMapClick = {
+                                    createBubbleViewModel.updateBubble(
+                                        bubble.value.copy(
+                                            latitude = String.format("%.4f", it.latitude).toDouble(),
+                                            longitude = String.format("%.4f", it.longitude).toDouble()
+                                        )
+                                    )
+                                }
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Card(modifier = Modifier
+                            .fillMaxWidth()
+                            .height(42.dp),
                             colors = CardDefaults.cardColors(GreventureScheme.Primary.color),
                             shape = RoundedCornerShape(50.dp)
                         ) {
                             Box(modifier = Modifier
                                 .fillMaxSize()
                                 .clickable {
-                                    handleBubbleData(
-                                        bubble = bubble.value,
-                                        bubblePhoto = bubblePhoto.value,
-                                        bubbleSocialMedia = listOf(
-                                            bubbleSocialMedia.value.first,
-                                            bubbleSocialMedia.value.second,
-                                            bubbleSocialMedia.value.third
-                                        ),
-                                        bubbleViewModel = bubbleViewModel,
-                                        context = context
-                                    )
+                                    homeNavController.navigate(HomeNavObj.CreateBubble2.route)
                                 }, contentAlignment = Alignment.Center){
-                                Text(text = "Lanjut", color = GreventureScheme.White.color, fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
+                                Text(text = "Lanjut", color = GreventureScheme.White.color, fontSize = 16.sp, fontWeight = FontWeight.Medium)
                             }
                         }
                     }
@@ -199,28 +174,5 @@ fun CreateBubbleScreen3(
                 Spacer(modifier = Modifier.height(120.dp))
             }
         }
-    }
-}
-
-fun handleBubbleData(
-    bubble: Bubble,
-    bubblePhoto: BubblePhoto,
-    bubbleSocialMedia: List<BubbleSocialMedia>,
-    bubbleViewModel: BubbleViewModel,
-    context: Context
-) {
-    if (bubble.isComplete() && bubblePhoto.isComplete()) {
-        if (bubbleSocialMedia.any { it.isComplete() }) {
-            bubbleViewModel.upsertBubble(bubble)
-            bubbleViewModel.upsertBubblePhoto(bubblePhoto)
-
-            bubbleSocialMedia.filter { it.isComplete() }.forEach {
-                bubbleViewModel.upsertBubbleSocialMedia(it)
-            }
-        } else {
-            Toast.makeText(context, "Lengkapi media sosial terlebih dahulu", Toast.LENGTH_SHORT).show()
-        }
-    } else {
-        Toast.makeText(context, "Lengkapi data terlebih dahulu", Toast.LENGTH_SHORT).show()
     }
 }

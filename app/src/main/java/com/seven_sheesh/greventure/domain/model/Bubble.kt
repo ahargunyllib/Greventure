@@ -19,7 +19,19 @@ data class Bubble(
     @SerialName("phone_number") val phoneNumber: String,
     @SerialName("created_at") val createdAt: String? = null,
     @SerialName("updated_at") val updatedAt: String? = null
-)
+){
+    fun isComplete(): Boolean {
+        return id.isNotBlank() &&
+                userId.isNotBlank() &&
+                title.isNotBlank() &&
+                description.isNotBlank() &&
+                startTime.isNotBlank() &&
+                duration.isNotBlank() &&
+                phoneNumber.isNotBlank() &&
+                latitude != 0.0 &&
+                longitude != 0.0
+    }
+}
 
 @Serializable
 data class BubblePhoto(
@@ -27,7 +39,13 @@ data class BubblePhoto(
     @SerialName("bubble_id") val bubbleId: String,
     @SerialName("url") val url: String,
     @SerialName("created_at") val createdAt: String? = null
-)
+) {
+    fun isComplete(): Boolean {
+        return id != 0 &&
+                bubbleId.isNotBlank()
+    }
+}
+
 
 @Serializable
 data class BubbleSocialMedia(
@@ -36,4 +54,10 @@ data class BubbleSocialMedia(
     @SerialName("content") val content: String,
     @SerialName("type") val type: SocialMedia,
     @SerialName("created_at") val createdAt: String? = null
-)
+) {
+    fun isComplete(): Boolean {
+        return id != 0 &&
+                bubbleId.isNotBlank() &&
+                content.isNotBlank()
+    }
+}

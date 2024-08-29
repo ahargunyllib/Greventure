@@ -29,9 +29,11 @@ import com.seven_sheesh.greventure.presentation.view.maps.MapsScreen
 import com.seven_sheesh.greventure.presentation.view.profile.CreateBubbleScreen1
 import com.seven_sheesh.greventure.presentation.view.profile.CreateBubbleScreen2
 import com.seven_sheesh.greventure.presentation.view.profile.CreateBubbleScreen3
+import com.seven_sheesh.greventure.presentation.view.profile.CreateBubbleScreenPick
 import com.seven_sheesh.greventure.presentation.view.profile.EditProfileScreen
 import com.seven_sheesh.greventure.presentation.view.profile.ProfileScreen
 import com.seven_sheesh.greventure.presentation.view.profile.YourBubbleScreen
+import com.seven_sheesh.greventure.presentation.viewmodel.CreateBubbleViewModel
 import com.seven_sheesh.greventure.presentation.viewmodel.MapsViewModel
 import com.seven_sheesh.greventure.presentation.viewmodel.NavbarViewModel
 
@@ -42,6 +44,7 @@ fun HomeNavHost(parentNavController: NavController = rememberNavController()){
     val homeNavController = rememberNavController()
     val navbarViewModel   = hiltViewModel<NavbarViewModel>()
     val mapsViewModel     = hiltViewModel<MapsViewModel>()
+    val createBubbleViewModel = hiltViewModel<CreateBubbleViewModel>()
 
     Scaffold(
         containerColor = GreventureScheme.White.color,
@@ -298,7 +301,8 @@ fun HomeNavHost(parentNavController: NavController = rememberNavController()){
                 content = {
                     CreateBubbleScreen1(
                         homeNavController = homeNavController,
-                        navbarViewModel = navbarViewModel
+                        navbarViewModel = navbarViewModel,
+                        createBubbleViewModel = createBubbleViewModel
                     )
                 }, enterTransition = {
                     return@composable slideIntoContainer(
@@ -316,7 +320,8 @@ fun HomeNavHost(parentNavController: NavController = rememberNavController()){
                 content = {
                     CreateBubbleScreen2(
                         homeNavController = homeNavController,
-                        navbarViewModel = navbarViewModel
+                        navbarViewModel = navbarViewModel,
+                        createBubbleViewModel = createBubbleViewModel
                     )
                 }, enterTransition = {
                     return@composable slideIntoContainer(
@@ -334,7 +339,28 @@ fun HomeNavHost(parentNavController: NavController = rememberNavController()){
                 content = {
                     CreateBubbleScreen3(
                         homeNavController = homeNavController,
-                        navbarViewModel = navbarViewModel
+                        navbarViewModel = navbarViewModel,
+                        createBubbleViewModel = createBubbleViewModel
+                    )
+                }, enterTransition = {
+                    return@composable slideIntoContainer(
+                        AnimatedContentTransitionScope.SlideDirection.Up, tween(700)
+                    )
+                }, popExitTransition = {
+                    return@composable slideOutOfContainer(
+                        AnimatedContentTransitionScope.SlideDirection.Down, tween(700)
+                    )
+                }
+            )
+
+            composable(
+                route = HomeNavObj.CreateBubblePick.route,
+                content = {
+                    CreateBubbleScreenPick(
+                        homeNavController = homeNavController,
+                        navbarViewModel = navbarViewModel,
+                        createBubbleViewModel = createBubbleViewModel,
+                        mapsViewModel = mapsViewModel
                     )
                 }, enterTransition = {
                     return@composable slideIntoContainer(
