@@ -38,7 +38,7 @@ import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.ParentNavO
 import com.seven_sheesh.greventure.utils.loadProgress
 
 @Composable
-fun Boarding3Screen(authNavCtr: NavController) {
+fun Boarding3Screen(authNavCtr: NavController, parentNavCtr: NavController) {
     val currentProgress = remember { mutableFloatStateOf(0f) }
     LaunchedEffect(Unit) {
         loadProgress {
@@ -66,7 +66,7 @@ fun Boarding3Screen(authNavCtr: NavController) {
                 ) {
                     Button(
                         onClick = {
-                            authNavCtr.navigate(AuthNavObj.Home.route)
+                            parentNavCtr.navigate(ParentNavObj.HomeNav.route)
                         },
                         colors = ButtonDefaults.buttonColors(GreventureScheme.White.color),
                         modifier = Modifier.height(48.dp).width(160.dp),

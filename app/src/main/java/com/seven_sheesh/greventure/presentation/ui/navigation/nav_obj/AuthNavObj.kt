@@ -7,5 +7,4 @@ sealed class AuthNavObj(val route: String) {
     data object Boarding3: AuthNavObj("boarding-3")
     data object Login: AuthNavObj("login")
     data object Register: AuthNavObj("register")
-    data object Home: AuthNavObj("home")
 }

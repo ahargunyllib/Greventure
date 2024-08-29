@@ -18,37 +18,33 @@ import com.seven_sheesh.greventure.presentation.view.auth.SplashScreen
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 @Composable
 fun AuthNavHost(
-    parentNavCtr : NavController
+    parentNavController: NavController = rememberNavController()
 ) {
     val authNavCtr = rememberNavController()
-    
-    NavHost(navController = authNavCtr, startDestination = AuthNavObj.Splash.route){
-        composable(AuthNavObj.Splash.route){
-            SplashScreen(authNavCtr = authNavCtr)
+
+    NavHost(navController = authNavCtr, startDestination = AuthNavObj.Splash.route) {
+        composable(AuthNavObj.Splash.route) {
+            SplashScreen(authNavCtr = authNavCtr, parentNavCtr = parentNavController)
         }
 
-        composable(AuthNavObj.Boarding1.route){
+        composable(AuthNavObj.Boarding1.route) {
             Boarding1Screen(authNavCtr = authNavCtr)
         }
 
-        composable(AuthNavObj.Boarding2.route){
+        composable(AuthNavObj.Boarding2.route) {
             Boarding2Screen(authNavCtr = authNavCtr)
         }
 
-        composable(AuthNavObj.Boarding3.route){
-            Boarding3Screen(authNavCtr = authNavCtr)
+        composable(AuthNavObj.Boarding3.route) {
+            Boarding3Screen(authNavCtr = authNavCtr, parentNavCtr = parentNavController)
         }
 
-        composable(AuthNavObj.Login.route){
-            LoginScreen(authNavCtr = authNavCtr)
+        composable(AuthNavObj.Login.route) {
+            LoginScreen(authNavCtr = authNavCtr, parentNavCtr = parentNavController)
         }
 
-        composable(AuthNavObj.Register.route){
+        composable(AuthNavObj.Register.route) {
             RegisterScreen(authNavCtr = authNavCtr)
-        }
-
-        composable(AuthNavObj.Home.route){
-            HomeNavHost()
         }
     }
 

@@ -21,7 +21,7 @@ class LoginViewModel @Inject constructor(
     val password: Flow<String> = _password
 
     private val _message = MutableStateFlow("")
-    val message: StateFlow<String> get() = _message
+    val message: Flow<String> = _message
 
     fun onEmailChange(email: String) {
         _email.value = email
@@ -37,7 +37,7 @@ class LoginViewModel @Inject constructor(
             return
         }
 
-        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(_message.value).matches()){
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(_email.value).matches()){
             _message.value = "Please enter a valid email"
             return
         }
