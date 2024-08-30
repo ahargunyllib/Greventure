@@ -1,5 +1,8 @@
 package com.seven_sheesh.greventure.data.repository
 
+import android.app.Application
+import android.content.ContentResolver
+import android.net.Uri
 import android.util.Log
 import com.seven_sheesh.greventure.domain.model.User
 import com.seven_sheesh.greventure.domain.repository.AuthenticationRepository
@@ -17,10 +20,14 @@ import kotlinx.serialization.json.buildJsonObject
 import okhttp3.internal.wait
 import javax.inject.Inject
 import com.google.gson.JsonObject
+import io.github.jan.supabase.storage.Storage
+import java.io.InputStream
 
 class AuthenticationRepositoryImpl @Inject constructor(
     private val auth: Auth,
-    private val db: Postgrest
+    private val db: Postgrest,
+    private val storage: Storage,
+    private val application: Application
 ) : AuthenticationRepository {
     private val FILE_NAME = "AuthenticationRepositoryImpl"
 
@@ -178,6 +185,76 @@ class AuthenticationRepositoryImpl @Inject constructor(
                 auth.signOut()
                 Log.d(FILE_NAME, "[$FUNCTION_NAME] Success")
                 emit("Successfully sign out")
+            } catch (e: Exception) {
+                Log.d(FILE_NAME, "[$FUNCTION_NAME] Error")
+                emit("An error occurred: ${e.message}")
+            }
+        }
+    }
+
+    override suspend fun editProfile(
+        name: String,
+        email: String,
+        phoneNumber: String,
+        photoUri: Uri
+    ): Flow<String> {
+        val FUNCTION_NAME = "editProfile"
+        return flow {
+            Log.d(FILE_NAME, "[$FUNCTION_NAME] Loading")
+            emit("Loading")
+            try {
+                auth.awaitInitialization()
+                val session = auth.currentSessionOrNull()
+                if (session == null) {
+                    Log.d(FILE_NAME, "[$FUNCTION_NAME] Error")
+                    emit("User not found")
+                    return@flow
+                }
+
+                val user = withContext(Dispatchers.IO) {
+                    db.from("users").select {
+                        filter {
+                            eq("email", session.user?.email!!)
+                        }
+                    }.decodeSingleOrNull<User>()
+                }
+                if (user == null) {
+                    Log.d(FILE_NAME, "[$FUNCTION_NAME] Error")
+                    emit("User not found")
+                    return@flow
+                }
+
+                if (photoUri != Uri.EMPTY) {
+                    val contentResolver: ContentResolver = application.contentResolver
+                    val inputStream: InputStream? = contentResolver.openInputStream(photoUri)
+                    val imagePath = "profile_photo/${photoUri.lastPathSegment ?: "unknown_image"}"
+
+                    if (inputStream == null) {
+                        Log.e(FILE_NAME, "[$FUNCTION_NAME]: Unable to open InputStream from Uri")
+                        emit("Unable to open InputStream from Uri")
+                        return@flow
+                    }
+
+                    storage.from("image").upload(
+                        path = imagePath,
+                        data = inputStream.readBytes(),
+                        upsert = true
+                    )
+
+                    val profilePictureUrl = storage.from("image").publicUrl(imagePath)
+
+                    val userDto = User(
+                        id = user.id,
+                        name = name,
+                        email = email,
+                        phoneNum = phoneNumber,
+                        profilePictureUrl = profilePictureUrl
+                    )
+                    db.from("users").upsert(userDto)
+
+                    Log.d(FILE_NAME, "[$FUNCTION_NAME] Success")
+                    emit("Successfully edit profile")
+                }
             } catch (e: Exception) {
                 Log.d(FILE_NAME, "[$FUNCTION_NAME] Error")
                 emit("An error occurred: ${e.message}")
