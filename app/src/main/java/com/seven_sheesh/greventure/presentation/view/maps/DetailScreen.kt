@@ -66,12 +66,13 @@ fun DetailScreen(
         threadViewModel.loadThreadByBubbleId(bubbleIdValue)
     }
     val threadsState = threadViewModel.threadListState.collectAsState()
+    val user = navbarViewModel.user.collectAsState().value.second
 
     Scaffold(
         containerColor = GreventureScheme.White.color,
         contentColor = GreventureScheme.White.color,
         topBar = {
-            TopBar(homeNavController)
+            TopBar(homeNavController, bubbleId, user?.id ?: "")
         },
         bottomBar = {
             Column(modifier = Modifier.animateContentSize(animationSpec = tween(durationMillis = 1500))) {
