@@ -150,10 +150,13 @@ fun HomeNavHost(parentNavController: NavController = rememberNavController()){
 
             composable(
                 route = HomeNavObj.NewsDetailScreen.route,
+                arguments = listOf(navArgument("news_id") { type = NavType.StringType }),
                 content = {
+                        val newsId = it.arguments?.getString("news_id") ?: ""
                     NewsDetailScreen(
                         homeNavController = homeNavController,
-                        navbarViewModel = navbarViewModel
+                        navbarViewModel = navbarViewModel,
+                        newsId = newsId
                     )
                 }, enterTransition = {
                     return@composable slideIntoContainer(

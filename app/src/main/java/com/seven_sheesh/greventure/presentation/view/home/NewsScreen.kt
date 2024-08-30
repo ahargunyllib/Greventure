@@ -29,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -36,6 +37,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import coil.compose.AsyncImage
+import com.seven_sheesh.greventure.domain.model.dummyNews
 import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
 import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
 import com.seven_sheesh.greventure.presentation.viewmodel.NavbarViewModel
@@ -45,23 +48,26 @@ import com.seven_sheesh.greventure.presentation.viewmodel.NavbarViewModel
 fun NewsScreen(
     homeNavController: NavController = rememberNavController(),
     navbarViewModel: NavbarViewModel = hiltViewModel(),
-){
+) {
     navbarViewModel.setPageState(0)
 
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .background(Color.White)
-        .safeDrawingPadding(),
-        contentAlignment = Alignment.Center) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White)
+            .safeDrawingPadding(),
+        contentAlignment = Alignment.Center
+    ) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
         ) {
             item {
-                Row(modifier = Modifier
-                    .fillMaxWidth()
-                    .height(90.dp)
-                    .background(GreventureScheme.Primary.color),
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(90.dp)
+                        .background(GreventureScheme.Primary.color),
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -71,12 +77,22 @@ fun NewsScreen(
                             .fillMaxSize(),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
-                    ){
-                        Icon(imageVector = Icons.Default.ArrowBackIosNew, contentDescription = "Arrow Back", modifier = Modifier.clickable {
-                            homeNavController.navigate(HomeNavObj.HomeScreen.route)
-                        }, tint = GreventureScheme.White.color)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBackIosNew,
+                            contentDescription = "Arrow Back",
+                            modifier = Modifier.clickable {
+                                homeNavController.navigate(HomeNavObj.HomeScreen.route)
+                            },
+                            tint = GreventureScheme.White.color
+                        )
                         Column {
-                            Text(text = "Berita", fontWeight = FontWeight.SemiBold, fontSize = 22.sp, color = GreventureScheme.White.color)
+                            Text(
+                                text = "Berita",
+                                fontWeight = FontWeight.SemiBold,
+                                fontSize = 22.sp,
+                                color = GreventureScheme.White.color
+                            )
                         }
                         Spacer(modifier = Modifier.padding(horizontal = 8.dp))
                     }
@@ -84,27 +100,57 @@ fun NewsScreen(
             }
 
             item {
-                val dummyArray = listOf(0, 1, 2)
                 Spacer(modifier = Modifier.height(32.dp))
-                Column(modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)) {
-                    dummyArray.forEach {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp)
+                ) {
+                    dummyNews.forEach { news ->
                         Row(
-                            modifier = Modifier,
+                            modifier = Modifier.clickable {
+                                homeNavController.navigate(
+                                    HomeNavObj.NewsDetailScreen.createRoute(
+                                        news.id
+                                    )
+                                )
+                            },
                             verticalAlignment = Alignment.CenterVertically
-                        ){
-                            Card(modifier = Modifier
-                                .height(96.dp)
-                                .width(120.dp),
+                        ) {
+                            Card(
+                                modifier = Modifier
+                                    .height(96.dp)
+                                    .width(120.dp),
                                 shape = RoundedCornerShape(16.dp),
                                 colors = CardDefaults.cardColors(GreventureScheme.PrimaryVariant1.color),
-                            ) {}
+                            ) {
+                                AsyncImage(
+                                    model = news.photoUrl,
+                                    contentDescription = "News Image",
+                                    contentScale = ContentScale.Crop,
+                                    modifier = Modifier.fillMaxSize()
+                                )
+                            }
                             Spacer(modifier = Modifier.width(12.dp))
                             Column {
-                                Text(text = "2 Maret 2024", fontSize = 12.sp, modifier = Modifier.padding(top = 2.dp), color = GreventureScheme.Black.color)
-                                Text(text = "Lorem Ipsum Dolor sit Amet", fontWeight = FontWeight.Medium, fontSize = 16.sp, color = GreventureScheme.Black.color)
-                                Text(text = "Lorem ipsum - 2 menit dibaca", fontSize = 12.sp, modifier = Modifier.padding(top = 2.dp), color = GreventureScheme.Black.color)
+                                Text(
+                                    text = news.createdAt,
+                                    fontSize = 12.sp,
+                                    modifier = Modifier.padding(top = 2.dp),
+                                    color = GreventureScheme.Black.color
+                                )
+                                Text(
+                                    text = news.title,
+                                    fontWeight = FontWeight.Medium,
+                                    fontSize = 16.sp,
+                                    color = GreventureScheme.Black.color
+                                )
+                                Text(
+                                    text = "${news.author} - ${news.minutesToRead} menit dibaca",
+                                    fontSize = 12.sp,
+                                    modifier = Modifier.padding(top = 2.dp),
+                                    color = GreventureScheme.Black.color
+                                )
                             }
                         }
                         Spacer(modifier = Modifier.height(12.dp))
