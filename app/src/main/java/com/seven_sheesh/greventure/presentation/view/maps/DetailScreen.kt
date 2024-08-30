@@ -42,6 +42,8 @@ fun DetailScreen(
     bubbleViewModel.loadBubblePhotoByBubbleId(bubbleId)
     bubbleViewModel.loadBubbleSocialMediaByBubbleId(bubbleId)
 
+    val user = navbarViewModel.user.collectAsState().value.second
+
     val currentBubble = bubbleViewModel.bubbleState.collectAsState()
     val currentBubblePhoto = bubbleViewModel.bubblePhotoListState.collectAsState()
     val currentBubbleSocialMedia = bubbleViewModel.bubbleSocialMediaListState.collectAsState()
@@ -50,7 +52,7 @@ fun DetailScreen(
         containerColor = GreventureScheme.White.color,
         contentColor = GreventureScheme.White.color,
         topBar = {
-            TopBar(homeNavController)
+            TopBar(homeNavController, bubbleId, user?.id ?: "")
         },
     ) {
         Box(

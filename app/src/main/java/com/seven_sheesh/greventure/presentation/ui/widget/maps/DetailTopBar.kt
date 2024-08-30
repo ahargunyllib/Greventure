@@ -17,26 +17,37 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.Bookmark
+import androidx.compose.material.icons.outlined.Bookmark
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
 import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
+import com.seven_sheesh.greventure.presentation.viewmodel.BookmarkViewModel
 
 @Composable
-fun TopBar(homeNavController: NavController) {
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .padding(horizontal = 16.dp)) {
+fun TopBar(
+    homeNavController: NavController, bubbleId: String, userId: String,
+    bookmarkViewModel: BookmarkViewModel = hiltViewModel()
+) {
+    bookmarkViewModel.getBookmark(userId, bubbleId)
+    val bubble = bookmarkViewModel.bookmark.collectAsState().value.second
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 16.dp)
+    ) {
         Spacer(modifier = Modifier.height(16.dp))
         Row(
             modifier = Modifier
@@ -75,11 +86,27 @@ fun TopBar(homeNavController: NavController) {
                     modifier = Modifier
                         .fillMaxSize()
                         .clickable {
-
+                            if (bubble == null) {
+                                bookmarkViewModel.addBookmark(userId, bubbleId)
+                            } else {
+                                bookmarkViewModel.removeBookmark(userId, bubbleId)
+                            }
                         },
                     contentAlignment = Alignment.Center
                 ) {
-                    Icon(imageVector = Icons.Default.Bookmark, contentDescription = "Bookmark", tint = GreventureScheme.Black.color)
+                    if (bubble == null) {
+                        Icon(
+                            imageVector = Icons.Outlined.Bookmark,
+                            contentDescription = "Bookmark",
+                            tint = GreventureScheme.Secondary.color
+                        )
+                    } else {
+                        Icon(
+                            imageVector = Icons.Default.Bookmark,
+                            contentDescription = "Bookmark",
+                            tint = GreventureScheme.Primary.color
+                        )
+                    }
                 }
             }
         }

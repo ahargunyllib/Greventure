@@ -18,7 +18,9 @@ data class Bubble(
     @SerialName("duration") val duration: String,
     @SerialName("phone_number") val phoneNumber: String,
     @SerialName("created_at") val createdAt: String? = null,
-    @SerialName("updated_at") val updatedAt: String? = null
+    @SerialName("updated_at") val updatedAt: String? = null,
+    @SerialName("photo_url") val photoUrl: String? = null,
+    @SerialName("average_rating") val averageRating: Double? = null
 )
 
 @Serializable

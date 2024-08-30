@@ -28,9 +28,11 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
@@ -40,54 +42,78 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
+import com.seven_sheesh.greventure.presentation.ui.design_system.PlusJakartaSans
 import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
 import com.seven_sheesh.greventure.presentation.ui.widget.bookmark.BookmarkList
+import com.seven_sheesh.greventure.presentation.viewmodel.BookmarkViewModel
 import com.seven_sheesh.greventure.presentation.viewmodel.NavbarViewModel
 
 @Composable
 @Preview
 fun BookmarkScreen(
     homeNavController: NavController = rememberNavController(),
-    navbarViewModel: NavbarViewModel = hiltViewModel()
-){
+    navbarViewModel: NavbarViewModel = hiltViewModel(),
+    bookmarkViewModel: BookmarkViewModel = hiltViewModel()
+) {
+    val user = navbarViewModel.user.collectAsState().value.second
+    bookmarkViewModel.loadBookmarks(user?.id!!)
+    val bookmarks = bookmarkViewModel.bookmarks.collectAsState().value.second
+
     navbarViewModel.setPageState(2)
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .background(GreventureScheme.White.color)
-        .safeDrawingPadding(),
-        contentAlignment = Alignment.Center){
-        LazyColumn(modifier = Modifier
+    Box(
+        modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 16.dp)){
+            .background(GreventureScheme.White.color)
+            .safeDrawingPadding(),
+        contentAlignment = Alignment.Center
+    ) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp)
+        ) {
             item {
                 Spacer(modifier = Modifier.height(16.dp))
-                Row(modifier = Modifier
-                    .fillMaxWidth()
-                    .height(100.dp),
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(100.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically
-                    ){
+                    ) {
                         Spacer(modifier = Modifier.width(12.dp))
-                        Column {
-                            Text(text = "Bookmark", fontWeight = FontWeight.SemiBold, fontSize = 28.sp, color = Color.Black)
-                            Text(text = "Lorem ipsum Dolor Sit Amet", fontSize = 14.sp, modifier = Modifier.padding(top = 4.dp), color = Color.Black)
-                        }
+                        Text(
+                            text = "Bookmark",
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 28.sp,
+                            color = Color.Black,
+                            style = TextStyle(
+                                fontFamily = PlusJakartaSans,
+                                fontWeight = FontWeight.ExtraBold,
+                            )
+                        )
                     }
 
-                    Card(modifier = Modifier.size(48.dp),
+                    Card(
+                        modifier = Modifier.size(48.dp),
                         shape = RoundedCornerShape(50),
                         colors = CardDefaults.cardColors(Color.White),
                         border = BorderStroke(2.dp, Color.LightGray)
                     ) {
-                        Box(modifier = Modifier
-                            .fillMaxSize()
-                            .clickable {
-                                homeNavController.navigate(HomeNavObj.NotificationScreen.route)
-                            }, contentAlignment = Alignment.Center){
-                            Icon(imageVector = Icons.Default.History, contentDescription = "History")
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .clickable {
+                                    homeNavController.navigate(HomeNavObj.NotificationScreen.route)
+                                }, contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.History,
+                                contentDescription = "History"
+                            )
                         }
                     }
                 }
@@ -95,10 +121,10 @@ fun BookmarkScreen(
             }
 
             item {
-                BookmarkList()
+                BookmarkList(bookmarks = bookmarks, homeNavController = homeNavController)
             }
-            
-            item { 
+
+            item {
                 Spacer(modifier = Modifier.height(140.dp))
             }
         }
