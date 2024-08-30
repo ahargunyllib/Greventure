@@ -54,13 +54,14 @@ fun EventVector(type: EventType): ImageVector {
     }
 }
 
-fun EventBubble(type: EventType): Int {
+fun EventBubble(type: EventType?): Int {
     when(type) {
-        EventType.Budaya -> return R.drawable.bubble_2
-        EventType.Lingkungan -> return R.drawable.bubble_1
+        EventType.Budaya -> return R.drawable.bubble_1
+        EventType.Lingkungan -> return R.drawable.bubble_2
         EventType.Masyarakat -> return R.drawable.bubble_3
-        EventType.Komunitas -> return R.drawable.bubble_3
-        EventType.Official -> return R.drawable.bubble_1
+        EventType.Komunitas -> return R.drawable.bubble_4
+        EventType.Official -> return R.drawable.bubble_5
+        null -> return R.drawable.bubble_place
     }
 }
 

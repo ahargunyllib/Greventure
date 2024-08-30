@@ -88,7 +88,7 @@ fun GoogleMapsComponent(
             MarkerInfoWindow(
                 state = MarkerState(position = LatLng(bubble.latitude.toDouble(), bubble.longitude.toDouble())),
                 icon = getResizedMarkerIcon(
-                    EventBubble(bubble.eventType ?: EventType.Lingkungan),
+                    EventBubble(bubble.eventType),
                     newWidth = 80,
                     newHeight = 80
                 ),
