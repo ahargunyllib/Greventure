@@ -1,12 +1,14 @@
 package com.seven_sheesh.greventure.di
 
 import com.seven_sheesh.greventure.data.repository.AuthenticationRepositoryImpl
+import com.seven_sheesh.greventure.data.repository.BookmarkRepositoryImpl
 import com.seven_sheesh.greventure.data.repository.BubbleRepositoryImpl
 import com.seven_sheesh.greventure.data.repository.CommentRepositoryImpl
 import com.seven_sheesh.greventure.data.repository.BubblePhotoRepositoryImpl
 import com.seven_sheesh.greventure.data.repository.BubbleSocialMediaRepositoryImpl
 import com.seven_sheesh.greventure.data.repository.ThreadRepositoryImpl
 import com.seven_sheesh.greventure.domain.repository.AuthenticationRepository
+import com.seven_sheesh.greventure.domain.repository.BookmarkRepository
 import com.seven_sheesh.greventure.domain.repository.BubbleRepository
 import com.seven_sheesh.greventure.domain.repository.CommentRepository
 import com.seven_sheesh.greventure.domain.repository.BubblePhotoRepository
@@ -57,4 +59,10 @@ abstract class RepositoryModule {
     abstract fun bindThreadRepository(
         threadRepositoryImpl: ThreadRepositoryImpl
     ): ThreadRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindBookmarkRepository(
+        bookmarkRepositoryImpl: BookmarkRepositoryImpl
+    ): BookmarkRepository
 }
