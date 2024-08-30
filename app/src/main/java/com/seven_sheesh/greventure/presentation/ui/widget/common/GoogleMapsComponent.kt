@@ -36,7 +36,8 @@ fun GoogleMapsComponent(
     currentLocation: Pair<Double, Double>,
     context: Context,
     viewModel: MapsViewModel = hiltViewModel(),
-    onClickMarker: (Bubble) -> Unit = {}
+    onClickMarker: (Bubble) -> Unit = {},
+    onMapClick: (LatLng) -> Unit = {}
 ) {
     val bubbleViewModel = hiltViewModel<BubbleViewModel>()
     val bubbles by bubbleViewModel.bubbleListState.collectAsState()
@@ -46,6 +47,9 @@ fun GoogleMapsComponent(
         cameraPositionState = cameraPositionState,
         properties = properties,
         uiSettings = uiSettings,
+        onMapClick = {
+            onMapClick(it)
+        }
     ) {
         Marker(
             state = MarkerState(position = LatLng(currentLocation.first, currentLocation.second)),

@@ -26,6 +26,9 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,9 +40,12 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.seven_sheesh.greventure.domain.model.EventType
 import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
 import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
+import com.seven_sheesh.greventure.presentation.ui.widget.common.SnackBar
 import com.seven_sheesh.greventure.presentation.viewmodel.NavbarViewModel
+import com.seven_sheesh.greventure.ui.viewmodel.BubbleViewModel
 
 @Composable
 @Preview
@@ -48,6 +54,9 @@ fun EventScreen(
     navbarViewModel: NavbarViewModel = hiltViewModel(),
 ){
     navbarViewModel.setPageState(0)
+    val bubbleViewModel = hiltViewModel<BubbleViewModel>()
+    val bubbleList = bubbleViewModel.bubbleListState.collectAsState()
+    val selectedCategory = remember { mutableStateOf(EventType.Lingkungan) }
 
     Box(modifier = Modifier
         .fillMaxSize()
@@ -85,17 +94,27 @@ fun EventScreen(
             }
 
             item {
-                val dummyArray = listOf(0, 1, 2)
-                Spacer(modifier = Modifier.height(32.dp))
+                Spacer(modifier = Modifier.height(16.dp))
+                Column(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)){
+                    SnackBar(onClick = {
+                        selectedCategory.value = it
+                    })
+                }
+            }
+
+            item {
+                Spacer(modifier = Modifier.height(16.dp))
                 Column(modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)) {
-                    dummyArray.forEach {
+                    bubbleList.value.second.filter { it.eventType == selectedCategory.value }.forEach {
                         Card(modifier = Modifier
                             .fillMaxWidth()
                             .height(140.dp)
                             .clip(RoundedCornerShape(16.dp))
-                            .clickable {  },
+                            .clickable { },
                             colors = CardDefaults.cardColors(GreventureScheme.Primary.color),
                             shape = RoundedCornerShape(16.dp),
                         ) {
@@ -106,7 +125,7 @@ fun EventScreen(
                                 verticalArrangement = Arrangement.SpaceBetween
                             ) {
                                 Column {
-                                    Text(text = "Lorem ipsum dolor", fontWeight = FontWeight.Medium, fontSize = 16.sp, color = GreventureScheme.White.color)
+                                    Text(text = it.title, fontWeight = FontWeight.Medium, fontSize = 16.sp, color = GreventureScheme.White.color)
                                     Spacer(modifier = Modifier.height(4.dp))
                                     Row(verticalAlignment = Alignment.CenterVertically) {
                                         Icon(imageVector = Icons.Default.Star, contentDescription = "Star", tint = GreventureScheme.White.color)
@@ -115,7 +134,7 @@ fun EventScreen(
                                     }
                                 }
 
-                                Text(text = "Lorem ipsum dolor sit amet", fontSize = 12.sp, modifier = Modifier.padding(top = 2.dp), color = GreventureScheme.White.color)
+                                Text(text = it.description, fontSize = 12.sp, modifier = Modifier.padding(top = 2.dp), color = GreventureScheme.White.color)
                             }
                         }
                         Spacer(modifier = Modifier.height(16.dp))

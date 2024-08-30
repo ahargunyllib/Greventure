@@ -1,6 +1,8 @@
 package com.seven_sheesh.greventure.domain.model
 
 import java.time.ZonedDateTime
+import java.util.Random
+import java.util.UUID
 
 object PlaceholderData {
     val user1 = User(
@@ -184,5 +186,36 @@ object PlaceholderData {
         star = 4,
         content = "Great workshop, learned a lot!",
         createdAt = ZonedDateTime.now().toString()
+    )
+
+    val bubbleEmpty = Bubble(
+        id = UUID.randomUUID().toString(),
+        userId = "",
+        title = "",
+        description = "",
+        type = BubbleType.Event,
+        eventType = EventType.Komunitas,
+        latitude = 0.0,
+        longitude = 0.0,
+        startTime = java.time.OffsetDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSXXX")),
+        duration = "02:00:00",
+        phoneNumber = "",
+        createdAt = java.time.OffsetDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSXXX")),
+        updatedAt = java.time.OffsetDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSXXX"))
+    )
+
+    val bubblePhotoEmpty = BubblePhoto(
+        id = kotlin.random.Random.nextInt(0, 128).toByte().toInt(),
+        bubbleId = "",
+        url = "",
+        createdAt = java.time.OffsetDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSXXX"))
+    )
+
+    val bubbleSocialMediaEmpty = BubbleSocialMedia(
+        id = kotlin.random.Random.nextInt(0, 128).toByte().toInt(),
+        bubbleId = "",
+        content = "",
+        type = SocialMedia.Instagram,
+        createdAt = java.time.OffsetDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSXXX"))
     )
 }

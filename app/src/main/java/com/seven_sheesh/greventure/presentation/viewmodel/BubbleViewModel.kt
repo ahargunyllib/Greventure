@@ -63,12 +63,24 @@ class BubbleViewModel @Inject constructor(
         }
     }
 
-    fun upsertBubble(bubble: Bubble) {
+    fun loadBubbleByUserId(userId: String){
         viewModelScope.launch {
-            bubbleRepository.upsertBubble(bubble)
-                .collect { message ->
-                    _messageState.value = message
-                }
+            bubbleRepository.getBubbleByUserId(userId).collect{
+                result -> _bubbleListState.value = result
+            }
+        }
+    }
+
+    fun upsertBubble(bubble: Bubble) {
+        if (bubble.isComplete()) {
+            viewModelScope.launch {
+                bubbleRepository.upsertBubble(bubble)
+                    .collect { message ->
+                        _messageState.value = message
+                    }
+            }
+        } else {
+            _messageState.value = "Please fill in all required fields."
         }
     }
 
@@ -109,11 +121,15 @@ class BubbleViewModel @Inject constructor(
     }
 
     fun upsertBubblePhoto(bubblePhoto: BubblePhoto) {
-        viewModelScope.launch {
-            bubblePhotoRepository.upsertBubblePhoto(bubblePhoto)
-                .collect { message ->
-                    _messageState.value = message
-                }
+        if (bubblePhoto.isComplete()) {
+            viewModelScope.launch {
+                bubblePhotoRepository.upsertBubblePhoto(bubblePhoto)
+                    .collect { message ->
+                        _messageState.value = message
+                    }
+            }
+        } else {
+            _messageState.value = "Please fill in all required fields."
         }
     }
 
@@ -145,11 +161,15 @@ class BubbleViewModel @Inject constructor(
     }
 
     fun upsertBubbleSocialMedia(bubbleSocialMedia: BubbleSocialMedia) {
-        viewModelScope.launch {
-            bubbleSocialMediaRepository.upsertBubbleSocialMedia(bubbleSocialMedia)
-                .collect { message ->
-                    _messageState.value = message
-                }
+        if (bubbleSocialMedia.isComplete()) {
+            viewModelScope.launch {
+                bubbleSocialMediaRepository.upsertBubbleSocialMedia(bubbleSocialMedia)
+                    .collect { message ->
+                        _messageState.value = message
+                    }
+            }
+        } else {
+            _messageState.value = "Please fill in all required fields."
         }
     }
 
