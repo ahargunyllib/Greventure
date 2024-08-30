@@ -1,8 +1,11 @@
 package com.seven_sheesh.greventure.domain.model
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CameraAlt
+import androidx.compose.material.icons.filled.Facebook
 import androidx.compose.material.icons.filled.Groups
 import androidx.compose.material.icons.filled.Language
+import androidx.compose.material.icons.filled.MusicNote
 import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.Verified
 import androidx.compose.material.icons.rounded.EnergySavingsLeaf
@@ -16,6 +19,14 @@ enum class BubbleType {
 
 enum class SocialMedia {
     Instagram, Tiktok, Facebook
+}
+
+fun SocialMediaVector(socialMedia: SocialMedia): ImageVector{
+    when(socialMedia){
+        SocialMedia.Instagram -> return Icons.Default.CameraAlt
+        SocialMedia.Tiktok -> return Icons.Default.MusicNote
+        SocialMedia.Facebook -> return Icons.Default.Facebook
+    }
 }
 
 enum class EventType {
