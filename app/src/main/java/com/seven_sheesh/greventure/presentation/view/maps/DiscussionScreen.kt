@@ -150,7 +150,7 @@ fun DiscussionScreen(
                             .padding(horizontal = 24.dp, vertical = 8.dp)
                     ) {
                         thread?.let { it.keys.firstOrNull()?.let { it1 -> it.values.firstOrNull()
-                            ?.let { it2 -> ChatMessage(message = it1, user = it2, isComment = false) } } }
+                            ?.let { it2 -> ChatMessage(message = it1, user = it2, isComment = false, homeNavController = homeNavController) } } }
                         comments.forEach { map ->
                             map.keys.firstOrNull()?.let { it1 -> map.values.firstOrNull()
                                 ?.let { it2 -> ChatMessage(comment = it1, user = it2, isComment = true, homeNavController = homeNavController) } }

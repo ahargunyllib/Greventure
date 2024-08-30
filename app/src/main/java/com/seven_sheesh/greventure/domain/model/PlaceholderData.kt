@@ -205,14 +205,14 @@ object PlaceholderData {
     )
 
     val bubblePhotoEmpty = BubblePhoto(
-        id = kotlin.random.Random.nextInt(0, 128).toByte().toInt(),
+        id = kotlin.random.Random.nextInt(100000, 1000000),
         bubbleId = "",
         url = "",
         createdAt = java.time.OffsetDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSXXX"))
     )
 
     val bubbleSocialMediaEmpty = BubbleSocialMedia(
-        id = kotlin.random.Random.nextInt(0, 128).toByte().toInt(),
+        id = kotlin.random.Random.nextInt(100000, 1000000),
         bubbleId = "",
         content = "",
         type = SocialMedia.Instagram,

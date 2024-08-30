@@ -34,15 +34,26 @@ android {
         manifestPlaceholders["googleMapsApiKey"] = properties.getProperty("MAPS_API_KEY")
     }
 
+    signingConfigs {
+        create("release") {
+            keyAlias = "key0"
+            keyPassword = "220406"
+            storeFile = file("D:\\CODE\\key\\key3.jks")
+            storePassword = "220406"
+        }
+    }
+
     buildTypes {
-        release {
+        getByName("release") {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8

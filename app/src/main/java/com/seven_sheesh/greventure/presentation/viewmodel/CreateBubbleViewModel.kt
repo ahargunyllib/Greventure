@@ -12,14 +12,18 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CreateBubbleViewModel @Inject constructor(): ViewModel() {
+
     private val _bubbleState = MutableStateFlow<Bubble>(PlaceholderData.bubbleEmpty)
     val bubbleState = _bubbleState.asStateFlow()
 
-    private val _bubblePhoto = MutableStateFlow<BubblePhoto>(PlaceholderData.bubblePhotoEmpty)
+    private val _bubblePhoto = MutableStateFlow<BubblePhoto>(PlaceholderData.bubblePhotoEmpty.copy())
     val bubblePhoto = _bubblePhoto.asStateFlow()
 
     private val _bubbleSocialMedia = MutableStateFlow<Triple<BubbleSocialMedia, BubbleSocialMedia, BubbleSocialMedia>>(
-        Triple(PlaceholderData.bubbleSocialMediaEmpty, PlaceholderData.bubbleSocialMediaEmpty, PlaceholderData.bubbleSocialMediaEmpty)
+        Triple(PlaceholderData.bubbleSocialMediaEmpty,
+            PlaceholderData.bubbleSocialMediaEmpty,
+            PlaceholderData.bubbleSocialMediaEmpty
+        )
     )
     val bubbleSocialMedia = _bubbleSocialMedia.asStateFlow()
 
