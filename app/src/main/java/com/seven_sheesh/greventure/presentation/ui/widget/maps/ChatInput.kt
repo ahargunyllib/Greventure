@@ -28,14 +28,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
+import com.seven_sheesh.greventure.domain.model.PlaceholderData
+import com.seven_sheesh.greventure.domain.model.User
 import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
 
 @Composable
 fun ChatInput(
+    user: User = PlaceholderData.user1,
     isComment: Boolean = false,
     onSendClick: (String) -> Unit = {}
 ) {
@@ -52,7 +57,9 @@ fun ChatInput(
                 .size(42.dp)
                 .background(GreventureScheme.SoftGray.color, CircleShape)
                 .clip(CircleShape)
-        )
+        ){
+            AsyncImage(model = user.profilePictureUrl, contentDescription = "profile", modifier = Modifier.fillMaxSize(), contentScale = ContentScale.Crop)
+        }
 
         Spacer(modifier = Modifier.width(8.dp))
 

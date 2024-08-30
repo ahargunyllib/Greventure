@@ -1,6 +1,7 @@
 package com.seven_sheesh.greventure.presentation.view.maps
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.tween
@@ -19,12 +20,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.seven_sheesh.greventure.domain.model.PlaceholderData
+import com.seven_sheesh.greventure.domain.model.Thread
 import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
+import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
 import com.seven_sheesh.greventure.presentation.ui.widget.maps.ChatInput
 import com.seven_sheesh.greventure.presentation.ui.widget.maps.SocialMediaCard
 import com.seven_sheesh.greventure.presentation.ui.widget.maps.DiscussionSection
@@ -35,9 +40,12 @@ import com.seven_sheesh.greventure.presentation.ui.widget.maps.PictureCard
 import com.seven_sheesh.greventure.presentation.ui.widget.maps.TopBar
 import com.seven_sheesh.greventure.presentation.viewmodel.MapsViewModel
 import com.seven_sheesh.greventure.presentation.viewmodel.NavbarViewModel
+import com.seven_sheesh.greventure.presentation.viewmodel.ProfileViewModel
 import com.seven_sheesh.greventure.ui.viewmodel.BubbleViewModel
 import com.seven_sheesh.greventure.ui.viewmodel.CommentViewModel
 import com.seven_sheesh.greventure.ui.viewmodel.ThreadViewModel
+import java.time.ZonedDateTime
+import java.util.UUID
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -48,6 +56,7 @@ fun DetailScreen(
     threadViewModel: ThreadViewModel = hiltViewModel(),
     commentViewModel: CommentViewModel = hiltViewModel(),
     bubbleViewModel: BubbleViewModel = hiltViewModel(),
+    profileViewModel: ProfileViewModel = hiltViewModel(),
     bubbleId: String = ""
 ) {
     LaunchedEffect(Unit) {
@@ -60,6 +69,18 @@ fun DetailScreen(
     val currentBubbleState = bubbleViewModel.bubbleState.collectAsState()
     val currentBubblePhotoState = bubbleViewModel.bubblePhotoListState.collectAsState()
     val currentBubbleSocialMediaState = bubbleViewModel.bubbleSocialMediaListState.collectAsState()
+    val message = threadViewModel.messageState.collectAsState().value
+    val context = LocalContext.current
+
+    LaunchedEffect(message) {
+        if (message.isNotEmpty()) {
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        }
+
+        if(message.contains("successfully")){
+            homeNavController.navigate(HomeNavObj.DetailScreen.createRoute(bubbleId))
+        }
+    }
 
     val bubbleIdValue by remember { derivedStateOf { currentBubbleState.value.second?.id ?: "" } }
     LaunchedEffect(bubbleIdValue) {
@@ -75,14 +96,25 @@ fun DetailScreen(
             TopBar(homeNavController, bubbleId, user?.id ?: "")
         },
         bottomBar = {
-            Column(modifier = Modifier.animateContentSize(animationSpec = tween(durationMillis = 1500))) {
-                Column(modifier = Modifier
-                    .fillMaxWidth()
-                    .background(GreventureScheme.White.color)
-                ) {
-                    HorizontalDivider()
-                    ChatInput()
-                    Spacer(modifier = Modifier.height(96.dp))
+            if(user != null){
+                Column(modifier = Modifier.animateContentSize(animationSpec = tween(durationMillis = 1500))) {
+                    Column(modifier = Modifier
+                        .fillMaxWidth()
+                        .background(GreventureScheme.White.color)
+                    ) {
+                        HorizontalDivider()
+                        ChatInput(onSendClick = {
+                            val thread = Thread(
+                                id = UUID.randomUUID().toString(),
+                                bubbleId = bubbleId,
+                                userId = user?.id ?: "",
+                                content = it,
+                                createdAt =  java.time.OffsetDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSXXX"))
+                            )
+                            threadViewModel.upsertThread(thread)
+                        }, user = user)
+                        Spacer(modifier = Modifier.height(96.dp))
+                    }
                 }
             }
         }
