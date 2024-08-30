@@ -17,6 +17,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.ArrowForwardIos
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -146,7 +147,9 @@ fun MapsCard(
                         Card(
                             modifier = Modifier.size(54.dp),
                             shape = RoundedCornerShape(50),
-                            colors = CardDefaults.cardColors(EventColor(bubble.first.eventType ?: EventType.Komunitas)),
+                            colors = CardDefaults.cardColors(if(bubble.first.eventType != null) EventColor(
+                                bubble.first.eventType!!
+                            ) else GreventureScheme.Success.color),
                             border = BorderStroke(2.dp, GreventureScheme.SoftGray.color)
                         ) {
                             Box(
@@ -154,7 +157,9 @@ fun MapsCard(
                                 contentAlignment = Alignment.Center
                             ){
                                 Icon(
-                                    imageVector = EventVector(bubble.first.eventType ?: EventType.Komunitas),
+                                    imageVector = if(bubble.first.eventType != null) EventVector(
+                                        bubble.first.eventType!!
+                                    ) else Icons.Default.LocationOn,
                                     contentDescription = "Icon",
                                     tint = GreventureScheme.White.color
                                 )

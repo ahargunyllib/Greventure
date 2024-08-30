@@ -67,14 +67,27 @@ fun PopupCard(
                     verticalAlignment = Alignment.CenterVertically
                 ){
                     Text(text = bubble.title, color = GreventureScheme.Black.color, fontSize = 20.sp, fontWeight = FontWeight.Bold)
-                    Box(modifier = Modifier
-                        .height(32.dp)
-                        .width(92.dp)
-                        .clip(RoundedCornerShape(50))
-                        .background(EventColor(bubble.eventType ?: EventType.Masyarakat)),
-                        contentAlignment = Alignment.Center
-                    ){
-                        Text(text = bubble.eventType.toString(), color = GreventureScheme.White.color, fontSize = 12.sp)
+                    Spacer(modifier = Modifier.width(8.dp))
+                    if(bubble.eventType != null){
+                        Box(modifier = Modifier
+                            .height(32.dp)
+                            .width(92.dp)
+                            .clip(RoundedCornerShape(50))
+                            .background(EventColor(bubble.eventType)),
+                            contentAlignment = Alignment.Center
+                        ){
+                            Text(text = bubble.eventType.toString(), color = GreventureScheme.White.color, fontSize = 12.sp)
+                        }
+                    } else {
+                        Box(modifier = Modifier
+                            .height(32.dp)
+                            .width(92.dp)
+                            .clip(RoundedCornerShape(50))
+                            .background(GreventureScheme.Success.color),
+                            contentAlignment = Alignment.Center
+                        ){
+                            Text(text = "Lokasi", color = GreventureScheme.White.color, fontSize = 12.sp)
+                        }
                     }
                 }
                 Spacer(modifier = Modifier.height(4.dp))

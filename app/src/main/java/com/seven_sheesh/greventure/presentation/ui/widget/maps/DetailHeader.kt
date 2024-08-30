@@ -49,15 +49,28 @@ fun HeaderSection(currentBubble: State<Pair<String, Bubble?>>) {
                     fontSize = 20.sp,
                     fontWeight = FontWeight.SemiBold
                 )
-                Box(
-                    modifier = Modifier
+                if(currentBubble.value.second?.eventType != null){
+                    Box(modifier = Modifier
                         .height(32.dp)
                         .width(92.dp)
                         .clip(RoundedCornerShape(50))
-                        .background(EventColor(currentBubble.value.second?.eventType ?: EventType.Masyarakat)),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(text = currentBubble.value.second?.eventType.toString(), color = GreventureScheme.White.color, fontSize = 12.sp)
+                        .background(if(currentBubble.value.second?.eventType != null) EventColor(
+                            currentBubble.value.second?.eventType!!
+                        ) else GreventureScheme.Success.color),
+                        contentAlignment = Alignment.Center
+                    ){
+                        Text(text = currentBubble.value.second?.eventType.toString(), color = GreventureScheme.White.color, fontSize = 12.sp)
+                    }
+                } else {
+                    Box(modifier = Modifier
+                        .height(32.dp)
+                        .width(92.dp)
+                        .clip(RoundedCornerShape(50))
+                        .background(GreventureScheme.Success.color),
+                        contentAlignment = Alignment.Center
+                    ){
+                        Text(text = "Lokasi", color = GreventureScheme.White.color, fontSize = 12.sp)
+                    }
                 }
             }
             Spacer(modifier = Modifier.height(12.dp))

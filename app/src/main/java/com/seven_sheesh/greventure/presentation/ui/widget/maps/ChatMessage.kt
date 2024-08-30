@@ -92,10 +92,10 @@ fun ChatMessage(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = "2 Suka", color = GreventureScheme.Gray.color,)
+                Text(text = "2 Suka", color = GreventureScheme.Gray.color, fontSize = 12.sp)
                 Spacer(modifier = Modifier.width(8.dp))
                 if(!isComment){
-                    Text(text = "Balas", color = GreventureScheme.Gray.color, textDecoration = TextDecoration.Underline)
+                    Text(text = "Balas", color = GreventureScheme.Gray.color, textDecoration = TextDecoration.Underline, fontSize = 12.sp)
                 }
             }
             Spacer(modifier = Modifier.height(8.dp))

@@ -16,6 +16,7 @@ import com.seven_sheesh.greventure.domain.model.Bubble
 import com.seven_sheesh.greventure.domain.model.BubblePhoto
 import com.seven_sheesh.greventure.domain.model.EventColor
 import com.seven_sheesh.greventure.domain.model.EventType
+import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
 
 @Composable
 fun PictureCard(
@@ -27,7 +28,9 @@ fun PictureCard(
             .fillMaxWidth()
             .height(240.dp),
         shape = RectangleShape,
-        colors = CardDefaults.cardColors(EventColor(currentBubble.value.second?.eventType ?: EventType.Masyarakat))
+        colors = CardDefaults.cardColors(if(currentBubble.value.second?.eventType != null) EventColor(
+            currentBubble.value.second?.eventType!!
+        ) else GreventureScheme.Success.color)
     ) {
         AsyncImage(model = currentBubblePhoto.value.second.firstOrNull()?.url, contentDescription = "photo", modifier = Modifier.fillMaxSize(), contentScale = ContentScale.Crop)
     }

@@ -76,7 +76,17 @@ fun DetailScreen(
                     item { HeaderSection(currentBubble) }
                     item { DateLocationCard(homeNavController, currentBubble) }
                     item { SocialMediaCard(homeNavController, currentBubbleSocialMedia) }
-                    item { FAQSection() }
+                    if(currentBubble.value.second?.eventType != null){
+                        item { FAQSection() }
+                    } else {
+                        item {
+                            Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+                                Spacer(modifier = Modifier.height(24.dp))
+                                HorizontalDivider()
+                                Spacer(modifier = Modifier.height(24.dp))
+                            }
+                        }
+                    }
                     item { DiscussionSection() }
                     item { Spacer(modifier = Modifier.height(140.dp)) }
                 }

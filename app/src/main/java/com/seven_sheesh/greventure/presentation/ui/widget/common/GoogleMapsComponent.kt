@@ -77,7 +77,7 @@ fun GoogleMapsComponent(
                         verticalArrangement = Arrangement.Center,
                         modifier = Modifier
                             .clip(RoundedCornerShape(24.dp))
-                            .background(EventColor(bubble.eventType ?: EventType.Masyarakat))
+                            .background(if(bubble.eventType != null) EventColor(bubble.eventType) else GreventureScheme.Success.color)
                             .padding(vertical = 8.dp, horizontal = 16.dp)
                     ) {
                         Text(bubble.title, fontWeight = FontWeight.Medium, color = GreventureScheme.White.color)
