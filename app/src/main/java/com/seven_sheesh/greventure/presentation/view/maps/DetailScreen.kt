@@ -2,6 +2,7 @@ package com.seven_sheesh.greventure.presentation.view.maps
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -12,6 +13,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -21,6 +25,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
+import com.seven_sheesh.greventure.presentation.ui.widget.maps.ChatInput
 import com.seven_sheesh.greventure.presentation.ui.widget.maps.SocialMediaCard
 import com.seven_sheesh.greventure.presentation.ui.widget.maps.DiscussionSection
 import com.seven_sheesh.greventure.presentation.ui.widget.maps.FAQSection
@@ -36,33 +41,31 @@ import com.seven_sheesh.greventure.ui.viewmodel.ThreadViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-@Preview
 fun DetailScreen(
     homeNavController: NavController = rememberNavController(),
     navbarViewModel: NavbarViewModel = hiltViewModel(),
     mapsViewModel: MapsViewModel = hiltViewModel(),
     threadViewModel: ThreadViewModel = hiltViewModel(),
     commentViewModel: CommentViewModel = hiltViewModel(),
+    bubbleViewModel: BubbleViewModel = hiltViewModel(),
     bubbleId: String = ""
 ) {
     LaunchedEffect(Unit) {
         navbarViewModel.setPageState(1)
+        bubbleViewModel.loadBubbleById(bubbleId)
+        bubbleViewModel.loadBubblePhotoByBubbleId(bubbleId)
+        bubbleViewModel.loadBubbleSocialMediaByBubbleId(bubbleId)
     }
 
-    val bubbleViewModel = hiltViewModel<BubbleViewModel>()
-    bubbleViewModel.loadBubbleById(bubbleId)
-    bubbleViewModel.loadBubblePhotoByBubbleId(bubbleId)
-    bubbleViewModel.loadBubbleSocialMediaByBubbleId(bubbleId)
+    val currentBubbleState = bubbleViewModel.bubbleState.collectAsState()
+    val currentBubblePhotoState = bubbleViewModel.bubblePhotoListState.collectAsState()
+    val currentBubbleSocialMediaState = bubbleViewModel.bubbleSocialMediaListState.collectAsState()
 
-    val currentBubble = bubbleViewModel.bubbleState.collectAsState()
-    val currentBubblePhoto = bubbleViewModel.bubblePhotoListState.collectAsState()
-    val currentBubbleSocialMedia = bubbleViewModel.bubbleSocialMediaListState.collectAsState()
-
-    val bubbleIdValue = currentBubble.value.second?.id ?: ""
+    val bubbleIdValue by remember { derivedStateOf { currentBubbleState.value.second?.id ?: "" } }
     LaunchedEffect(bubbleIdValue) {
         threadViewModel.loadThreadByBubbleId(bubbleIdValue)
     }
-    val threads = threadViewModel.threadListState.collectAsState()
+    val threadsState = threadViewModel.threadListState.collectAsState()
 
     Scaffold(
         containerColor = GreventureScheme.White.color,
@@ -70,6 +73,18 @@ fun DetailScreen(
         topBar = {
             TopBar(homeNavController)
         },
+        bottomBar = {
+            Column(modifier = Modifier.animateContentSize(animationSpec = tween(durationMillis = 1500))) {
+                Column(modifier = Modifier
+                    .fillMaxWidth()
+                    .background(GreventureScheme.White.color)
+                ) {
+                    HorizontalDivider()
+                    ChatInput()
+                    Spacer(modifier = Modifier.height(96.dp))
+                }
+            }
+        }
     ) {
         Box(
             modifier = Modifier
@@ -81,11 +96,11 @@ fun DetailScreen(
             LazyColumn(
                 modifier = Modifier.fillMaxSize()
             ) {
-                item { PictureCard(currentBubblePhoto, currentBubble) }
-                item { HeaderSection(currentBubble) }
-                item { DateLocationCard(homeNavController, currentBubble) }
-                item { SocialMediaCard(homeNavController, currentBubbleSocialMedia) }
-                if (currentBubble.value.second?.eventType != null) {
+                item { PictureCard(currentBubblePhotoState, currentBubbleState) }
+                item { HeaderSection(currentBubbleState) }
+                item { DateLocationCard(homeNavController, currentBubbleState) }
+                item { SocialMediaCard(homeNavController, currentBubbleSocialMediaState) }
+                if (currentBubbleState.value.second?.eventType != null) {
                     item { FAQSection() }
                 } else {
                     item {
@@ -96,12 +111,13 @@ fun DetailScreen(
                         }
                     }
                 }
-                item { DiscussionSection(threads = threads.value.second) }
+                item { DiscussionSection(threads = threadsState.value.second) }
                 item { Spacer(modifier = Modifier.height(140.dp)) }
             }
         }
     }
 }
+
 
 
 

@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.seven_sheesh.greventure.domain.model.BubbleSocialMedia
+import com.seven_sheesh.greventure.domain.model.SocialMediaVector
 import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
 import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
 
@@ -58,7 +59,7 @@ fun SocialMediaCard(
                         },
                     contentAlignment = Alignment.Center
                 ) {
-                    Icon(imageVector = Icons.Default.CameraAlt, contentDescription = "Camera", tint = GreventureScheme.White.color)
+                    Icon(imageVector = SocialMediaVector(it.type), contentDescription = "Camera", tint = GreventureScheme.White.color)
                 }
             }
             Spacer(modifier = Modifier.width(12.dp))

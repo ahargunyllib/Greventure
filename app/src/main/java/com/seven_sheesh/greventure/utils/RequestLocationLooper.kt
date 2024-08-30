@@ -22,7 +22,7 @@ fun RequestLocationLooper(
     LaunchedEffect(Unit) {
         while (true) {
             shouldRequestPermission.value = true
-            delay(20000)
+            delay(60000)
         }
     }
 

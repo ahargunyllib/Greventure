@@ -22,7 +22,10 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -30,9 +33,17 @@ import androidx.navigation.NavController
 import com.seven_sheesh.greventure.domain.model.Bubble
 import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
 import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
+import com.seven_sheesh.greventure.utils.formatDateTime
 
 @Composable
 fun DateLocationCard(homeNavController: NavController, currentBubble: State<Pair<String, Bubble?>>) {
+    var date = remember { mutableStateOf("No date") }
+
+    LaunchedEffect(currentBubble.value) {
+        val startTime = currentBubble.value.second?.startTime
+        date.value = startTime?.let { formatDateTime(it) } ?: "No date"
+    }
+
     Spacer(modifier = Modifier.height(12.dp))
     Row(
         modifier = Modifier
@@ -91,8 +102,7 @@ fun DateLocationCard(homeNavController: NavController, currentBubble: State<Pair
         }
         Spacer(modifier = Modifier.width(12.dp))
         Column {
-            Text(text = currentBubble.value.second?.startTime.toString()
-                , color = GreventureScheme.Black.color)
+            Text(text = date.value, color = GreventureScheme.Black.color)
         }
     }
 }

@@ -11,6 +11,7 @@ import androidx.compose.material.icons.filled.Verified
 import androidx.compose.material.icons.rounded.EnergySavingsLeaf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.seven_sheesh.greventure.R
 import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
 
 enum class BubbleType {
@@ -50,6 +51,16 @@ fun EventVector(type: EventType): ImageVector {
         EventType.Masyarakat -> return Icons.Default.People
         EventType.Komunitas -> return Icons.Default.Groups
         EventType.Official -> return Icons.Default.Verified
+    }
+}
+
+fun EventBubble(type: EventType): Int {
+    when(type) {
+        EventType.Budaya -> return R.drawable.bubble_2
+        EventType.Lingkungan -> return R.drawable.bubble_1
+        EventType.Masyarakat -> return R.drawable.bubble_3
+        EventType.Komunitas -> return R.drawable.bubble_3
+        EventType.Official -> return R.drawable.bubble_1
     }
 }
 
