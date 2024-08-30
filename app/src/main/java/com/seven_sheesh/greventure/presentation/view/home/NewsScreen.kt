@@ -143,7 +143,8 @@ fun NewsScreen(
                                     text = news.title,
                                     fontWeight = FontWeight.Medium,
                                     fontSize = 16.sp,
-                                    color = GreventureScheme.Black.color
+                                    color = GreventureScheme.Black.color,
+                                    maxLines = 2
                                 )
                                 Text(
                                     text = "${news.author} - ${news.minutesToRead} menit dibaca",
@@ -158,6 +159,10 @@ fun NewsScreen(
                         Spacer(modifier = Modifier.height(12.dp))
                     }
                 }
+            }
+
+            item {
+                Spacer(modifier = Modifier.height(160.dp))
             }
         }
     }

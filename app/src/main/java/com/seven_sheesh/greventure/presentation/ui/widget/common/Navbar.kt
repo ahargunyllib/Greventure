@@ -47,6 +47,7 @@ fun Navbar(
     navbarViewModel: NavbarViewModel = hiltViewModel()
 ){
     val currentPage by navbarViewModel.pageState.collectAsState()
+    val user = navbarViewModel.user.collectAsState().value.second
 
     BottomAppBar(
         containerColor = GreventureScheme.White.color,
@@ -89,8 +90,13 @@ fun Navbar(
             }
             IconButton(onClick = {
                 if(currentPage != 2){
-                    navbarViewModel.setPageState(2)
-                    homeNavController.navigate(HomeNavObj.BookmarkScreen.route)
+                    if(user != null){
+                        navbarViewModel.setPageState(2)
+                        homeNavController.navigate(HomeNavObj.BookmarkScreen.route)
+                    } else {
+                        Toast.makeText(homeNavController.context, "Login dulu yuk...", Toast.LENGTH_SHORT).show()
+                    }
+
                 } else {
                     Toast.makeText(homeNavController.context, "Bookmark", Toast.LENGTH_SHORT).show()
                 }

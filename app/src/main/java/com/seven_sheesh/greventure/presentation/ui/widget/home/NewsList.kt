@@ -69,7 +69,7 @@ fun NewsList(
         modifier = Modifier
             .fillMaxWidth()
     ) {
-        dummyNews.forEach { news ->
+        dummyNews.take(3).forEach { news ->
             Row(
                 modifier = Modifier.clickable {
                     homeNavController.navigate(HomeNavObj.NewsDetailScreen.createRoute(news.id))
@@ -102,7 +102,8 @@ fun NewsList(
                         text = news.title,
                         fontWeight = FontWeight.Medium,
                         fontSize = 16.sp,
-                        color = GreventureScheme.Black.color
+                        color = GreventureScheme.Black.color,
+                        maxLines = 2
                     )
                     Text(
                         text = "${news.author} - ${news.minutesToRead} menit dibaca",
