@@ -29,11 +29,50 @@ val PlusJakartaSans = FontFamily(
 )
 
 val Typography = Typography(
+    displayLarge = TextStyle(
+        fontFamily = PlusJakartaSans,
+    ),
+    displayMedium = TextStyle(
+        fontFamily = PlusJakartaSans,
+    ),
+    displaySmall = TextStyle(
+        fontFamily = PlusJakartaSans,
+    ),
     bodyLarge = TextStyle(
         fontFamily = PlusJakartaSans,
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
-        lineHeight = 24.sp,
-        letterSpacing = 0.5.sp
+    ),
+    bodyMedium = TextStyle(
+        fontFamily = PlusJakartaSans,
+    ),
+    bodySmall = TextStyle(
+        fontFamily = PlusJakartaSans,
+    ),
+    headlineLarge = TextStyle(
+        fontFamily = PlusJakartaSans,
+    ),
+    headlineSmall = TextStyle(
+        fontFamily = PlusJakartaSans,
+    ),
+    labelLarge = TextStyle(
+        fontFamily = PlusJakartaSans,
+    ),
+    labelSmall = TextStyle(
+        fontFamily = PlusJakartaSans,
+    ),
+    titleLarge = TextStyle(
+        fontFamily = PlusJakartaSans,
+    ),
+    titleSmall = TextStyle(
+        fontFamily = PlusJakartaSans,
+    ),
+    labelMedium = TextStyle(
+        fontFamily = PlusJakartaSans,
+    ),
+    titleMedium = TextStyle(
+        fontFamily = PlusJakartaSans,
+    ),
+    headlineMedium = TextStyle(
+        fontFamily = PlusJakartaSans,
+    ),
+
     )
-)
