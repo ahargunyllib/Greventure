@@ -1,6 +1,7 @@
 package com.seven_sheesh.greventure.presentation.ui.widget.maps
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,10 +29,13 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.seven_sheesh.greventure.domain.model.Comment
 import com.seven_sheesh.greventure.domain.model.PlaceholderData
 import com.seven_sheesh.greventure.domain.model.Thread
 import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
+import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
 
 @Composable
 @Preview
@@ -39,7 +43,8 @@ fun ChatMessage(
     message: Thread = PlaceholderData.thread1,
     comment: Comment = PlaceholderData.comment1,
     userID: String = "",
-    isComment: Boolean = true
+    isComment: Boolean = true,
+    homeNavController: NavController = rememberNavController()
 ) {
     Row(
         modifier = Modifier
@@ -96,7 +101,9 @@ fun ChatMessage(
                 Text(text = "2 Suka", color = GreventureScheme.Gray.color, fontSize = 12.sp)
                 Spacer(modifier = Modifier.width(8.dp))
                 if(!isComment){
-                    Text(text = "Balas", color = GreventureScheme.Gray.color, textDecoration = TextDecoration.Underline, fontSize = 12.sp)
+                    Text(text = "Balas", color = GreventureScheme.Gray.color, textDecoration = TextDecoration.Underline, fontSize = 12.sp, modifier = Modifier.clickable {
+                        homeNavController.navigate(HomeNavObj.DiscussionScreen.createRoute(message.id))
+                    })
                 }
             }
             Spacer(modifier = Modifier.height(8.dp))

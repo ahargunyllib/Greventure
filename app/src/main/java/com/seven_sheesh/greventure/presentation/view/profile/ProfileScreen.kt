@@ -2,6 +2,7 @@ package com.seven_sheesh.greventure.presentation.view.profile
 
 import android.annotation.SuppressLint
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
@@ -42,6 +43,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -78,6 +80,7 @@ fun ProfileScreen(
 
     val user = profileViewModel.user.collectAsState(initial = Pair("", null)).value.second
     val message = profileViewModel.message.collectAsState(initial = "").value
+    val context = LocalContext.current
 
     navbarViewModel.setPageState(3)
 
@@ -189,7 +192,11 @@ fun ProfileScreen(
                             icon = Icons.Default.Person,
                             title = "Edit Profil"
                         ) {
-                            homeNavController.navigate(HomeNavObj.EditProfileScreen.route)
+                            if(user != null){
+                                homeNavController.navigate(HomeNavObj.EditProfileScreen.route)
+                            } else {
+                                Toast.makeText(context, "Login dulu yuk", Toast.LENGTH_SHORT).show()
+                            }
                         }
                         Spacer(modifier = Modifier.height(16.dp))
                         HorizontalDivider()
@@ -203,7 +210,12 @@ fun ProfileScreen(
                             icon = Icons.Default.History,
                             title = "Bubble Buatanmu"
                         ) {
-                            homeNavController.navigate(HomeNavObj.YourBubbleScreen.route)
+                            if(user != null){
+                                homeNavController.navigate(HomeNavObj.YourBubbleScreen.route)
+                            } else {
+                                Toast.makeText(context, "Login dulu yuk", Toast.LENGTH_SHORT).show()
+                            }
+
                         }
                         Spacer(modifier = Modifier.height(16.dp))
                         HorizontalDivider()

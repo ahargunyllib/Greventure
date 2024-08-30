@@ -2,11 +2,8 @@ package com.seven_sheesh.greventure.presentation.view.maps
 
 import android.annotation.SuppressLint
 import android.widget.Toast
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -21,12 +18,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.seven_sheesh.greventure.domain.model.PlaceholderData
 import com.seven_sheesh.greventure.domain.model.Thread
 import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
 import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
@@ -44,7 +39,6 @@ import com.seven_sheesh.greventure.presentation.viewmodel.ProfileViewModel
 import com.seven_sheesh.greventure.ui.viewmodel.BubbleViewModel
 import com.seven_sheesh.greventure.ui.viewmodel.CommentViewModel
 import com.seven_sheesh.greventure.ui.viewmodel.ThreadViewModel
-import java.time.ZonedDateTime
 import java.util.UUID
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -144,8 +138,8 @@ fun DetailScreen(
                         }
                     }
                 }
-                item { DiscussionSection(threads = threadsState.value.second) }
-                item { Spacer(modifier = Modifier.height(140.dp)) }
+                item { DiscussionSection(threads = threadsState.value.second, homeNavController) }
+                item { Spacer(modifier = Modifier.height(160.dp)) }
             }
         }
     }

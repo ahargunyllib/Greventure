@@ -72,4 +72,13 @@ class CommentViewModel @Inject constructor(
                 }
         }
     }
+
+    fun loadCommentByThreadId(threadId: String) {
+        viewModelScope.launch {
+            commentRepository.getCommentsByThreadId(threadId)
+                .collect { message ->
+                    _commentListState.value = message
+                }
+        }
+    }
 }

@@ -11,7 +11,9 @@ sealed class HomeNavObj(val route: String) {
     data object DetailScreen: HomeNavObj("maps-detail/{bubble_id}"){
         fun createRoute(bubbleId: String) = "maps-detail/$bubbleId"
     }
-    data object DiscussionScreen: HomeNavObj("maps-discussion")
+    data object DiscussionScreen: HomeNavObj("maps-discussion/{thread_id}"){
+        fun createRoute(threadId: String) = "maps-discussion/$threadId"
+    }
     data object BookmarkScreen: HomeNavObj("bookmark")
     data object ProfileScreen: HomeNavObj("profile")
     data object EditProfileScreen: HomeNavObj("profile-edit")

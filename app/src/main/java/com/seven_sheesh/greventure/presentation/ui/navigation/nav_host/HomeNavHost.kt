@@ -208,11 +208,13 @@ fun HomeNavHost(parentNavController: NavController = rememberNavController()){
 
             composable(
                 route = HomeNavObj.DiscussionScreen.route,
+                arguments = listOf(navArgument("thread_id") { type = NavType.StringType }),
                 content = {
+                    val threadId = it.arguments?.getString("thread_id") ?: ""
                     DiscussionScreen(
-//                        homeNavController = homeNavController,
-//                        navbarViewModel = navbarViewModel,
-//                        mapsViewModel = mapsViewModel
+                        homeNavController = homeNavController,
+                        navbarViewModel = navbarViewModel,
+                        threadId = threadId
                     )
                 }, enterTransition = {
                     return@composable slideIntoContainer(
