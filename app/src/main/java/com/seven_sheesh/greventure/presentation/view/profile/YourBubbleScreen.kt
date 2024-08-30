@@ -49,6 +49,7 @@ import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
 import com.seven_sheesh.greventure.presentation.ui.widget.common.SearchBarComponent
 import com.seven_sheesh.greventure.presentation.ui.widget.maps.PopupCard
 import com.seven_sheesh.greventure.presentation.viewmodel.NavbarViewModel
+import com.seven_sheesh.greventure.presentation.viewmodel.ProfileViewModel
 import com.seven_sheesh.greventure.ui.viewmodel.BubbleViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -57,11 +58,12 @@ import com.seven_sheesh.greventure.ui.viewmodel.BubbleViewModel
 fun YourBubbleScreen(
     homeNavController: NavController = rememberNavController(),
     navbarViewModel: NavbarViewModel = hiltViewModel(),
+    profileViewModel: ProfileViewModel = hiltViewModel()
 ){
     navbarViewModel.setPageState(3)
-    val dummyUserID = "user1"
+    val user = profileViewModel.user.collectAsState(initial = Pair("", null)).value.second
     val bubbleViewModel = hiltViewModel<BubbleViewModel>()
-    bubbleViewModel.loadBubbleByUserId(dummyUserID)
+    bubbleViewModel.loadBubbleByUserId(user?.id ?: "")
     val bubbleList = bubbleViewModel.bubbleListState.collectAsState()
 
     Scaffold(
@@ -145,6 +147,10 @@ fun YourBubbleScreen(
                         }, textDecoration = TextDecoration.Underline)
                     }
                     HorizontalDivider()
+                }
+
+                item{
+                    Spacer(modifier = Modifier.height(120.dp))
                 }
             }
         }

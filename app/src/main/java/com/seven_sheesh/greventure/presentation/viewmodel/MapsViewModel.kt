@@ -25,7 +25,7 @@ class MapsViewModel @Inject constructor(
     @ApplicationContext private val context: Context
 ): ViewModel() {
     private val _requestPositionMessage = MutableStateFlow("")
-    private val _currentPosition = MutableStateFlow(Pair(0.0, 0.0))
+    private val _currentPosition = MutableStateFlow(Pair(-7.9796, 112.6304))
     private val _cameraPositionState = MutableStateFlow(
         CameraPositionState(
             position = CameraPosition.fromLatLngZoom(

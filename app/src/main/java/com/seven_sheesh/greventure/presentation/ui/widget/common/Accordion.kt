@@ -53,7 +53,7 @@ fun Accordion(faqItems: List<FAQItem> = predefinedFAQs) {
                         .padding(16.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    BasicText(faq.title, style = MaterialTheme.typography.bodyMedium)
+                    BasicText(faq.title, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.fillMaxWidth(0.9f))
                     Image(
                         Icons.Rounded.ChevronRight,
                         contentDescription = null,
@@ -84,16 +84,16 @@ fun Accordion(faqItems: List<FAQItem> = predefinedFAQs) {
 }
 private val predefinedFAQs = listOf(
     FAQItem(
-        title = "Lorem ipsum dolor sit amet",
-        content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+        title = "Bagaimana cara mendaftar untuk kegiatan ini?",
+        content = "Anda dapat mendaftar untuk kegiatan ini melalui media sosial kami atau dengan menghubungi panitia penyelenggara secara langsung."
     ),
     FAQItem(
-        title = "Ut enim ad minim veniam",
-        content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+        title = "Bagaimana jika saya tidak bisa hadir di seluruh durasi kegiatan?",
+        content = "Anda bebas untuk menghadiri kegiatan sesuai dengan waktu luang Anda. Namun, kami sarankan untuk hadir di sesi pembukaan dan penutupan agar tidak ketinggalan informasi penting."
     ),
     FAQItem(
-        title = "Quis nostrud exercitation ullamco",
-        content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+        title = "Apakah saya bisa membawa teman atau keluarga?",
+        content = "Tentu saja! Kami mendorong Anda untuk mengajak teman dan keluarga untuk bergabung dan meramaikan acara ini."
     )
 )
 

@@ -3,7 +3,9 @@ package com.seven_sheesh.greventure.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.seven_sheesh.greventure.data.repository.CommentRepositoryImpl
+import com.seven_sheesh.greventure.domain.model.Bubble
 import com.seven_sheesh.greventure.domain.model.Comment
+import com.seven_sheesh.greventure.domain.model.Thread
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -39,6 +41,17 @@ class CommentViewModel @Inject constructor(
                 .collect { result ->
                     _commentState.value = result
                 }
+        }
+    }
+
+    fun loadCommentFromThreadList(list: List<Thread>){
+        viewModelScope.launch {
+            list.forEach{
+                commentRepository.getCommentsByThreadId(it.id)
+                    .collect { result ->
+                        _commentListState.value = _commentListState.value.copy(second = _commentListState.value.second + result.second)
+                    }
+            }
         }
     }
 

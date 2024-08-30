@@ -284,7 +284,7 @@ fun HomeNavHost(parentNavController: NavController = rememberNavController()){
                 content = {
                     EditProfileScreen(
                         homeNavController = homeNavController,
-                        navbarViewModel = navbarViewModel
+                        navbarViewModel = navbarViewModel,
                     )
                 }, enterTransition = {
                     return@composable slideIntoContainer(

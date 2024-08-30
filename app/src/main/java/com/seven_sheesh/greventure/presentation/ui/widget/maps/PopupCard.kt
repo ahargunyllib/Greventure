@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.LocationOn
+import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -32,6 +33,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.seven_sheesh.greventure.domain.model.Bubble
+import com.seven_sheesh.greventure.domain.model.EventColor
+import com.seven_sheesh.greventure.domain.model.EventType
 import com.seven_sheesh.greventure.domain.model.PlaceholderData
 import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
 
@@ -39,7 +42,8 @@ import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureSchem
 @Preview
 fun PopupCard(
     bubble: Bubble = PlaceholderData.bubble1,
-    onClick: (String) -> Unit = {}
+    onClick: (String) -> Unit = {},
+    onDismiss: () -> Unit = {}
 ){
     Card(modifier = Modifier
         .fillMaxWidth()
@@ -63,14 +67,27 @@ fun PopupCard(
                     verticalAlignment = Alignment.CenterVertically
                 ){
                     Text(text = bubble.title, color = GreventureScheme.Black.color, fontSize = 20.sp, fontWeight = FontWeight.Bold)
-                    Box(modifier = Modifier
-                        .height(32.dp)
-                        .width(92.dp)
-                        .clip(RoundedCornerShape(50))
-                        .background(GreventureScheme.PrimaryVariant3.color),
-                        contentAlignment = Alignment.Center
-                    ){
-                        Text(text = bubble.eventType.toString(), color = GreventureScheme.White.color, fontSize = 12.sp)
+                    Spacer(modifier = Modifier.width(8.dp))
+                    if(bubble.eventType != null){
+                        Box(modifier = Modifier
+                            .height(32.dp)
+                            .width(92.dp)
+                            .clip(RoundedCornerShape(50))
+                            .background(EventColor(bubble.eventType)),
+                            contentAlignment = Alignment.Center
+                        ){
+                            Text(text = bubble.eventType.toString(), color = GreventureScheme.White.color, fontSize = 12.sp)
+                        }
+                    } else {
+                        Box(modifier = Modifier
+                            .height(32.dp)
+                            .width(92.dp)
+                            .clip(RoundedCornerShape(50))
+                            .background(GreventureScheme.Success.color),
+                            contentAlignment = Alignment.Center
+                        ){
+                            Text(text = "Lokasi", color = GreventureScheme.White.color, fontSize = 12.sp)
+                        }
                     }
                 }
                 Spacer(modifier = Modifier.height(4.dp))
@@ -80,19 +97,32 @@ fun PopupCard(
                     Text(text = bubble.latitude.toString() + " / " + bubble.longitude.toString(), fontSize = 16.sp, color = GreventureScheme.Black.color)
                 }
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(text = bubble.description, fontSize = 16.sp, color = GreventureScheme.Black.color)
-                Spacer(modifier = Modifier.height(16.dp))
-                Card(modifier = Modifier
-                    .width(140.dp)
-                    .height(36.dp),
-                    shape = RoundedCornerShape(50),
-                    colors = CardDefaults.cardColors(GreventureScheme.Primary.color)
-                ) {
-                    Box(modifier = Modifier.fillMaxSize().clickable {
-                        onClick(bubble.id)
-                    }, contentAlignment = Alignment.Center){
-                        Text(text = "Selengkapnya", color = GreventureScheme.White.color, modifier = Modifier)
+                Text(text = bubble.description, fontSize = 16.sp, color = GreventureScheme.Black.color, maxLines = 2)
+                Spacer(modifier = Modifier.height(24.dp))
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ){
+                    Card(modifier = Modifier
+                        .width(140.dp)
+                        .height(36.dp),
+                        shape = RoundedCornerShape(50),
+                        colors = CardDefaults.cardColors(GreventureScheme.Primary.color)
+                    ) {
+                        Box(modifier = Modifier
+                            .fillMaxSize()
+                            .clickable {
+                                onClick(bubble.id)
+                            }, contentAlignment = Alignment.Center){
+                            Text(text = "Selengkapnya", color = GreventureScheme.White.color, modifier = Modifier)
+                        }
                     }
+
+                    Icon(imageVector = Icons.Rounded.Close, contentDescription = "close", tint = GreventureScheme.Black.color, modifier = Modifier.size(28.dp).clickable {
+                        onDismiss()
+                    })
                 }
             }
         }

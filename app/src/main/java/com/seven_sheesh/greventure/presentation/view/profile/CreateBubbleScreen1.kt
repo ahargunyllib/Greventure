@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -31,6 +32,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -38,6 +41,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -48,10 +52,14 @@ import coil.compose.AsyncImage
 import com.seven_sheesh.greventure.R
 import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
 import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
+import com.seven_sheesh.greventure.presentation.ui.widget.common.DatePicker
 import com.seven_sheesh.greventure.presentation.ui.widget.common.Input
 import com.seven_sheesh.greventure.presentation.ui.widget.common.SnackBar
+import com.seven_sheesh.greventure.presentation.ui.widget.common.TimePicker
+import com.seven_sheesh.greventure.presentation.ui.widget.common.TimePicker2
 import com.seven_sheesh.greventure.presentation.viewmodel.CreateBubbleViewModel
 import com.seven_sheesh.greventure.presentation.viewmodel.NavbarViewModel
+import com.seven_sheesh.greventure.presentation.viewmodel.ProfileViewModel
 
 @Composable
 @Preview
@@ -59,17 +67,26 @@ fun CreateBubbleScreen1(
     homeNavController: NavController = rememberNavController(),
     navbarViewModel: NavbarViewModel = hiltViewModel(),
     createBubbleViewModel: CreateBubbleViewModel = hiltViewModel(),
+    profileViewModel: ProfileViewModel = hiltViewModel()
 ){
     navbarViewModel.setPageState(3)
     val bubble = createBubbleViewModel.bubbleState.collectAsState()
     val bubblePhoto = createBubbleViewModel.bubblePhoto.collectAsState()
     val bubbleSocialMedia = createBubbleViewModel.bubbleSocialMedia.collectAsState()
+    val user = profileViewModel.user.collectAsState(initial = Pair("", null)).value.second
 
-    createBubbleViewModel.updateBubble(bubble.value.copy(userId = "user1"))
+    createBubbleViewModel.updateBubble(bubble.value.copy(userId = user?.id ?: ""))
     createBubbleViewModel.updateBubblePhoto(bubblePhoto.value.copy(bubbleId = bubble.value.id))
     createBubbleViewModel.updateBubbleSocialMedia(bubbleSocialMedia.value.first.copy(bubbleId = bubble.value.id), 0)
     createBubbleViewModel.updateBubbleSocialMedia(bubbleSocialMedia.value.first.copy(bubbleId = bubble.value.id), 1)
     createBubbleViewModel.updateBubbleSocialMedia(bubbleSocialMedia.value.first.copy(bubbleId = bubble.value.id), 2)
+
+    var selectedDate = remember { mutableStateOf("") }
+    var selectedTime = remember { mutableStateOf("") }
+
+    var showDatePicker  = remember { mutableStateOf(false) }
+    var showTimePicker  = remember { mutableStateOf(false) }
+    var showTimePicker2 = remember { mutableStateOf(false) }
 
     val singlePhotoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
@@ -140,7 +157,29 @@ fun CreateBubbleScreen1(
                         Input(value = bubble.value.description, onValueChange = {
                            createBubbleViewModel.updateBubble(bubble.value.copy(description = it))
                         }, label = "Deskripsi", modifier = Modifier.height(160.dp), placeholder = "Masukkan deskripsi")
-//
+
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Row(modifier = Modifier
+                            .fillMaxWidth(), verticalAlignment = Alignment.CenterVertically){
+                            Box(modifier = Modifier.fillMaxWidth(0.5f)) {
+                                Input(value = bubble.value.startTime, onValueChange = {}, label = "Waktu")
+                                Box(modifier = Modifier
+                                    .matchParentSize()
+                                    .clickable {
+                                        showDatePicker.value = true
+                                    }) {}
+                            }
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Box() {
+                                Input(value = bubble.value.duration, onValueChange = {}, label = "Durasi")
+                                Box(modifier = Modifier
+                                    .matchParentSize()
+                                    .clickable {
+                                        showTimePicker2.value = true
+                                    }) {}
+                            }
+                        }
+
                         Spacer(modifier = Modifier.height(24.dp))
                         HorizontalDivider()
                         Spacer(modifier = Modifier.height(16.dp))
@@ -184,7 +223,8 @@ fun CreateBubbleScreen1(
                             .border(
                                 BorderStroke(2.dp, GreventureScheme.SoftGray.color),
                                 RoundedCornerShape(16.dp)
-                            ).clickable {
+                            )
+                            .clickable {
                                 singlePhotoPickerLauncher.launch(
                                     PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
                                 )
@@ -202,5 +242,38 @@ fun CreateBubbleScreen1(
                 Spacer(modifier = Modifier.height(120.dp))
             }
         }
+    }
+
+    if (showDatePicker.value) {
+        DatePicker(
+            onDateSelected = { date ->
+                selectedDate.value = date
+                showDatePicker.value = false
+                showTimePicker.value = true
+            },
+            onDismiss = { showDatePicker.value = false },
+            onDateChanged = {  }
+        )
+    }
+
+    if (showTimePicker.value) {
+        TimePicker(
+            onTimeSelected = { time ->
+                selectedTime.value = time
+                createBubbleViewModel.updateBubble(bubble.value.copy(startTime = selectedDate.value))
+                showTimePicker.value = false
+            },
+            onDismiss = { showTimePicker.value = false }
+        )
+    }
+
+    if (showTimePicker2.value) {
+        TimePicker2(
+            onTimeSelected = { time ->
+                createBubbleViewModel.updateBubble(bubble.value.copy(duration = time))
+                showTimePicker2.value = false
+            },
+            onDismiss = { showTimePicker2.value = false }
+        )
     }
 }

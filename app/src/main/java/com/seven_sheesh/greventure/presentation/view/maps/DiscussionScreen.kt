@@ -42,12 +42,12 @@ fun DiscussionScreen() {
                 Column(
                     modifier = Modifier
                         .weight(1f)
-                        .padding(horizontal = 16.dp, vertical = 8.dp)
+                        .padding(horizontal = 24.dp, vertical = 8.dp)
                 ) {
-                    ChatMessage(message = "Lorem ipsum dolor sit amet,", isUser = false, isReply = false)
-                    ChatMessage(message = "Reply to above message,", isUser = false, isReply = true)
-                    ChatMessage(message = "Another message from the user,", isUser = true, isReply = false)
-                    ChatMessage(message = "Another reply,", isUser = false, isReply = true)
+                    ChatMessage(isComment = false)
+                    ChatMessage()
+                    ChatMessage()
+                    ChatMessage(isComment = false)
                 }
 
                 ChatInput()

@@ -30,10 +30,14 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -58,6 +62,7 @@ import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
 import com.seven_sheesh.greventure.presentation.viewmodel.CreateBubbleViewModel
 import com.seven_sheesh.greventure.presentation.viewmodel.NavbarViewModel
 import com.seven_sheesh.greventure.ui.viewmodel.BubbleViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 @Preview
@@ -84,6 +89,10 @@ fun CreateBubbleScreen3(
     LaunchedEffect(message.value) {
         if (message.value.isNotEmpty()) {
             Toast.makeText(context, message.value, Toast.LENGTH_SHORT).show()
+        }
+
+        if(message.value.contains("successfully")){
+            homeNavController.navigate(HomeNavObj.YourBubbleScreen.route)
         }
     }
 
