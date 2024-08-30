@@ -1,6 +1,8 @@
 package com.seven_sheesh.greventure.presentation.ui.widget.home
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,6 +17,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -80,62 +84,73 @@ fun EventCard(
 ) {
     val bubblePhoto = bubbleViewModel.bubblePhotoListState.collectAsState().value.second.filter { it.bubbleId == bubble.id }.firstOrNull()
 
-    Box(modifier = Modifier
-        .fillMaxWidth()
-        .height(140.dp)
-        .clip(RoundedCornerShape(16.dp))
-        .clickable {
-            homeNavController.navigate(HomeNavObj.DetailScreen.createRoute(bubble.id))
-        }
-        .background(EventColor(bubble.eventType ?: EventType.Masyarakat)),
-        contentAlignment = Alignment.Center
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(140.dp)
+            .clickable {
+                homeNavController.navigate(HomeNavObj.DetailScreen.createRoute(bubble.id))
+            },
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(EventColor(bubble.eventType ?: EventType.Masyarakat)) ,
+        border = BorderStroke(2.dp, GreventureScheme.SoftGray.color),
+        elevation = CardDefaults.cardElevation(2.dp)
     ) {
-        AsyncImage(model = bubblePhoto?.url, contentDescription = "image", modifier = Modifier.fillMaxSize().blur(2.dp), contentScale = ContentScale.Crop )
-
-        if(bubblePhoto != null){
-            Box(
+        Box(modifier = Modifier.fillMaxSize()) {
+            AsyncImage(
+                model = bubblePhoto?.url,
+                contentDescription = "image",
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Color.Black.copy(alpha = 0.3f))
+                    .blur(2.dp),
+                contentScale = ContentScale.Crop
             )
-        }
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.SpaceBetween
-        ) {
-            Column {
-                Text(
-                    text = bubble.title,
-                    fontWeight = FontWeight.Medium,
-                    fontSize = 16.sp,
-                    color = GreventureScheme.White.color
+            if (bubblePhoto?.url != "") {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(GreventureScheme.LineDark.color.copy(alpha = 0.6f))
                 )
-                Spacer(modifier = Modifier.height(4.dp))
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(
-                        imageVector = Icons.Default.Star,
-                        contentDescription = "Star",
-                        tint = GreventureScheme.White.color
-                    )
-                    Spacer(modifier = Modifier.width(4.dp))
+            }
+
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.SpaceBetween
+            ) {
+                Column {
                     Text(
-                        text = "4.9",
+                        text = bubble.title,
                         fontWeight = FontWeight.Medium,
                         fontSize = 16.sp,
                         color = GreventureScheme.White.color
                     )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            imageVector = Icons.Default.Star,
+                            contentDescription = "Star",
+                            tint = GreventureScheme.White.color
+                        )
+                        Spacer(modifier = Modifier.width(4.dp))
+                        Text(
+                            text = "4.9",
+                            fontWeight = FontWeight.Medium,
+                            fontSize = 16.sp,
+                            color = GreventureScheme.White.color
+                        )
+                    }
                 }
-            }
 
-            Text(
-                text = bubble.description,
-                fontSize = 12.sp,
-                modifier = Modifier.padding(top = 2.dp),
-                color = GreventureScheme.White.color
-            )
+                Text(
+                    text = bubble.description,
+                    fontSize = 12.sp,
+                    modifier = Modifier.padding(top = 2.dp),
+                    color = GreventureScheme.White.color
+                )
+            }
         }
     }
 }

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,6 +31,8 @@ import com.seven_sheesh.greventure.presentation.ui.widget.maps.TopBar
 import com.seven_sheesh.greventure.presentation.viewmodel.MapsViewModel
 import com.seven_sheesh.greventure.presentation.viewmodel.NavbarViewModel
 import com.seven_sheesh.greventure.ui.viewmodel.BubbleViewModel
+import com.seven_sheesh.greventure.ui.viewmodel.CommentViewModel
+import com.seven_sheesh.greventure.ui.viewmodel.ThreadViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -38,9 +41,14 @@ fun DetailScreen(
     homeNavController: NavController = rememberNavController(),
     navbarViewModel: NavbarViewModel = hiltViewModel(),
     mapsViewModel: MapsViewModel = hiltViewModel(),
+    threadViewModel: ThreadViewModel = hiltViewModel(),
+    commentViewModel: CommentViewModel = hiltViewModel(),
     bubbleId: String = ""
 ) {
-    navbarViewModel.setPageState(1)
+    LaunchedEffect(Unit) {
+        navbarViewModel.setPageState(1)
+    }
+
     val bubbleViewModel = hiltViewModel<BubbleViewModel>()
     bubbleViewModel.loadBubbleById(bubbleId)
     bubbleViewModel.loadBubblePhotoByBubbleId(bubbleId)
@@ -49,6 +57,12 @@ fun DetailScreen(
     val currentBubble = bubbleViewModel.bubbleState.collectAsState()
     val currentBubblePhoto = bubbleViewModel.bubblePhotoListState.collectAsState()
     val currentBubbleSocialMedia = bubbleViewModel.bubbleSocialMediaListState.collectAsState()
+
+    val bubbleIdValue = currentBubble.value.second?.id ?: ""
+    LaunchedEffect(bubbleIdValue) {
+        threadViewModel.loadThreadByBubbleId(bubbleIdValue)
+    }
+    val threads = threadViewModel.threadListState.collectAsState()
 
     Scaffold(
         containerColor = GreventureScheme.White.color,
@@ -64,36 +78,31 @@ fun DetailScreen(
                 .safeDrawingPadding(),
             contentAlignment = Alignment.Center
         ) {
-            AnimatedVisibility(
-                visible = currentBubble.value.second?.id == bubbleId,
-                enter = fadeIn(animationSpec = tween(durationMillis = 500)),
-                exit = fadeOut(animationSpec = tween(durationMillis = 500))
+            LazyColumn(
+                modifier = Modifier.fillMaxSize()
             ) {
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    item { PictureCard(currentBubblePhoto, currentBubble) }
-                    item { HeaderSection(currentBubble) }
-                    item { DateLocationCard(homeNavController, currentBubble) }
-                    item { SocialMediaCard(homeNavController, currentBubbleSocialMedia) }
-                    if(currentBubble.value.second?.eventType != null){
-                        item { FAQSection() }
-                    } else {
-                        item {
-                            Column(modifier = Modifier.padding(horizontal = 16.dp)) {
-                                Spacer(modifier = Modifier.height(24.dp))
-                                HorizontalDivider()
-                                Spacer(modifier = Modifier.height(24.dp))
-                            }
+                item { PictureCard(currentBubblePhoto, currentBubble) }
+                item { HeaderSection(currentBubble) }
+                item { DateLocationCard(homeNavController, currentBubble) }
+                item { SocialMediaCard(homeNavController, currentBubbleSocialMedia) }
+                if (currentBubble.value.second?.eventType != null) {
+                    item { FAQSection() }
+                } else {
+                    item {
+                        Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+                            Spacer(modifier = Modifier.height(24.dp))
+                            HorizontalDivider()
+                            Spacer(modifier = Modifier.height(24.dp))
                         }
                     }
-                    item { DiscussionSection() }
-                    item { Spacer(modifier = Modifier.height(140.dp)) }
                 }
+                item { DiscussionSection(threads = threads.value.second) }
+                item { Spacer(modifier = Modifier.height(140.dp)) }
             }
         }
     }
 }
+
 
 
 

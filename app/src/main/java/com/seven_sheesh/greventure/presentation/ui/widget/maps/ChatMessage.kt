@@ -77,15 +77,16 @@ fun ChatMessage(
                         .background(GreventureScheme.SoftGray.color, CircleShape)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text(text = if(isComment) comment.userId.toString() else message.userId.toString(), color = GreventureScheme.Black.color, fontWeight = FontWeight.SemiBold, fontSize = 16.sp)
+                Text(text = "User", color = GreventureScheme.Black.color, fontWeight = FontWeight.SemiBold, fontSize = 16.sp)
                 Spacer(modifier = Modifier.width(8.dp))
-                Text(text = if(isComment) comment.createdAt.toString().substring(0,10) else message.createdAt.toString().substring(0,10) , color = GreventureScheme.Gray.color,)
+                Text(text = if(isComment) comment.createdAt.toString().substring(0,10) else message.createdAt.toString().substring(0,10) , color = GreventureScheme.Gray.color, fontSize = 14.sp)
             }
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = if(isComment) comment.content else message.content,
                 style = MaterialTheme.typography.bodyLarge,
                 color = GreventureScheme.Black.color,
+                fontSize = 14.sp
             )
             Spacer(modifier = Modifier.height(12.dp))
             Row(

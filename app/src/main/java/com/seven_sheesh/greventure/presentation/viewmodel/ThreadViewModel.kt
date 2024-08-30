@@ -42,6 +42,15 @@ class ThreadViewModel @Inject constructor(
         }
     }
 
+    fun loadThreadByBubbleId(bubbleId: String) {
+        viewModelScope.launch {
+            threadRepository.getThreadsByBubbleId(bubbleId)
+                .collect { result ->
+                    _threadListState.value = result
+                }
+        }
+    }
+
     fun upsertThread(thread: Thread) {
         viewModelScope.launch {
             threadRepository.upsertThread(thread)
