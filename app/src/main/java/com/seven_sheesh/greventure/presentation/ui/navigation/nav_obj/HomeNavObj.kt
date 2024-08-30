@@ -20,4 +20,5 @@ sealed class HomeNavObj(val route: String) {
     data object CreateBubble2: HomeNavObj("profile-create-bubble2")
     data object CreateBubble3: HomeNavObj("profile-create-bubble3")
     data object CreateBubblePick: HomeNavObj("profile-create-bubble-pick")
+    data object HistoryBookmarkScreen: HomeNavObj("bookmark-history")
 }
