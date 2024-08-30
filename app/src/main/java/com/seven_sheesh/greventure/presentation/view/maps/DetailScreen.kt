@@ -80,7 +80,7 @@ fun DetailScreen(
     LaunchedEffect(bubbleIdValue) {
         threadViewModel.loadThreadByBubbleId(bubbleIdValue)
     }
-    val threadsState = threadViewModel.threadListState.collectAsState()
+    val mapState = threadViewModel.threadUserListState.collectAsState().value
     val user = navbarViewModel.user.collectAsState().value.second
 
     Scaffold(
@@ -138,7 +138,7 @@ fun DetailScreen(
                         }
                     }
                 }
-                item { DiscussionSection(threads = threadsState.value.second, homeNavController) }
+                item { DiscussionSection(mapState, homeNavController) }
                 item { Spacer(modifier = Modifier.height(160.dp)) }
             }
         }

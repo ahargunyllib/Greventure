@@ -60,8 +60,8 @@ fun DiscussionScreen(
         commentViewModel.loadCommentByThreadId(threadId)
     }
 
-    val thread = threadViewModel.threadState.collectAsState().value
-    val comments = commentViewModel.commentListState.collectAsState().value
+    val thread = threadViewModel.threadUserState.collectAsState().value
+    val comments = commentViewModel.commentUserListState.collectAsState().value
     val message = commentViewModel.messageState.collectAsState().value
     val context = LocalContext.current
 
@@ -149,9 +149,11 @@ fun DiscussionScreen(
                             .fillMaxWidth()
                             .padding(horizontal = 24.dp, vertical = 8.dp)
                     ) {
-                        thread.second?.let { ChatMessage(it, isComment = false) }
-                        comments.second.forEach { comment ->
-                            ChatMessage(comment = comment, isComment = true, homeNavController = homeNavController)
+                        thread?.let { it.keys.firstOrNull()?.let { it1 -> it.values.firstOrNull()
+                            ?.let { it2 -> ChatMessage(message = it1, user = it2, isComment = false) } } }
+                        comments.forEach { map ->
+                            map.keys.firstOrNull()?.let { it1 -> map.values.firstOrNull()
+                                ?.let { it2 -> ChatMessage(comment = it1, user = it2, isComment = true, homeNavController = homeNavController) } }
                         }
                     }
                 }

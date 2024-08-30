@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -22,6 +23,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
@@ -31,9 +34,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import coil.compose.AsyncImage
 import com.seven_sheesh.greventure.domain.model.Comment
 import com.seven_sheesh.greventure.domain.model.PlaceholderData
 import com.seven_sheesh.greventure.domain.model.Thread
+import com.seven_sheesh.greventure.domain.model.User
 import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
 import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
 
@@ -42,6 +47,7 @@ import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
 fun ChatMessage(
     message: Thread = PlaceholderData.thread1,
     comment: Comment = PlaceholderData.comment1,
+    user: User = PlaceholderData.user1,
     userID: String = "",
     isComment: Boolean = true,
     homeNavController: NavController = rememberNavController()
@@ -80,9 +86,12 @@ fun ChatMessage(
                     modifier = Modifier
                         .size(40.dp)
                         .background(GreventureScheme.SoftGray.color, CircleShape)
-                )
+                ){
+                    AsyncImage(model = user.profilePictureUrl, contentDescription = "profile", modifier = Modifier.fillMaxSize().clip(
+                        CircleShape), contentScale = ContentScale.Crop)
+                }
                 Spacer(modifier = Modifier.width(8.dp))
-                Text(text = "User", color = GreventureScheme.Black.color, fontWeight = FontWeight.SemiBold, fontSize = 16.sp)
+                Text(text = user.name, color = GreventureScheme.Black.color, fontWeight = FontWeight.SemiBold, fontSize = 16.sp)
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(text = if(isComment) comment.createdAt.toString().substring(0,10) else message.createdAt.toString().substring(0,10) , color = GreventureScheme.Gray.color, fontSize = 14.sp)
             }

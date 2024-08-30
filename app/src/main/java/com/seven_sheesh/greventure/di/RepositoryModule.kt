@@ -7,6 +7,7 @@ import com.seven_sheesh.greventure.data.repository.CommentRepositoryImpl
 import com.seven_sheesh.greventure.data.repository.BubblePhotoRepositoryImpl
 import com.seven_sheesh.greventure.data.repository.BubbleSocialMediaRepositoryImpl
 import com.seven_sheesh.greventure.data.repository.ThreadRepositoryImpl
+import com.seven_sheesh.greventure.data.repository.UserRepositoryImpl
 import com.seven_sheesh.greventure.domain.repository.AuthenticationRepository
 import com.seven_sheesh.greventure.domain.repository.BookmarkRepository
 import com.seven_sheesh.greventure.domain.repository.BubbleRepository
@@ -14,6 +15,7 @@ import com.seven_sheesh.greventure.domain.repository.CommentRepository
 import com.seven_sheesh.greventure.domain.repository.BubblePhotoRepository
 import com.seven_sheesh.greventure.domain.repository.BubbleSocialMediaRepository
 import com.seven_sheesh.greventure.domain.repository.ThreadRepository
+import com.seven_sheesh.greventure.domain.repository.UserRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -29,6 +31,12 @@ abstract class RepositoryModule {
     abstract fun bindAuthenticationRepository(
         authenticationRepositoryImpl: AuthenticationRepositoryImpl
     ): AuthenticationRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindUserRepository(
+        userRepository: UserRepositoryImpl
+    ): UserRepository
 
     @Binds
     @Singleton

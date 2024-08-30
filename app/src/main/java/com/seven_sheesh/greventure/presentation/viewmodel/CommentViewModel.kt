@@ -3,9 +3,10 @@ package com.seven_sheesh.greventure.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.seven_sheesh.greventure.data.repository.CommentRepositoryImpl
-import com.seven_sheesh.greventure.domain.model.Bubble
+import com.seven_sheesh.greventure.data.repository.UserRepositoryImpl
 import com.seven_sheesh.greventure.domain.model.Comment
 import com.seven_sheesh.greventure.domain.model.Thread
+import com.seven_sheesh.greventure.domain.model.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,7 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CommentViewModel @Inject constructor(
-    private val commentRepository: CommentRepositoryImpl
+    private val commentRepository: CommentRepositoryImpl,
+    private val userRepository: UserRepositoryImpl
 ) : ViewModel() {
 
     private val _commentListState = MutableStateFlow<Pair<String, List<Comment>>>(Pair("Loading...", emptyList()))
@@ -26,11 +28,33 @@ class CommentViewModel @Inject constructor(
     private val _messageState = MutableStateFlow<String>("")
     val messageState: StateFlow<String> get() = _messageState
 
+    private val _threadUserState = MutableStateFlow<Map<Thread, User>?>(null)
+    val threadUserState: StateFlow<Map<Thread, User>?> get() = _threadUserState
+
+    private val _commentUserListState = MutableStateFlow<List<Map<Comment, User>>>(emptyList())
+    val commentUserListState: StateFlow<List<Map<Comment, User>>> get() = _commentUserListState
+
     fun loadAllComments() {
         viewModelScope.launch {
             commentRepository.getAllComments()
-                .collect { result ->
-                    _commentListState.value = result
+                .collect { commentResult ->
+                    _commentListState.value = commentResult
+
+                    val comments = commentResult.second
+                    val commentUserList = mutableListOf<Map<Comment, User>>()
+
+                    comments.forEach { comment ->
+                        val userId = comment.userId // assuming Comment has a userId field
+                        userRepository.getUserById(comment.userId.toString()).collect { userResult ->
+                            userResult.second?.let { user ->
+                                // Create a map of Comment to User and add it to the list
+                                commentUserList.add(mapOf(comment to user))
+                            }
+                        }
+                    }
+
+                    // Update state with the list of maps of comments and their users
+                    _commentUserListState.value = commentUserList
                 }
         }
     }
@@ -44,12 +68,30 @@ class CommentViewModel @Inject constructor(
         }
     }
 
-    fun loadCommentFromThreadList(list: List<Thread>){
+    fun loadCommentFromThreadList(list: List<Thread>) {
         viewModelScope.launch {
-            list.forEach{
-                commentRepository.getCommentsByThreadId(it.id)
-                    .collect { result ->
-                        _commentListState.value = _commentListState.value.copy(second = _commentListState.value.second + result.second)
+            val commentUserList = mutableListOf<Map<Comment, User>>()
+
+            list.forEach { thread ->
+                commentRepository.getCommentsByThreadId(thread.id)
+                    .collect { commentResult ->
+                        _commentListState.value = _commentListState.value.copy(
+                            second = _commentListState.value.second + commentResult.second
+                        )
+
+                        val comments = commentResult.second
+                        comments.forEach { comment ->
+                            val userId = comment.userId // assuming Comment has a userId field
+                            userRepository.getUserById(comment.userId.toString()).collect { userResult ->
+                                userResult.second?.let { user ->
+                                    // Create a map of Comment to User and add it to the list
+                                    commentUserList.add(mapOf(comment to user))
+                                }
+                            }
+                        }
+
+                        // Update state with the list of maps of comments and their users
+                        _commentUserListState.value = commentUserList
                     }
             }
         }
@@ -76,8 +118,24 @@ class CommentViewModel @Inject constructor(
     fun loadCommentByThreadId(threadId: String) {
         viewModelScope.launch {
             commentRepository.getCommentsByThreadId(threadId)
-                .collect { message ->
-                    _commentListState.value = message
+                .collect { commentResult ->
+                    _commentListState.value = commentResult
+
+                    val comments = commentResult.second
+                    val commentUserList = mutableListOf<Map<Comment, User>>()
+
+                    comments.forEach { comment ->
+                        val userId = comment.userId // assuming Comment has a userId field
+                        userRepository.getUserById(comment.userId.toString()).collect { userResult ->
+                            userResult.second?.let { user ->
+                                // Create a map of Comment to User and add it to the list
+                                commentUserList.add(mapOf(comment to user))
+                            }
+                        }
+                    }
+
+                    // Update state with the list of maps of comments and their users
+                    _commentUserListState.value = commentUserList
                 }
         }
     }

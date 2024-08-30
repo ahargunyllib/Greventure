@@ -12,11 +12,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.seven_sheesh.greventure.domain.model.Thread
+import com.seven_sheesh.greventure.domain.model.User
 import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
 
 @Composable
 fun DiscussionSection(
-    threads: List<Thread>,
+    mapState: List<Map<Thread, User>>,
     homeNavController: NavController,
 ){
     Column(modifier = Modifier.padding(horizontal = 16.dp)) {
@@ -27,10 +28,11 @@ fun DiscussionSection(
             fontWeight = FontWeight.SemiBold
         )
         Spacer(modifier = Modifier.height(12.dp))
-        threads.forEach{thread ->
-            ChatMessage(message = thread, isComment = false, homeNavController = homeNavController)
+        mapState.forEach{ map ->
+            map.values.firstOrNull()?.let { map.keys.firstOrNull()
+                ?.let { it1 -> ChatMessage(message = it1, user = it, isComment = false, homeNavController = homeNavController) } }
         }
-        if(threads.isEmpty()){
+        if(mapState.isEmpty()){
             Text(text = "Belum ada diskusi yang tersedia", color = GreventureScheme.Gray.color, fontSize = 14.sp)
         }
     }
