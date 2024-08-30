@@ -18,10 +18,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.History
-import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
@@ -35,7 +33,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -47,24 +44,23 @@ import com.seven_sheesh.greventure.presentation.ui.design_system.PlusJakartaSans
 import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
 import com.seven_sheesh.greventure.presentation.ui.widget.bookmark.BookmarkList
 import com.seven_sheesh.greventure.presentation.viewmodel.BookmarkViewModel
+import com.seven_sheesh.greventure.presentation.viewmodel.HistoryBookmarkViewModel
 import com.seven_sheesh.greventure.presentation.viewmodel.NavbarViewModel
 
 @Composable
-@Preview
-fun BookmarkScreen(
+fun HistoryBookmarkScreen(
     homeNavController: NavController = rememberNavController(),
     navbarViewModel: NavbarViewModel = hiltViewModel(),
-    bookmarkViewModel: BookmarkViewModel = hiltViewModel()
+    historyBookmarkViewModel: HistoryBookmarkViewModel = hiltViewModel()
 ) {
-    navbarViewModel.setPageState(2)
-
     val user = navbarViewModel.user.collectAsState().value.second
-    val bookmarks = bookmarkViewModel.bookmarks.collectAsState().value.second
+    val bookmarks = historyBookmarkViewModel.bookmarks.collectAsState().value.second
 
-    LaunchedEffect(Unit) {
-        bookmarkViewModel.loadBookmarks(user?.id!!)
+    LaunchedEffect(Unit)     {
+        historyBookmarkViewModel.loadHistoryBookmarks(user?.id!!)
     }
 
+    navbarViewModel.setPageState(2)
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -75,57 +71,48 @@ fun BookmarkScreen(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 16.dp)
         ) {
             item {
-                Spacer(modifier = Modifier.height(16.dp))
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(100.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
+                        .height(90.dp)
+                        .background(GreventureScheme.Primary.color),
+                    horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Row(
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp)
+                            .fillMaxSize(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Spacer(modifier = Modifier.width(12.dp))
-                        Text(
-                            text = "Bookmark",
-                            fontWeight = FontWeight.SemiBold,
-                            fontSize = 28.sp,
-                            color = Color.Black,
-                            style = TextStyle(
-                                fontFamily = PlusJakartaSans,
-                                fontWeight = FontWeight.ExtraBold,
-                            )
+                        Icon(
+                            imageVector = Icons.Default.ArrowBackIosNew,
+                            contentDescription = "Arrow Back",
+                            modifier = Modifier.clickable {
+                                homeNavController.navigate(HomeNavObj.BookmarkScreen.route)
+                            },
+                            tint = GreventureScheme.White.color
                         )
-                    }
-
-                    Card(
-                        modifier = Modifier.size(48.dp),
-                        shape = RoundedCornerShape(50),
-                        colors = CardDefaults.cardColors(Color.White),
-                        border = BorderStroke(2.dp, Color.LightGray)
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .clickable {
-                                    homeNavController.navigate(HomeNavObj.HistoryBookmarkScreen.route)
-                                }, contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.History,
-                                contentDescription = "History"
+                        Column {
+                            Text(
+                                text = "History Bookmark",
+                                fontWeight = FontWeight.SemiBold,
+                                fontSize = 22.sp,
+                                color = GreventureScheme.White.color,
+                                style = TextStyle(
+                                    fontFamily = PlusJakartaSans,
+                                )
                             )
                         }
+                        Spacer(modifier = Modifier.padding(horizontal = 8.dp))
                     }
                 }
-                HorizontalDivider()
             }
 
-            item {
+            item{
                 BookmarkList(bookmarks = bookmarks, homeNavController = homeNavController)
             }
 

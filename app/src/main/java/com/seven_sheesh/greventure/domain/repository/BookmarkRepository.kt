@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface BookmarkRepository {
     fun getBookmarks(userId: String): Flow<Pair<String, List<Bubble>>>
+    fun getHistoryBookmarks(userId: String): Flow<Pair<String, List<Bubble>>>
     fun getBookmark(userId: String, bubbleId: String): Flow<Pair<String, Bubble?>>
     fun addBookmark(userId: String, bubbleId: String): Flow<String>
     fun removeBookmark(userId: String, bubbleId: String): Flow<String>

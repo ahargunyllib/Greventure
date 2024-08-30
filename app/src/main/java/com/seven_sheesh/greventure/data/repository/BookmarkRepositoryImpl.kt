@@ -27,6 +27,60 @@ class BookmarkRepositoryImpl @Inject constructor(
                 val bookmarks = db.from("bookmarks").select {
                     filter {
                         eq("user_id", userId)
+                        eq("is_started", false)
+                    }
+                }.decodeList<Bookmark>()
+
+                val bubbles = db.from("bubbles").select().decodeList<Bubble>()
+
+                val response = mutableListOf<Bubble>()
+
+                bookmarks.forEach { bookmark ->
+                    bubbles.forEach { bubble ->
+                        if (bookmark.bubbleId == bubble.id) {
+                            val bubblePhoto = db.from("bubble_photos").select {
+                                filter {
+                                    eq("bubble_id", bubble.id)
+                                }
+                            }.decodeSingleOrNull<BubblePhoto>()
+
+                            val bubbleReview = db.from("reviews").select {
+                                filter {
+                                    eq("bubble_id", bubble.id)
+                                }
+                            }.decodeList<Review>()
+
+                            val averageStar = bubbleReview.map { it.star }.average()
+
+                            val bubbleResponse = bubble.copy(
+                                photoUrl = bubblePhoto?.url,
+                                averageRating = if (averageStar.isNaN()) 0.0 else averageStar
+                            )
+
+                            response.add(bubbleResponse)
+                        }
+                    }
+                }
+
+                Log.d(FILE_NAME, "[$FUNCTION_NAME] Successfully fetched bookmarks")
+                emit(Pair("Successfully fetched bookmarks", response))
+            } catch (e: Exception) {
+                Log.e(FILE_NAME, "[$FUNCTION_NAME] An error occurred: ${e.message}", e)
+                emit(Pair("An error occurred: ${e.message}", emptyList()))
+            }
+        }
+    }
+
+    override fun getHistoryBookmarks(userId: String): Flow<Pair<String, List<Bubble>>> {
+        val FUNCTION_NAME = "getBookmark"
+        return flow {
+            Log.d(FILE_NAME, "[$FUNCTION_NAME] Loading")
+            emit(Pair("Loading", emptyList()))
+            try {
+                val bookmarks = db.from("bookmarks").select {
+                    filter {
+                        eq("user_id", userId)
+                        eq("is_started", true)
                     }
                 }.decodeList<Bookmark>()
 

@@ -17,6 +17,7 @@ import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureSchem
 import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
 import com.seven_sheesh.greventure.presentation.ui.widget.common.Navbar
 import com.seven_sheesh.greventure.presentation.view.bookmark.BookmarkScreen
+import com.seven_sheesh.greventure.presentation.view.bookmark.HistoryBookmarkScreen
 import com.seven_sheesh.greventure.presentation.view.home.CityScreen
 import com.seven_sheesh.greventure.presentation.view.home.EventScreen
 import com.seven_sheesh.greventure.presentation.view.home.HomeScreen
@@ -362,6 +363,24 @@ fun HomeNavHost(parentNavController: NavController = rememberNavController()){
                         navbarViewModel = navbarViewModel,
                         createBubbleViewModel = createBubbleViewModel,
                         mapsViewModel = mapsViewModel
+                    )
+                }, enterTransition = {
+                    return@composable slideIntoContainer(
+                        AnimatedContentTransitionScope.SlideDirection.Up, tween(700)
+                    )
+                }, popExitTransition = {
+                    return@composable slideOutOfContainer(
+                        AnimatedContentTransitionScope.SlideDirection.Down, tween(700)
+                    )
+                }
+            )
+
+            composable(
+                route = HomeNavObj.HistoryBookmarkScreen.route,
+                content = {
+                    HistoryBookmarkScreen(
+                        homeNavController = homeNavController,
+                        navbarViewModel = navbarViewModel
                     )
                 }, enterTransition = {
                     return@composable slideIntoContainer(
