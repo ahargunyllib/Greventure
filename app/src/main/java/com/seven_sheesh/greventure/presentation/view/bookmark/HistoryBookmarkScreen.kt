@@ -1,4 +1,4 @@
-package com.seven_sheesh.greventure.presentation.view.home
+package com.seven_sheesh.greventure.presentation.view.bookmark
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -19,17 +19,19 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
+import androidx.compose.material.icons.filled.History
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -37,24 +39,32 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import coil.compose.AsyncImage
-import com.seven_sheesh.greventure.domain.model.dummyNews
 import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
+import com.seven_sheesh.greventure.presentation.ui.design_system.PlusJakartaSans
 import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
+import com.seven_sheesh.greventure.presentation.ui.widget.bookmark.BookmarkList
+import com.seven_sheesh.greventure.presentation.viewmodel.BookmarkViewModel
+import com.seven_sheesh.greventure.presentation.viewmodel.HistoryBookmarkViewModel
 import com.seven_sheesh.greventure.presentation.viewmodel.NavbarViewModel
 
 @Composable
-@Preview
-fun NewsScreen(
+fun HistoryBookmarkScreen(
     homeNavController: NavController = rememberNavController(),
     navbarViewModel: NavbarViewModel = hiltViewModel(),
+    historyBookmarkViewModel: HistoryBookmarkViewModel = hiltViewModel()
 ) {
-    navbarViewModel.setPageState(0)
+    val user = navbarViewModel.user.collectAsState().value.second
+    val bookmarks = historyBookmarkViewModel.bookmarks.collectAsState().value.second
 
+    LaunchedEffect(Unit)     {
+        historyBookmarkViewModel.loadHistoryBookmarks(user?.id!!)
+    }
+
+    navbarViewModel.setPageState(2)
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(GreventureScheme.White.color)
             .safeDrawingPadding(),
         contentAlignment = Alignment.Center
     ) {
@@ -82,16 +92,19 @@ fun NewsScreen(
                             imageVector = Icons.Default.ArrowBackIosNew,
                             contentDescription = "Arrow Back",
                             modifier = Modifier.clickable {
-                                homeNavController.navigate(HomeNavObj.HomeScreen.route)
+                                homeNavController.navigate(HomeNavObj.BookmarkScreen.route)
                             },
                             tint = GreventureScheme.White.color
                         )
                         Column {
                             Text(
-                                text = "Berita",
+                                text = "History Bookmark",
                                 fontWeight = FontWeight.SemiBold,
                                 fontSize = 22.sp,
-                                color = GreventureScheme.White.color
+                                color = GreventureScheme.White.color,
+                                style = TextStyle(
+                                    fontFamily = PlusJakartaSans,
+                                )
                             )
                         }
                         Spacer(modifier = Modifier.padding(horizontal = 8.dp))
@@ -99,65 +112,12 @@ fun NewsScreen(
                 }
             }
 
+            item{
+                BookmarkList(bookmarks = bookmarks, homeNavController = homeNavController)
+            }
+
             item {
-                Spacer(modifier = Modifier.height(32.dp))
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp)
-                ) {
-                    dummyNews.forEach { news ->
-                        Row(
-                            modifier = Modifier.clickable {
-                                homeNavController.navigate(
-                                    HomeNavObj.NewsDetailScreen.createRoute(
-                                        news.id
-                                    )
-                                )
-                            },
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Card(
-                                modifier = Modifier
-                                    .height(96.dp)
-                                    .width(120.dp),
-                                shape = RoundedCornerShape(16.dp),
-                                colors = CardDefaults.cardColors(GreventureScheme.PrimaryVariant1.color),
-                            ) {
-                                AsyncImage(
-                                    model = news.photoUrl,
-                                    contentDescription = "News Image",
-                                    contentScale = ContentScale.Crop,
-                                    modifier = Modifier.fillMaxSize()
-                                )
-                            }
-                            Spacer(modifier = Modifier.width(12.dp))
-                            Column {
-                                Text(
-                                    text = news.createdAt,
-                                    fontSize = 12.sp,
-                                    modifier = Modifier.padding(top = 2.dp),
-                                    color = GreventureScheme.Black.color
-                                )
-                                Text(
-                                    text = news.title,
-                                    fontWeight = FontWeight.Medium,
-                                    fontSize = 16.sp,
-                                    color = GreventureScheme.Black.color
-                                )
-                                Text(
-                                    text = "${news.author} - ${news.minutesToRead} menit dibaca",
-                                    fontSize = 12.sp,
-                                    modifier = Modifier.padding(top = 2.dp),
-                                    color = GreventureScheme.Black.color
-                                )
-                            }
-                        }
-                        Spacer(modifier = Modifier.height(12.dp))
-                        HorizontalDivider()
-                        Spacer(modifier = Modifier.height(12.dp))
-                    }
-                }
+                Spacer(modifier = Modifier.height(140.dp))
             }
         }
     }

@@ -28,6 +28,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -55,11 +56,15 @@ fun BookmarkScreen(
     navbarViewModel: NavbarViewModel = hiltViewModel(),
     bookmarkViewModel: BookmarkViewModel = hiltViewModel()
 ) {
+    navbarViewModel.setPageState(2)
+
     val user = navbarViewModel.user.collectAsState().value.second
-    bookmarkViewModel.loadBookmarks(user?.id!!)
     val bookmarks = bookmarkViewModel.bookmarks.collectAsState().value.second
 
-    navbarViewModel.setPageState(2)
+    LaunchedEffect(Unit) {
+        bookmarkViewModel.loadBookmarks(user?.id!!)
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -107,7 +112,7 @@ fun BookmarkScreen(
                             modifier = Modifier
                                 .fillMaxSize()
                                 .clickable {
-                                    homeNavController.navigate(HomeNavObj.NotificationScreen.route)
+                                    homeNavController.navigate(HomeNavObj.HistoryBookmarkScreen.route)
                                 }, contentAlignment = Alignment.Center
                         ) {
                             Icon(

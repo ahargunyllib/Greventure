@@ -26,6 +26,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,6 +36,9 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import coil.compose.AsyncImage
+import com.seven_sheesh.greventure.domain.model.EventColor
+import com.seven_sheesh.greventure.domain.model.dummyNews
 import com.seven_sheesh.greventure.presentation.ui.design_system.GreventureScheme
 import com.seven_sheesh.greventure.presentation.ui.navigation.nav_obj.HomeNavObj
 import com.seven_sheesh.greventure.presentation.ui.widget.maps.PictureCard
@@ -44,7 +49,10 @@ import com.seven_sheesh.greventure.presentation.viewmodel.NavbarViewModel
 fun NewsDetailScreen(
     homeNavController: NavController = rememberNavController(),
     navbarViewModel: NavbarViewModel = hiltViewModel(),
+    newsId: String
 ){
+    val news = dummyNews.find { it.id == newsId }!!
+
     navbarViewModel.setPageState(0)
 
     Box(modifier = Modifier
@@ -82,9 +90,16 @@ fun NewsDetailScreen(
                 }
             }
 
-//            item {
-//                PictureCard(currentBubblePhoto)
-//            }
+            item {
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(240.dp),
+                ) {
+                    AsyncImage(model = news.photoUrl, contentDescription = "photo",
+                        modifier = Modifier.fillMaxSize(), contentScale = ContentScale.Crop)
+                }
+            }
 
             item {
                 Column(
@@ -93,15 +108,15 @@ fun NewsDetailScreen(
                         .padding(horizontal = 24.dp, vertical = 24.dp)
                 ) {
                     Text(
-                        text = "Lorem Ipsum dolor sit Amet",
+                        text = news.title,
                         color = GreventureScheme.Black.color,
                         fontSize = 24.sp,
                         fontWeight = FontWeight.SemiBold
                     )
                     Spacer(modifier = Modifier.height(12.dp))
-                    Text(text = "Lorem Ipsum - 2 menit dibaca", color = GreventureScheme.Black.color)
+                    Text(text = "${news.author} - ${news.minutesToRead} menit dibaca", color = GreventureScheme.Black.color)
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text(text = "2 Maret 2024", color = GreventureScheme.Black.color)
+                    Text(text = news.createdAt, color = GreventureScheme.Black.color)
                 }
             }
 
@@ -111,19 +126,7 @@ fun NewsDetailScreen(
                         .fillMaxWidth()
                         .padding(horizontal = 24.dp)
                 ){
-                    Text(text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
-                            "Suspendisse dapibus tristique lacus quis iaculis. Proin semper " +
-                            "ultrices dolor sed tincidunt. Praesent et elit sem. Nullam faucibus " +
-                            "dui sed ipsum tempor, nec scelerisque justo consequat. Quisque " +
-                            "ultricies consectetur arcu nec tincidunt. Pellentesque vestibulum, " +
-                            "lorem congue ultricies vestibulum, libero turpis feugiat dui, ut " +
-                            "feugiat massa nunc id arcu. Class aptent taciti sociosqu ad \n\n" +
-                            "litora torquent per conubia nostra, per inceptos himenaeos. Cras " +
-                            "aliquet, tortor eu auctor placerat, nisi lectus dapibus quam, " +
-                            "quis ullamcorper ex ex ut nisl. Quisque mattis scelerisque sapien " +
-                            "malesuada tincidunt. Quisque sem est, ullamcorper eget auctor at, " +
-                            "porta a magna. Duis consequat luctus eros, sed hendrerit odio vulputate " +
-                            "nec. Quisque vitae sapien imperdiet, finibus lectus sit amet, rutrum mauris.",
+                    Text(text = news.description,
                         textAlign = TextAlign.Justify,
                         color = GreventureScheme.Black.color
                     )
@@ -136,45 +139,43 @@ fun NewsDetailScreen(
                         .fillMaxWidth()
                         .padding(horizontal = 24.dp, vertical = 24.dp)
                 ){
-                    val dummyArray = listOf(0, 1, 2)
-
                     HorizontalDivider()
                     Spacer(modifier = Modifier.height(24.dp))
 
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable {  },
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ){
-                        Text(text = "Berita Lainnya", fontSize = 18.sp, color = GreventureScheme.Black.color, fontWeight = FontWeight.SemiBold)
-                    }
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Column(modifier = Modifier
-                        .fillMaxWidth()
-                    ) {
-                        dummyArray.forEach {
-                            Row(
-                                modifier = Modifier,
-                                verticalAlignment = Alignment.CenterVertically
-                            ){
-                                Card(modifier = Modifier.height(96.dp).width(120.dp),
-                                    shape = RoundedCornerShape(16.dp),
-                                    colors = CardDefaults.cardColors(GreventureScheme.PrimaryVariant1.color),
-                                ) {}
-                                Spacer(modifier = Modifier.width(12.dp))
-                                Column {
-                                    Text(text = "2 Maret 2024", fontSize = 12.sp, modifier = Modifier.padding(top = 2.dp), color = GreventureScheme.Black.color)
-                                    Text(text = "Lorem Ipsum Dolor sit Amet", fontWeight = FontWeight.Medium, fontSize = 16.sp, color = GreventureScheme.Black.color)
-                                    Text(text = "Lorem ipsum - 2 menit dibaca", fontSize = 12.sp, modifier = Modifier.padding(top = 2.dp), color = GreventureScheme.Black.color)
-                                }
-                            }
-                            Spacer(modifier = Modifier.height(12.dp))
-                            HorizontalDivider()
-                            Spacer(modifier = Modifier.height(12.dp))
-                        }
-                    }
+//                    Row(
+//                        modifier = Modifier
+//                            .fillMaxWidth()
+//                            .clickable {  },
+//                        horizontalArrangement = Arrangement.SpaceBetween,
+//                        verticalAlignment = Alignment.CenterVertically
+//                    ){
+//                        Text(text = "Berita Lainnya", fontSize = 18.sp, color = GreventureScheme.Black.color, fontWeight = FontWeight.SemiBold)
+//                    }
+//                    Spacer(modifier = Modifier.height(16.dp))
+//                    Column(modifier = Modifier
+//                        .fillMaxWidth()
+//                    ) {
+//                        dummyNews.forEach {
+//                            Row(
+//                                modifier = Modifier,
+//                                verticalAlignment = Alignment.CenterVertically
+//                            ){
+//                                Card(modifier = Modifier.height(96.dp).width(120.dp),
+//                                    shape = RoundedCornerShape(16.dp),
+//                                    colors = CardDefaults.cardColors(GreventureScheme.PrimaryVariant1.color),
+//                                ) {}
+//                                Spacer(modifier = Modifier.width(12.dp))
+//                                Column {
+//                                    Text(text = "2 Maret 2024", fontSize = 12.sp, modifier = Modifier.padding(top = 2.dp), color = GreventureScheme.Black.color)
+//                                    Text(text = "Lorem Ipsum Dolor sit Amet", fontWeight = FontWeight.Medium, fontSize = 16.sp, color = GreventureScheme.Black.color)
+//                                    Text(text = "Lorem ipsum - 2 menit dibaca", fontSize = 12.sp, modifier = Modifier.padding(top = 2.dp), color = GreventureScheme.Black.color)
+//                                }
+//                            }
+//                            Spacer(modifier = Modifier.height(12.dp))
+//                            HorizontalDivider()
+//                            Spacer(modifier = Modifier.height(12.dp))
+//                        }
+//                    }
                 }
             }
 
